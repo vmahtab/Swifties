@@ -7,65 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC4B207D2BA0B06E00345FCD /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B207C2BA0B06E00345FCD /* wanderhubApp.swift */; };
-		BC4B207F2BA0B06E00345FCD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B207E2BA0B06E00345FCD /* ContentView.swift */; };
-		BC4B20812BA0B07000345FCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC4B20802BA0B07000345FCD /* Assets.xcassets */; };
-		BC4B20842BA0B07000345FCD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC4B20832BA0B07000345FCD /* Preview Assets.xcassets */; };
-		BC4B20862BA0B07000345FCD /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B20852BA0B07000345FCD /* Persistence.swift */; };
-		BC4B20892BA0B07000345FCD /* wanderhub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BC4B20872BA0B07000345FCD /* wanderhub.xcdatamodeld */; };
-		BC4B20932BA0B07000345FCD /* wanderhubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B20922BA0B07000345FCD /* wanderhubTests.swift */; };
-		BC4B209D2BA0B07000345FCD /* wanderhubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B209C2BA0B07000345FCD /* wanderhubUITests.swift */; };
-		BC4B209F2BA0B07000345FCD /* wanderhubUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4B209E2BA0B07000345FCD /* wanderhubUITestsLaunchTests.swift */; };
+		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
+		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
+		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
+		F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		BC4B208F2BA0B07000345FCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC4B20712BA0B06E00345FCD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC4B20782BA0B06E00345FCD;
-			remoteInfo = wanderhub;
-		};
-		BC4B20992BA0B07000345FCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BC4B20712BA0B06E00345FCD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BC4B20782BA0B06E00345FCD;
-			remoteInfo = wanderhub;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		BC4B20792BA0B06E00345FCD /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC4B207C2BA0B06E00345FCD /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
-		BC4B207E2BA0B06E00345FCD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		BC4B20802BA0B07000345FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BC4B20832BA0B07000345FCD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BC4B20852BA0B07000345FCD /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		BC4B20882BA0B07000345FCD /* wanderhub.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wanderhub.xcdatamodel; sourceTree = "<group>"; };
-		BC4B208E2BA0B07000345FCD /* wanderhubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wanderhubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC4B20922BA0B07000345FCD /* wanderhubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubTests.swift; sourceTree = "<group>"; };
-		BC4B20982BA0B07000345FCD /* wanderhubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wanderhubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC4B209C2BA0B07000345FCD /* wanderhubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubUITests.swift; sourceTree = "<group>"; };
-		BC4B209E2BA0B07000345FCD /* wanderhubUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
+		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BC4B20762BA0B06E00345FCD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B208B2BA0B07000345FCD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B20952BA0B07000345FCD /* Frameworks */ = {
+		F7EAB9102BA0B7F800F2B335 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -75,74 +32,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BC4B20702BA0B06E00345FCD = {
+		F7EAB90A2BA0B7F800F2B335 = {
 			isa = PBXGroup;
 			children = (
-				BC4B207B2BA0B06E00345FCD /* wanderhub */,
-				BC4B20912BA0B07000345FCD /* wanderhubTests */,
-				BC4B209B2BA0B07000345FCD /* wanderhubUITests */,
-				BC4B207A2BA0B06E00345FCD /* Products */,
+				F7EAB9152BA0B7F800F2B335 /* wanderhub */,
+				F7EAB9142BA0B7F800F2B335 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		BC4B207A2BA0B06E00345FCD /* Products */ = {
+		F7EAB9142BA0B7F800F2B335 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BC4B20792BA0B06E00345FCD /* wanderhub.app */,
-				BC4B208E2BA0B07000345FCD /* wanderhubTests.xctest */,
-				BC4B20982BA0B07000345FCD /* wanderhubUITests.xctest */,
+				F7EAB9132BA0B7F800F2B335 /* wanderhub.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BC4B207B2BA0B06E00345FCD /* wanderhub */ = {
+		F7EAB9152BA0B7F800F2B335 /* wanderhub */ = {
 			isa = PBXGroup;
 			children = (
-				BC4B207C2BA0B06E00345FCD /* wanderhubApp.swift */,
-				BC4B207E2BA0B06E00345FCD /* ContentView.swift */,
-				BC4B20802BA0B07000345FCD /* Assets.xcassets */,
-				BC4B20852BA0B07000345FCD /* Persistence.swift */,
-				BC4B20872BA0B07000345FCD /* wanderhub.xcdatamodeld */,
-				BC4B20822BA0B07000345FCD /* Preview Content */,
+				F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */,
+				F7EAB9182BA0B7F800F2B335 /* ContentView.swift */,
+				F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */,
+				F7EAB91C2BA0B7FB00F2B335 /* Preview Content */,
 			);
 			path = wanderhub;
 			sourceTree = "<group>";
 		};
-		BC4B20822BA0B07000345FCD /* Preview Content */ = {
+		F7EAB91C2BA0B7FB00F2B335 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				BC4B20832BA0B07000345FCD /* Preview Assets.xcassets */,
+				F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		BC4B20912BA0B07000345FCD /* wanderhubTests */ = {
-			isa = PBXGroup;
-			children = (
-				BC4B20922BA0B07000345FCD /* wanderhubTests.swift */,
-			);
-			path = wanderhubTests;
-			sourceTree = "<group>";
-		};
-		BC4B209B2BA0B07000345FCD /* wanderhubUITests */ = {
-			isa = PBXGroup;
-			children = (
-				BC4B209C2BA0B07000345FCD /* wanderhubUITests.swift */,
-				BC4B209E2BA0B07000345FCD /* wanderhubUITestsLaunchTests.swift */,
-			);
-			path = wanderhubUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BC4B20782BA0B06E00345FCD /* wanderhub */ = {
+		F7EAB9122BA0B7F800F2B335 /* wanderhub */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC4B20A22BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhub" */;
+			buildConfigurationList = F7EAB9212BA0B7FB00F2B335 /* Build configuration list for PBXNativeTarget "wanderhub" */;
 			buildPhases = (
-				BC4B20752BA0B06E00345FCD /* Sources */,
-				BC4B20762BA0B06E00345FCD /* Frameworks */,
-				BC4B20772BA0B06E00345FCD /* Resources */,
+				F7EAB90F2BA0B7F800F2B335 /* Sources */,
+				F7EAB9102BA0B7F800F2B335 /* Frameworks */,
+				F7EAB9112BA0B7F800F2B335 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -150,69 +84,25 @@
 			);
 			name = wanderhub;
 			productName = wanderhub;
-			productReference = BC4B20792BA0B06E00345FCD /* wanderhub.app */;
+			productReference = F7EAB9132BA0B7F800F2B335 /* wanderhub.app */;
 			productType = "com.apple.product-type.application";
-		};
-		BC4B208D2BA0B07000345FCD /* wanderhubTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BC4B20A52BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhubTests" */;
-			buildPhases = (
-				BC4B208A2BA0B07000345FCD /* Sources */,
-				BC4B208B2BA0B07000345FCD /* Frameworks */,
-				BC4B208C2BA0B07000345FCD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BC4B20902BA0B07000345FCD /* PBXTargetDependency */,
-			);
-			name = wanderhubTests;
-			productName = wanderhubTests;
-			productReference = BC4B208E2BA0B07000345FCD /* wanderhubTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		BC4B20972BA0B07000345FCD /* wanderhubUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BC4B20A82BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhubUITests" */;
-			buildPhases = (
-				BC4B20942BA0B07000345FCD /* Sources */,
-				BC4B20952BA0B07000345FCD /* Frameworks */,
-				BC4B20962BA0B07000345FCD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BC4B209A2BA0B07000345FCD /* PBXTargetDependency */,
-			);
-			name = wanderhubUITests;
-			productName = wanderhubUITests;
-			productReference = BC4B20982BA0B07000345FCD /* wanderhubUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		BC4B20712BA0B06E00345FCD /* Project object */ = {
+		F7EAB90B2BA0B7F800F2B335 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
-					BC4B20782BA0B06E00345FCD = {
+					F7EAB9122BA0B7F800F2B335 = {
 						CreatedOnToolsVersion = 15.3;
-					};
-					BC4B208D2BA0B07000345FCD = {
-						CreatedOnToolsVersion = 15.3;
-						TestTargetID = BC4B20782BA0B06E00345FCD;
-					};
-					BC4B20972BA0B07000345FCD = {
-						CreatedOnToolsVersion = 15.3;
-						TestTargetID = BC4B20782BA0B06E00345FCD;
 					};
 				};
 			};
-			buildConfigurationList = BC4B20742BA0B06E00345FCD /* Build configuration list for PBXProject "wanderhub" */;
+			buildConfigurationList = F7EAB90E2BA0B7F800F2B335 /* Build configuration list for PBXProject "wanderhub" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -220,90 +110,42 @@
 				en,
 				Base,
 			);
-			mainGroup = BC4B20702BA0B06E00345FCD;
-			productRefGroup = BC4B207A2BA0B06E00345FCD /* Products */;
+			mainGroup = F7EAB90A2BA0B7F800F2B335;
+			productRefGroup = F7EAB9142BA0B7F800F2B335 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BC4B20782BA0B06E00345FCD /* wanderhub */,
-				BC4B208D2BA0B07000345FCD /* wanderhubTests */,
-				BC4B20972BA0B07000345FCD /* wanderhubUITests */,
+				F7EAB9122BA0B7F800F2B335 /* wanderhub */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BC4B20772BA0B06E00345FCD /* Resources */ = {
+		F7EAB9112BA0B7F800F2B335 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC4B20842BA0B07000345FCD /* Preview Assets.xcassets in Resources */,
-				BC4B20812BA0B07000345FCD /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B208C2BA0B07000345FCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B20962BA0B07000345FCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */,
+				F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BC4B20752BA0B06E00345FCD /* Sources */ = {
+		F7EAB90F2BA0B7F800F2B335 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC4B20862BA0B07000345FCD /* Persistence.swift in Sources */,
-				BC4B207F2BA0B06E00345FCD /* ContentView.swift in Sources */,
-				BC4B20892BA0B07000345FCD /* wanderhub.xcdatamodeld in Sources */,
-				BC4B207D2BA0B06E00345FCD /* wanderhubApp.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B208A2BA0B07000345FCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC4B20932BA0B07000345FCD /* wanderhubTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BC4B20942BA0B07000345FCD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BC4B209D2BA0B07000345FCD /* wanderhubUITests.swift in Sources */,
-				BC4B209F2BA0B07000345FCD /* wanderhubUITestsLaunchTests.swift in Sources */,
+				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
+				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		BC4B20902BA0B07000345FCD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC4B20782BA0B06E00345FCD /* wanderhub */;
-			targetProxy = BC4B208F2BA0B07000345FCD /* PBXContainerItemProxy */;
-		};
-		BC4B209A2BA0B07000345FCD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BC4B20782BA0B06E00345FCD /* wanderhub */;
-			targetProxy = BC4B20992BA0B07000345FCD /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		BC4B20A02BA0B07000345FCD /* Debug */ = {
+		F7EAB91F2BA0B7FB00F2B335 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -366,7 +208,7 @@
 			};
 			name = Debug;
 		};
-		BC4B20A12BA0B07000345FCD /* Release */ = {
+		F7EAB9202BA0B7FB00F2B335 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -422,7 +264,7 @@
 			};
 			name = Release;
 		};
-		BC4B20A32BA0B07000345FCD /* Debug */ = {
+		F7EAB9222BA0B7FB00F2B335 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -430,6 +272,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
+				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -442,7 +285,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenginhasanberk.wanderhub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -450,7 +293,7 @@
 			};
 			name = Debug;
 		};
-		BC4B20A42BA0B07000345FCD /* Release */ = {
+		F7EAB9232BA0B7FB00F2B335 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -458,6 +301,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
+				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -470,139 +314,36 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhub;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zenginhasanberk.wanderhub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		BC4B20A62BA0B07000345FCD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wanderhub.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/wanderhub";
-			};
-			name = Debug;
-		};
-		BC4B20A72BA0B07000345FCD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wanderhub.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/wanderhub";
-			};
-			name = Release;
-		};
-		BC4B20A92BA0B07000345FCD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhubUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = wanderhub;
-			};
-			name = Debug;
-		};
-		BC4B20AA2BA0B07000345FCD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = swifities.wanderhubUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = wanderhub;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC4B20742BA0B06E00345FCD /* Build configuration list for PBXProject "wanderhub" */ = {
+		F7EAB90E2BA0B7F800F2B335 /* Build configuration list for PBXProject "wanderhub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BC4B20A02BA0B07000345FCD /* Debug */,
-				BC4B20A12BA0B07000345FCD /* Release */,
+				F7EAB91F2BA0B7FB00F2B335 /* Debug */,
+				F7EAB9202BA0B7FB00F2B335 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC4B20A22BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhub" */ = {
+		F7EAB9212BA0B7FB00F2B335 /* Build configuration list for PBXNativeTarget "wanderhub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BC4B20A32BA0B07000345FCD /* Debug */,
-				BC4B20A42BA0B07000345FCD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BC4B20A52BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhubTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC4B20A62BA0B07000345FCD /* Debug */,
-				BC4B20A72BA0B07000345FCD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BC4B20A82BA0B07000345FCD /* Build configuration list for PBXNativeTarget "wanderhubUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BC4B20A92BA0B07000345FCD /* Debug */,
-				BC4B20AA2BA0B07000345FCD /* Release */,
+				F7EAB9222BA0B7FB00F2B335 /* Debug */,
+				F7EAB9232BA0B7FB00F2B335 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		BC4B20872BA0B07000345FCD /* wanderhub.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				BC4B20882BA0B07000345FCD /* wanderhub.xcdatamodel */,
-			);
-			currentVersion = BC4B20882BA0B07000345FCD /* wanderhub.xcdatamodel */;
-			path = wanderhub.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
-	rootObject = BC4B20712BA0B06E00345FCD /* Project object */;
+	rootObject = F7EAB90B2BA0B7F800F2B335 /* Project object */;
 }
