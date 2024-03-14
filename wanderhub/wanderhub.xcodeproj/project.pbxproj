@@ -7,16 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0418A8E22BA2A28D00DA4516 /* LocManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E12BA2A28D00DA4516 /* LocManager.swift */; };
+		0418A8E42BA2A34600DA4516 /* locMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E32BA2A34600DA4516 /* locMarkers.swift */; };
+		0418A8E62BA2A47600DA4516 /* GeoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E52BA2A47600DA4516 /* GeoData.swift */; };
+		0418A8E82BA2A83D00DA4516 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E72BA2A83D00DA4516 /* MapView.swift */; };
+		0418A8EA2BA2AF2800DA4516 /* locMarkersListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E92BA2AF2800DA4516 /* locMarkersListRow.swift */; };
+		0418A8EC2BA2B12000DA4516 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8EB2BA2B12000DA4516 /* MarkerView.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
-		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
+		F7EAB9192BA0B7F800F2B335 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* MainView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
 		F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0418A8E12BA2A28D00DA4516 /* LocManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocManager.swift; sourceTree = "<group>"; };
+		0418A8E32BA2A34600DA4516 /* locMarkers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locMarkers.swift; sourceTree = "<group>"; };
+		0418A8E52BA2A47600DA4516 /* GeoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoData.swift; sourceTree = "<group>"; };
+		0418A8E72BA2A83D00DA4516 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		0418A8E92BA2AF2800DA4516 /* locMarkersListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locMarkersListRow.swift; sourceTree = "<group>"; };
+		0418A8EB2BA2B12000DA4516 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
-		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F7EAB9182BA0B7F800F2B335 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +64,13 @@
 			isa = PBXGroup;
 			children = (
 				F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */,
-				F7EAB9182BA0B7F800F2B335 /* ContentView.swift */,
+				F7EAB9182BA0B7F800F2B335 /* MainView.swift */,
+				0418A8EB2BA2B12000DA4516 /* MarkerView.swift */,
+				0418A8E92BA2AF2800DA4516 /* locMarkersListRow.swift */,
+				0418A8E72BA2A83D00DA4516 /* MapView.swift */,
+				0418A8E32BA2A34600DA4516 /* locMarkers.swift */,
+				0418A8E52BA2A47600DA4516 /* GeoData.swift */,
+				0418A8E12BA2A28D00DA4516 /* LocManager.swift */,
 				F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */,
 				F7EAB91C2BA0B7FB00F2B335 /* Preview Content */,
 			);
@@ -137,8 +155,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
+				0418A8EC2BA2B12000DA4516 /* MarkerView.swift in Sources */,
+				F7EAB9192BA0B7F800F2B335 /* MainView.swift in Sources */,
+				0418A8E82BA2A83D00DA4516 /* MapView.swift in Sources */,
+				0418A8E62BA2A47600DA4516 /* GeoData.swift in Sources */,
+				0418A8EA2BA2AF2800DA4516 /* locMarkersListRow.swift in Sources */,
+				0418A8E42BA2A34600DA4516 /* locMarkers.swift in Sources */,
 				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
+				0418A8E22BA2A28D00DA4516 /* LocManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +296,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
-				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
+				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -301,7 +325,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
-				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
+				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
