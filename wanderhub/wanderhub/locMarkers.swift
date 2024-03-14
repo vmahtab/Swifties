@@ -22,6 +22,9 @@ final class locMarkers {
     static let shared = locMarkers() // create one instance of the class to be shared
     private init() {
         self.markers.append(locMarker(name: "Bell Tower", timestamp: "now", geodata: GeoData(lat: 42.2743155694, lon: -83.736413721)))
+        self.markers.append(locMarker(name: "University of Michigan - Ann Arbor:", timestamp: "now", geodata: GeoData(lat:  42.278564, lon: -83.737998)))
+        self.markers.append(locMarker(name: "The Big House", timestamp: "now", geodata: GeoData(lat: 42.265649, lon: -83.748443)))
+        self.markers.append(locMarker(name: "Nichols Arboretum", timestamp: "now", geodata: GeoData(lat: 42.280800, lon: -83.726784)))
     }
     private(set) var markers = [locMarker]()
     private let nFields = Mirror(reflecting: locMarker()).children.count

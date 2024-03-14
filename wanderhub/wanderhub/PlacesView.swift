@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct MainView: View {
+struct PlacesView: View {
     @State private var isMapping = false
     @State var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     private let store = locMarkers.shared
@@ -20,6 +20,10 @@ struct MainView: View {
             locMarkersListRow(marker: store.markers[$0])
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color(($0 % 2 == 0) ? .systemGray5 : .systemGray6))
+        }
+        // added this update to initialize the camera in case we swipe
+        .onAppear {
+            LocManager.shared.toggleUpdates()
         }
         .gesture(DragGesture(minimumDistance: 3.0, coordinateSpace: .local)
             .onEnded { value in
@@ -39,18 +43,18 @@ struct MainView: View {
         }
         .navigationTitle("Chatter")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement:.navigationBarTrailing) {
-                Button {
-                    isPresenting.toggle()
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                }
-            }
-        }
-        .navigationDestination(isPresented: $isPresenting) {
-            MarkerView(isPresented: $isPresenting)
-        }
+//        .toolbar {
+//            ToolbarItem(placement:.navigationBarTrailing) {
+//                Button {
+//                    isPresenting.toggle()
+//                } label: {
+//                    Image(systemName: "square.and.pencil")
+//                }
+//            }
+//        }
+//        .navigationDestination(isPresented: $isPresenting) {
+//            MarkerView(isPresented: $isPresenting)
+//        }
         
     }
 }

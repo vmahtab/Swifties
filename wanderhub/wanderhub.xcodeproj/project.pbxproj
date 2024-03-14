@@ -14,7 +14,7 @@
 		0418A8EA2BA2AF2800DA4516 /* locMarkersListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8E92BA2AF2800DA4516 /* locMarkersListRow.swift */; };
 		0418A8EC2BA2B12000DA4516 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418A8EB2BA2B12000DA4516 /* MarkerView.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
-		F7EAB9192BA0B7F800F2B335 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* MainView.swift */; };
+		F7EAB9192BA0B7F800F2B335 /* PlacesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* PlacesView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
 		F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -28,7 +28,7 @@
 		0418A8EB2BA2B12000DA4516 /* MarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
-		F7EAB9182BA0B7F800F2B335 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F7EAB9182BA0B7F800F2B335 /* PlacesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesView.swift; sourceTree = "<group>"; };
 		F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */,
-				F7EAB9182BA0B7F800F2B335 /* MainView.swift */,
+				F7EAB9182BA0B7F800F2B335 /* PlacesView.swift */,
 				0418A8EB2BA2B12000DA4516 /* MarkerView.swift */,
 				0418A8E92BA2AF2800DA4516 /* locMarkersListRow.swift */,
 				0418A8E72BA2A83D00DA4516 /* MapView.swift */,
@@ -156,7 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0418A8EC2BA2B12000DA4516 /* MarkerView.swift in Sources */,
-				F7EAB9192BA0B7F800F2B335 /* MainView.swift in Sources */,
+				F7EAB9192BA0B7F800F2B335 /* PlacesView.swift in Sources */,
 				0418A8E82BA2A83D00DA4516 /* MapView.swift in Sources */,
 				0418A8E62BA2A47600DA4516 /* GeoData.swift in Sources */,
 				0418A8EA2BA2AF2800DA4516 /* locMarkersListRow.swift in Sources */,
@@ -299,6 +299,7 @@
 				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "to know where you are";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -328,6 +329,7 @@
 				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "to know where you are";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
