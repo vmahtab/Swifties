@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04F327AE2BA260BD0020D486 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F327AD2BA260BD0020D486 /* MapView.swift */; };
+		04F327B32BA2655F0020D486 /* GoogleMaps in Frameworks */ = {isa = PBXBuildFile; productRef = 04F327B22BA2655F0020D486 /* GoogleMaps */; };
+		04F327B52BA2655F0020D486 /* GoogleMapsBase in Frameworks */ = {isa = PBXBuildFile; productRef = 04F327B42BA2655F0020D486 /* GoogleMapsBase */; };
+		04F327B72BA2655F0020D486 /* GoogleMapsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 04F327B62BA2655F0020D486 /* GoogleMapsCore */; };
+		04F327B92BA2655F0020D486 /* GoogleMapsM4B in Frameworks */ = {isa = PBXBuildFile; productRef = 04F327B82BA2655F0020D486 /* GoogleMapsM4B */; };
+		04F327BB2BA26D5B0020D486 /* LocManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F327BA2BA26D5B0020D486 /* LocManager.swift */; };
+		04F327BE2BA293EE0020D486 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 04F327BD2BA293EE0020D486 /* GooglePlaces */; };
+		04F327C02BA2941C0020D486 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F327BF2BA2941C0020D486 /* PlacesViewController.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
 		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
@@ -14,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04F327AD2BA260BD0020D486 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		04F327BA2BA26D5B0020D486 /* LocManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocManager.swift; sourceTree = "<group>"; };
+		04F327BF2BA2941C0020D486 /* PlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
 		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -26,6 +37,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F327B32BA2655F0020D486 /* GoogleMaps in Frameworks */,
+				04F327B72BA2655F0020D486 /* GoogleMapsCore in Frameworks */,
+				04F327B92BA2655F0020D486 /* GoogleMapsM4B in Frameworks */,
+				04F327BE2BA293EE0020D486 /* GooglePlaces in Frameworks */,
+				04F327B52BA2655F0020D486 /* GoogleMapsBase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +69,9 @@
 			children = (
 				F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */,
 				F7EAB9182BA0B7F800F2B335 /* ContentView.swift */,
+				04F327AD2BA260BD0020D486 /* MapView.swift */,
+				04F327BF2BA2941C0020D486 /* PlacesViewController.swift */,
+				04F327BA2BA26D5B0020D486 /* LocManager.swift */,
 				F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */,
 				F7EAB91C2BA0B7FB00F2B335 /* Preview Content */,
 			);
@@ -83,6 +102,13 @@
 			dependencies = (
 			);
 			name = wanderhub;
+			packageProductDependencies = (
+				04F327B22BA2655F0020D486 /* GoogleMaps */,
+				04F327B42BA2655F0020D486 /* GoogleMapsBase */,
+				04F327B62BA2655F0020D486 /* GoogleMapsCore */,
+				04F327B82BA2655F0020D486 /* GoogleMapsM4B */,
+				04F327BD2BA293EE0020D486 /* GooglePlaces */,
+			);
 			productName = wanderhub;
 			productReference = F7EAB9132BA0B7F800F2B335 /* wanderhub.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +137,10 @@
 				Base,
 			);
 			mainGroup = F7EAB90A2BA0B7F800F2B335;
+			packageReferences = (
+				04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */,
+				04F327BC2BA293EE0020D486 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
+			);
 			productRefGroup = F7EAB9142BA0B7F800F2B335 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,8 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04F327BB2BA26D5B0020D486 /* LocManager.swift in Sources */,
 				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
+				04F327C02BA2941C0020D486 /* PlacesViewController.swift in Sources */,
 				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
+				04F327AE2BA260BD0020D486 /* MapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +305,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
-				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
+				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,9 +335,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wanderhub/Preview Content\"";
-				DEVELOPMENT_TEAM = 7CP2PKVSMZ;
+				DEVELOPMENT_TEAM = 9GF3YB429Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -344,6 +379,53 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-maps-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 8.4.0;
+			};
+		};
+		04F327BC2BA293EE0020D486 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04F327B22BA2655F0020D486 /* GoogleMaps */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMaps;
+		};
+		04F327B42BA2655F0020D486 /* GoogleMapsBase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsBase;
+		};
+		04F327B62BA2655F0020D486 /* GoogleMapsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsCore;
+		};
+		04F327B82BA2655F0020D486 /* GoogleMapsM4B */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04F327B12BA2655F0020D486 /* XCRemoteSwiftPackageReference "ios-maps-sdk" */;
+			productName = GoogleMapsM4B;
+		};
+		04F327BD2BA293EE0020D486 /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04F327BC2BA293EE0020D486 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F7EAB90B2BA0B7F800F2B335 /* Project object */;
 }
