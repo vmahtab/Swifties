@@ -1,0 +1,10 @@
+We're using Django Rest framework
+Different parts organized as "apps" in django (the folders)
+They all use the same database (postgresql)
+
+DATABASE:
+    We use sqlite for development, but will migrate to postgresql for production
+
+DATABASE COMMANDS
+    To start PostgreqSQL
+    sudo -u postgres psql
