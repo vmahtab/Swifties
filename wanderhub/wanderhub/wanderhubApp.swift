@@ -12,6 +12,7 @@ struct wanderhubApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+            // testing
         }
     }
 }
