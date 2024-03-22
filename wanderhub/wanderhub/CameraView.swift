@@ -4,47 +4,40 @@
 //
 //  Created by Neha Tiwari on 2/5/24.
 //
-
 import SwiftUI
 
 struct CameraView: View {
-
-    
     private let username = "tiwarin"
     @State private var message = "Some short sample text."
     @State private var image: UIImage? = nil
     @State private var videoUrl: URL? = nil
-    
     @State private var isPresenting = false
     @State private var sourceType: UIImagePickerController.SourceType? = nil
     
     var body: some View {
         VStack {
-            Text(username)
+            Text("Hello \(username)")
                 .padding(.top, 30.0)
-            TextEditor(text: $message)
-                .padding(EdgeInsets(top: 10, leading: 18, bottom: 0, trailing: 4))
             HStack (alignment: .top) {
-
-                if let image {
+                if let image = image {
                     Image(uiImage: image)
                         .scaledToFit()
                         .frame(height: 181)
                         .padding(.trailing, 18)
                 }
             }
-            Spacer().frame(height:240)
+            Spacer().frame(height:100)
+            CameraButton()
+            Spacer().frame(height:100)
+            AlbumButton()
         }
         .navigationTitle("Post")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement:.navigationBarTrailing) {
+            ToolbarItem(placement: .navigationBarTrailing) {
                 SubmitButton()
             }
-            ToolbarItemGroup(placement: .bottomBar) {
-                CameraButton()
-                AlbumButton()
-            }
+
         }
         .fullScreenCover(isPresented: $isPresenting) {
             ImagePicker(sourceType: $sourceType, image: $image)
@@ -56,37 +49,52 @@ struct CameraView: View {
     
     @ViewBuilder
     func SubmitButton() -> some View {
+        Button(action: submitAction) {
+            Image(systemName: "paperplane")
+                .padding(EdgeInsets(top: 0, leading: 60, bottom: 20, trailing: 0))
+                .scaleEffect(1.2)
+        }
+    }
+    
+    func submitAction() {
+        // Create a new Chatt object with the message, image, and geoData if available
+        let geoData = GeoData(lat: 0.0, lon: 0.0, place: "Unknown", facing: "Unknown", speed: "Unknown")
+        let imagedata = ImageData(username: username, timestamp: Date().description, imageUrl: nil, geoData: geoData)
+        
+        // Call the postChatt function to send the post request
+        Task {
+            let _ = await ImageStore.shared.postImage(imagedata, image: image)
+            print("success")
+            print(imagedata)
+        }
+    }
+    
+    @ViewBuilder
+    func CameraButton() -> some View {
         Button {
-            Task{
-               print("hello")
+            sourceType = .camera
+            isPresenting.toggle()
+        } label: {
+            HStack{
+                Image(systemName: "camera")
+                    .scaleEffect(1.2)
+            Text("Take picture")
             }
-    } label: {
-        Image(systemName: "paperplane")
+            }
     }
-}
-
-@ViewBuilder
-func CameraButton() -> some View {
-    Button {
-        sourceType = .camera
-        isPresenting.toggle()
-    } label: {
-        Image(systemName: "iphone.rear.camera")
-            .padding(EdgeInsets(top: 0, leading: 60, bottom: 20, trailing: 0))
-            .scaleEffect(1.2)
+    
+    @ViewBuilder
+    func AlbumButton() -> some View {
+        Button {
+            sourceType = .photoLibrary
+            isPresenting.toggle()
+        } label: {
+            HStack{
+                
+                Image(systemName: "photo.on.rectangle")
+                    .scaleEffect(1.2)
+            
+            Text("Camera Roll")
+            }}
     }
-}
-
-@ViewBuilder
-func AlbumButton() -> some View {
-    Button {
-        sourceType = .photoLibrary
-        isPresenting.toggle()
-    } label: {
-        Image(systemName: "photo.on.rectangle.angled")
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 20, trailing: 60))
-            .scaleEffect(1.2)
-    }
-}
-
 }

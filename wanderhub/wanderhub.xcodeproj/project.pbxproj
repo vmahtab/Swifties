@@ -10,6 +10,10 @@
 		2505CC902BACC86E00490764 /* GeoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC8F2BACC86E00490764 /* GeoData.swift */; };
 		2505CC922BACC87600490764 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC912BACC87600490764 /* Media.swift */; };
 		2505CC942BACD2C100490764 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC932BACD2C100490764 /* CameraView.swift */; };
+		2505CC962BAE353200490764 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC952BAE353200490764 /* ImageData.swift */; };
+		2505CC992BAE364000490764 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2505CC982BAE364000490764 /* Alamofire */; };
+		2505CC9B2BAE364000490764 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 2505CC9A2BAE364000490764 /* AlamofireDynamic */; };
+		2505CC9D2BAE373300490764 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC9C2BAE373300490764 /* ImageStore.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
 		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
@@ -20,6 +24,8 @@
 		2505CC8F2BACC86E00490764 /* GeoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoData.swift; sourceTree = "<group>"; };
 		2505CC912BACC87600490764 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		2505CC932BACD2C100490764 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		2505CC952BAE353200490764 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		2505CC9C2BAE373300490764 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
 		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +38,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2505CC992BAE364000490764 /* Alamofire in Frameworks */,
+				2505CC9B2BAE364000490764 /* AlamofireDynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +72,8 @@
 				2505CC8F2BACC86E00490764 /* GeoData.swift */,
 				2505CC912BACC87600490764 /* Media.swift */,
 				2505CC932BACD2C100490764 /* CameraView.swift */,
+				2505CC952BAE353200490764 /* ImageData.swift */,
+				2505CC9C2BAE373300490764 /* ImageStore.swift */,
 			);
 			path = wanderhub;
 			sourceTree = "<group>";
@@ -92,6 +102,10 @@
 			dependencies = (
 			);
 			name = wanderhub;
+			packageProductDependencies = (
+				2505CC982BAE364000490764 /* Alamofire */,
+				2505CC9A2BAE364000490764 /* AlamofireDynamic */,
+			);
 			productName = wanderhub;
 			productReference = F7EAB9132BA0B7F800F2B335 /* wanderhub.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +134,9 @@
 				Base,
 			);
 			mainGroup = F7EAB90A2BA0B7F800F2B335;
+			packageReferences = (
+				2505CC972BAE364000490764 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = F7EAB9142BA0B7F800F2B335 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -148,6 +165,8 @@
 			files = (
 				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
 				2505CC902BACC86E00490764 /* GeoData.swift in Sources */,
+				2505CC962BAE353200490764 /* ImageData.swift in Sources */,
+				2505CC9D2BAE373300490764 /* ImageStore.swift in Sources */,
 				2505CC922BACC87600490764 /* Media.swift in Sources */,
 				2505CC942BACD2C100490764 /* CameraView.swift in Sources */,
 				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
@@ -360,6 +379,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2505CC972BAE364000490764 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2505CC982BAE364000490764 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2505CC972BAE364000490764 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		2505CC9A2BAE364000490764 /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2505CC972BAE364000490764 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F7EAB90B2BA0B7F800F2B335 /* Project object */;
 }
