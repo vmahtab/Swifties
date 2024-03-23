@@ -13,15 +13,17 @@ import Foundation
 
 @Observable
 final class ImageStore {
+    
+    private let user = User.shared
     static let shared = ImageStore() // create one instance of the class to be shared
     private init() {}                // and make the constructor private so no other
     // instances can be created
     private(set) var chatts = [ImageData]()
     private let nFields = Mirror(reflecting: ImageData()).children.count
     
-    private let serverUrl = "https://127.0.0.1:8080/"
+//    private let serverUrl = "https://127.0.0.1:8080/"
     
-    
+    // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
     func postImage(_ imagedata: ImageData, image: UIImage?) async -> Data? {
         guard let apiUrl = URL(string: "\(serverUrl)postimages/") else {
             print("postChatt: Bad URL")
