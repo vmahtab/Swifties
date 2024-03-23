@@ -56,9 +56,9 @@ struct ChildNavController: View {
                     .padding(.vertical, 10) // Adjust vertical padding
                     .padding(.horizontal, 20) // Adjust horizontal padding
             }
-            .frame(height: 50)
-            .foregroundColor(.white)
         }
+        .background(Color.black)
+        .frame(height: 50)
     }
 }
 

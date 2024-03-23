@@ -12,25 +12,27 @@ struct StartupPage: View {
     @State var SigninPresented = true
     
     var body: some View {
-        VStack {
-            if isActive {
-                SigninView(isPresented: $SigninPresented)
-            } else {
-                Spacer()
-                Text("WanderHub")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
-                Spacer()
+        NavigationView{
+            VStack {
+                if isActive {
+                    SigninView(isPresented: $SigninPresented)
+                } else {
+                    Spacer()
+                    Text("WanderHub")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.blue)
+                    Spacer()
+                }
             }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                withAnimation {
-                    self.isActive = true
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.white)
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    withAnimation {
+                        self.isActive = true
+                    }
                 }
             }
         }
