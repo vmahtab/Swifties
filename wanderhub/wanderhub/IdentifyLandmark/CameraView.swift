@@ -31,7 +31,7 @@ struct CameraView: View {
             Spacer().frame(height:100)
             AlbumButton()
         }
-        .navigationTitle("Post")
+        .navigationTitle("Identify Landmark")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -51,8 +51,8 @@ struct CameraView: View {
     func SubmitButton() -> some View {
         Button(action: submitAction) {
             Image(systemName: "paperplane")
-                .padding(EdgeInsets(top: 0, leading: 60, bottom: 20, trailing: 0))
-                .scaleEffect(1.2)
+                .padding(EdgeInsets(top: 6, leading: 60, bottom: 20, trailing: 0))
+                .scaleEffect(1)
         }
     }
     

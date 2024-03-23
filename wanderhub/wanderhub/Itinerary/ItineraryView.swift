@@ -61,37 +61,41 @@ struct ItineraryView: View {
 }
 
 struct ItinView: View {
-    
   @State var draggedLandmark: Landmark?
-    @StateObject var itineraryEntries = LandmarkStore.shared
+@StateObject var itineraryEntries = LandmarkStore.shared
+    @ObservedObject var viewModel: NavigationControllerViewModel
   
   var body: some View {
-    ScrollView(showsIndicators: false) {
-      VStack(spacing: 10) {
-          ForEach(Array(itineraryEntries.landmarks.enumerated()), id: \.element.id) { index, landmark in
-          ItineraryView(index: index, landmark: $itineraryEntries.landmarks[index])
+      VStack {
+          ScrollView(showsIndicators: false) {
+              VStack(spacing: 10) {
+                  ForEach(Array(itineraryEntries.landmarks.enumerated()), id: \.element.id) { index, landmark in
+                      ItineraryView(index: index, landmark: $itineraryEntries.landmarks[index])
+                      
+                          .onDrag {
+                              self.draggedLandmark = landmark
+                              return NSItemProvider()
+                          }
+                          .onDrop(
+                            of: [.text],
+                            delegate: ItineraryDropViewDelegate(
+                                destinationLandmark: landmark,
+                                landmarks: $itineraryEntries.landmarks,
+                                draggedLandmark: $draggedLandmark
+                            ))
+                          .onTapGesture(count: 2) {
+                              itineraryEntries.removeLandmard(index: index)
+                          }
+                  }
+              }
               
-            .onDrag {
-              self.draggedLandmark = landmark
-              return NSItemProvider()
-            }
-            .onDrop(
-              of: [.text],
-              delegate: ItineraryDropViewDelegate(
-                destinationLandmark: landmark,
-                landmarks: $itineraryEntries.landmarks,
-                draggedLandmark: $draggedLandmark
-              ))
-            .onTapGesture(count: 2) {
-                    itineraryEntries.removeLandmard(index: index)
-            }
-        }
-        
-        Spacer()
+              .padding(.horizontal, 20)
+          }
+          .background(Color.black)
+          Spacer()
+          ChildNavController(viewModel: viewModel)
       }
-
-      .padding(.horizontal, 20)
-    }
-    .background(Color.black)
   }
 }
+
+
