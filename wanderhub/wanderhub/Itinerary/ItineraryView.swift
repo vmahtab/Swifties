@@ -88,7 +88,9 @@ struct ItinView: View {
                           }
                   }
               }
-              
+              .refreshable {
+                  await itineraryEntries.getLandmarks()
+              }
               .padding(.horizontal, 20)
           }
           .background(Color.black)

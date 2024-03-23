@@ -25,8 +25,9 @@ final class LandmarkStore: ObservableObject {
     private let nFields = Mirror(reflecting: Landmark()).children.count
     
     // FIX the URL TODO: FIXME
-    private let serverUrl = "https://3.22.222.79/"
+//    private let serverUrl = "https://3.22.222.79/"
     
+    // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
     func removeLandmard(index: Int) {
         
         // TODO: Call backend to remove the landmark from the itinerary
@@ -35,7 +36,8 @@ final class LandmarkStore: ObservableObject {
         landmarks.remove(at: index)
     }
     
-    func getLandmarks() {
+    // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
+    func getLandmarks() async {
         // FIX THIS
         // TODO: FIXME IMPLEMENT ME
         
@@ -92,7 +94,9 @@ final class LandmarkStore: ObservableObject {
         //        }.resume()
     }
     
-    func postLandmark(_ landmark: Landmark, completion: @escaping () -> ()) {
+    
+    // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
+    func postLandmark(_ landmark: Landmark, completion: @escaping () -> ()) async {
         
         // TODO: FIXME IMPLEMENT ME
         return

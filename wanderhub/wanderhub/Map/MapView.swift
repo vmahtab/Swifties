@@ -54,7 +54,6 @@ struct MapView: View {
     }
 }
 
-
 struct InfoView: View {
     let landmark: Landmark
     
