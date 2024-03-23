@@ -12,6 +12,7 @@ import GoogleSignInSwift
 struct SigninView: View {
     @Binding var isPresented: Bool
     private let signinClient = GIDSignIn.sharedInstance
+    //@State private var signupP
     
     func backendSignin(_ token: String?) {
         Task {
@@ -50,7 +51,9 @@ struct SigninView: View {
                     }
                 }
             }
+            //NavigationLink(destination: SignUpView(), isActive: $isPresented)
             Button("Sign Up") {
+                //NavigationLink(destination: SignUpView())
                 //SigninView(isPresented: $isPresented)
             }
         }
