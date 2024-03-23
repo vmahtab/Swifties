@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct wanderhubApp: App {
+    init() {
+        LocManager.shared.startUpdates()
+        LandmarkStore.shared.getLandmarks()
+    }
+    
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
