@@ -70,13 +70,16 @@ struct MainNavController: View {
             .fullScreenCover(isPresented: $viewModel.isPresented) {
                 switch viewModel.viewState {
                 case .map:
-                    MapView(cameraPosition: $viewModel.cameraPosition, landmark: nil)
+                    MapView(viewModel: viewModel, cameraPosition: $viewModel.cameraPosition, landmark: nil)
                 case .home:
                     HomeView()
                 case .itinerary:
                     ItinView(viewModel: viewModel)
+                case .landmark:
+                    CameraView(viewModel: viewModel)
                 default:
                     Text("Other view")
+                    ChildNavController(viewModel: viewModel)
                 }
             }
         }

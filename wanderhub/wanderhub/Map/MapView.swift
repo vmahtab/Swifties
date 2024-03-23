@@ -9,43 +9,48 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+    @ObservedObject var viewModel: NavigationControllerViewModel
     @Binding var cameraPosition: MapCameraPosition
     let landmark: Landmark?
     @State var selected: Landmark?
     
     var body: some View {
-        Map(position: $cameraPosition, selection: $selected) {
-            if let landmark {
-                if let geodata = landmark.geodata {
-                    Marker(landmark.name!, systemImage: "figure.wave",
-                           coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon))
-                    .tint(.red)
-                    .tag(landmark)
-                }
-            } else {
-                ForEach(LandmarkStore.shared.landmarks, id: \.self) { landmark in
+        VStack {
+            Map(position: $cameraPosition, selection: $selected) {
+                if let landmark {
                     if let geodata = landmark.geodata {
                         Marker(landmark.name!, systemImage: "figure.wave",
                                coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon))
-                        .tint(.mint)
+                        .tint(.red)
+                        .tag(landmark)
+                    }
+                } else {
+                    ForEach(LandmarkStore.shared.landmarks, id: \.self) { landmark in
+                        if let geodata = landmark.geodata {
+                            Marker(landmark.name!, systemImage: "figure.wave",
+                                   coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon))
+                            .tint(.mint)
+                        }
                     }
                 }
-            }
-            if let landmark = selected, let geodata = landmark.geodata {
-                Annotation(landmark.name!, coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon), anchor: .topLeading
-                ) {
-                    InfoView(landmark: landmark)
+                if let landmark = selected, let geodata = landmark.geodata {
+                    Annotation(landmark.name!, coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon), anchor: .topLeading
+                    ) {
+                        InfoView(landmark: landmark)
+                    }
+                    .annotationTitles(.hidden)
                 }
-                .annotationTitles(.hidden)
+                
+                UserAnnotation() // shows user location
             }
-            
-            UserAnnotation() // shows user location
+            .mapControls {
+                MapUserLocationButton()
+                MapCompass()
+                MapScaleView()
+            }
         }
-        .mapControls {
-            MapUserLocationButton()
-            MapCompass()
-            MapScaleView()
-        }
+        Spacer()
+        ChildNavController(viewModel: viewModel)
     }
 }
 

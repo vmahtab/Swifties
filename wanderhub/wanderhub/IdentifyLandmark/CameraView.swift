@@ -7,6 +7,8 @@
 import SwiftUI
 
 struct CameraView: View {
+    @ObservedObject var viewModel: NavigationControllerViewModel
+    
     private let username = "tiwarin"
     @State private var message = "Some short sample text."
     @State private var image: UIImage? = nil
@@ -30,6 +32,9 @@ struct CameraView: View {
             CameraButton()
             Spacer().frame(height:100)
             AlbumButton()
+            
+            Spacer()
+            ChildNavController(viewModel: viewModel)
         }
         .navigationTitle("Identify Landmark")
         .navigationBarTitleDisplayMode(.inline)
