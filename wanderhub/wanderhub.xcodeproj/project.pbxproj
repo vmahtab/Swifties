@@ -14,6 +14,7 @@
 		2505CC992BAE364000490764 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2505CC982BAE364000490764 /* Alamofire */; };
 		2505CC9B2BAE364000490764 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 2505CC9A2BAE364000490764 /* AlamofireDynamic */; };
 		2505CC9D2BAE373300490764 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2505CC9C2BAE373300490764 /* ImageStore.swift */; };
+		4E0C11E42BAF842C004BC1CE /* ImageListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0C11E32BAF842C004BC1CE /* ImageListRow.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
 		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		2505CC932BACD2C100490764 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		2505CC952BAE353200490764 /* ImageData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
 		2505CC9C2BAE373300490764 /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		4E0C11E32BAF842C004BC1CE /* ImageListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListRow.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
 		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				2505CC8F2BACC86E00490764 /* GeoData.swift */,
 				2505CC912BACC87600490764 /* Media.swift */,
 				2505CC932BACD2C100490764 /* CameraView.swift */,
+				4E0C11E32BAF842C004BC1CE /* ImageListRow.swift */,
 				2505CC952BAE353200490764 /* ImageData.swift */,
 				2505CC9C2BAE373300490764 /* ImageStore.swift */,
 			);
@@ -167,6 +170,7 @@
 				2505CC902BACC86E00490764 /* GeoData.swift in Sources */,
 				2505CC962BAE353200490764 /* ImageData.swift in Sources */,
 				2505CC9D2BAE373300490764 /* ImageStore.swift in Sources */,
+				4E0C11E42BAF842C004BC1CE /* ImageListRow.swift in Sources */,
 				2505CC922BACC87600490764 /* Media.swift in Sources */,
 				2505CC942BACD2C100490764 /* CameraView.swift in Sources */,
 				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
