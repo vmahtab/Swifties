@@ -14,7 +14,6 @@ struct wanderhubApp: App {
         LandmarkStore.shared.getLandmarks()
     }
     
-    
     var body: some Scene {
         WindowGroup {
             HomeView()
