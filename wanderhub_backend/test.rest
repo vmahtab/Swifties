@@ -1,0 +1,19 @@
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{"username": "hbzengin", "password": "example"}
+
+###
+
+POST http://127.0.0.1:8000/signup
+Content-Type: application/json
+
+{"username": "hbzengin", "password": "example", "email": "hbzengin@umich.edu"}
+
+###
+
+GET http://127.0.0.1:8000/test_token
+Content-Type: application/json
+Authorization: Token 24de975ce5c4783d841909e8c88cd994107bc3aa
+
+{}
