@@ -11,6 +11,7 @@ struct ImageData {
     var username: String?
     var timestamp: String?
     var imageUrl: String?
+    var imageUrls: String?
     var geoData: GeoData?
 
 }
