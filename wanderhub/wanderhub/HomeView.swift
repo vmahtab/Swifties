@@ -9,13 +9,36 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
                 VStack {
-                    Text("Welcome to the Home View")
+                    Text("Hello User")
                         .font(.title)
                         .padding()
                         .foregroundColor(titleCol)
                     
+                    Button(action: {
+                    }) {
+                        Text("Go to current trip")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.yellow)
+                            .cornerRadius(10)
+                    }
+                    .padding(.horizontal)
+                    
+                    Button(action: {
+                    }) {
+                        Text("Explore nearby")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color.yellow)
+                            .cornerRadius(10)
+                    }
+                    
                     .padding()
                     Spacer()
+                    SearchBarViewControllerRepresentable()
+                        .frame(height: 44)
                     MainNavController(viewModel: viewmodel)
                 }
                 .navigationTitle("Home")
