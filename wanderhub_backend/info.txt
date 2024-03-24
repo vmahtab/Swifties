@@ -8,3 +8,17 @@ DATABASE:
 DATABASE COMMANDS
     To start PostgreqSQL
     sudo -u postgres psql
+
+
+TO START THE BACKEND RUN:
+    python manage.py runserver
+
+To open the admin panel for Django first run the server
+Then go to the port where the server is running and append /admin to it
+http://127.0.0.1:8000/admin/
+However you need an admin account first!
+python manage.py createsuperuser
+
+Install rest client extension from vscode
+And look at Hasan's test.rest file for example rest api calls
+
