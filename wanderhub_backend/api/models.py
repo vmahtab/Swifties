@@ -36,7 +36,9 @@ class ItineraryItems(models.Model):
     id = models.AutoField(primary_key=True)
     it_id = models.ForeignKey(Itineraries, on_delete=models.CASCADE)
     landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE)
-    visit_time = models.DateTimeField()
+    date_time = models.DateTimeField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
 
     def __str__(self):
         return f"Visit {self.landmark.city_name} on {self.visit_time}"

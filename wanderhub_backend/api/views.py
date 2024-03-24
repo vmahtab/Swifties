@@ -17,6 +17,8 @@ from .models import VisitedCities, Landmark, Itineraries, ItineraryItems
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
+import json
+
 from openai import ChatCompletion
 api_key = "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"
 chat_completion = ChatCompletion(api_key)
@@ -82,12 +84,24 @@ def test_token(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def make_custom_itinerary(request):
+    user = request.user
     itinerary_prompt = '''\You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks.
       Here is some information about me to help you
       {interests}
       I am travelling to {city_name}, {country_name}
       with dates from {start_date} to {end_date}
-      Based on this information, please provide me an itinerary in a json format with date, time, specific landmark, latitude and longitude'''
+      Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.
+        {
+        "itinerary_name": "Fun Itinerary Name",
+        "itinerary": [
+            {
+            "date_time": "Date Time in django parsable format",
+            "landmark": "landmark name",
+            "latitude": "latitude in float",
+            "longitude": "longitude in float"
+            }
+        ]
+        }'''
     
     interests = request.data.get('interests', '')
     city_name = request.data.get('city_name', '')
@@ -102,8 +116,13 @@ def make_custom_itinerary(request):
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
-        # Return the generated response
-    return Response({'response': generated_text})
+    response_data = json.loads(generated_text)
+
+    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
+    for item in response_data["itinerary"]:
+        ItineraryItems.objects.create(it_id = new_it.id, landmark=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
+
+    return Response(generated_text)
 
 
 @api_view(["GET"])
