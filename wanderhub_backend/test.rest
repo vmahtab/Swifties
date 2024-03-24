@@ -1,0 +1,37 @@
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{"username": "alexey", "password": "russia"}
+
+###
+
+POST http://127.0.0.1:8000/signup
+Content-Type: application/json
+
+{"username": "alexey", "password": "russia", "email": "alexeyk@umich.edu"}
+
+###
+
+POST http://127.0.0.1:8000/add-user-landmark
+Content-Type: application/json
+Authorization: Token 43c4a432aa5ea9026a800399fb1e0d80a6faf7f3
+
+{"landmark_name": "Leaning Tower of Pisa"}
+
+
+###
+
+GET http://127.0.0.1:8000/get-user-landmarks
+Content-Type: application/json
+Authorization: Token 43c4a432aa5ea9026a800399fb1e0d80a6faf7f3
+
+{}
+
+
+###
+
+GET http://127.0.0.1:8000/test_token
+Content-Type: application/json
+Authorization: Token 471bc5e12073b6453fcf814e8b72ea46af683fa1
+
+{}
