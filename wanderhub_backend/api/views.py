@@ -82,44 +82,29 @@ def test_token(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def make_custom_itinerary(request):
-    user = request.user
-    landmark_name = request.data.get("landmark_name")
+    itinerary_prompt = '''\You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks.
+      Here is some information about me to help you
+      {interests}
+      I am travelling to {city_name}, {country_name}
+      with dates from {start_date} to {end_date}
+      Based on this information, please provide me an itinerary in a json format with date, time, specific landmark, latitude and longitude'''
+    
+    interests = request.data.get('interests', '')
+    city_name = request.data.get('city_name', '')
+    country_name = request.data.get('country_name', '')
+    start_date = request.data.get('start_date', '')
+    end_date = request.data.get('end_date', '')
+
     try:
-        landmark = Landmark.objects.get(name=landmark_name)
-    except Landmark.DoesNotExist:
-        raise NotFound("Landmark not found")
+        prompt_with_input = itinerary_prompt.format(interests=interests, city_name=city_name, country_name=country_name, start_date=start_date, end_date=end_date)
+        response = chat_completion.create_chat_completion(prompt=prompt_with_input)
+        generated_text = response.choices[0].text.strip()
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
 
-    VisitedCities.objects.create(user=user, landmark=landmark, visit_time=now())
-    return Response(f"New visit added for {user.email} to {landmark.name}")
+        # Return the generated response
+    return Response({'response': generated_text})
 
-@api_view(["POST"])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def add_user_landmark(request):
-    user = request.user
-    landmark_name = request.data.get("landmark_name")
-    try:
-        landmark = Landmark.objects.get(name=landmark_name)
-    except Landmark.DoesNotExist:
-        raise NotFound("Landmark not found")
-
-    VisitedCities.objects.create(user=user, landmark=landmark, visit_time=now())
-    return Response(f"New visit added for {user.email} to {landmark.name}")
-
-@api_view(["POST"])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def make_custom_itinerary(request):
-
-    user = request.user
-    landmark_name = request.data.get("landmark_name")
-    try:
-        landmark = Landmark.objects.get(name=landmark_name)
-    except Landmark.DoesNotExist:
-        raise NotFound("Landmark not found")
-
-    VisitedCities.objects.create(user=user, landmark=landmark, visit_time=now())
-    return Response(f"New visit added for {user.email} to {landmark.name}")
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -134,7 +119,13 @@ def get_user_itineraries(request):
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def edit_itinerary(request):
-    user = request.user
-    it_name = request.data.get("it_name")
+def remove_from_itinerary(request):
+    item_id = request.data.get("id")
+    try:
+        item = ItineraryItems.objects.get(id=item_id)
+    except ItineraryItems.DoesNotExist:
+        raise NotFound("Itinerary Item not found")
+    
+    ItineraryItems.objects.get(id = item_id).delete()
+    return Response(f"Itinerary Item deleted")
     

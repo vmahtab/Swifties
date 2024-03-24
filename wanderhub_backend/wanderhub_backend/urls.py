@@ -28,6 +28,6 @@ urlpatterns = [
     path('get-user-landmarks', views.get_user_landmarks),
     path('make-custom-itinerary', views.make_custom_itinerary),
     path('get-user-itineraries', views.get_user_itineraries),
-    path('edit-itinerary', views.edit_itinerary),
+    path('remove-from-itinerary', views.remove_from_itinerary),
     path('test_token', views.test_token),
 ]
