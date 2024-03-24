@@ -5,6 +5,9 @@
 //  Created by Alexey Kovalenko on 2/29/24.
 //
 
+
+// TODO: IMPLEMENT FOR MVP SO WE CAN STORE PREVIOUS LOGIN IN THE KEYCHAIN
+
 import Foundation
 import LocalAuthentication
 
@@ -15,13 +18,17 @@ final class WanderHubID {
     #if targetEnvironment(simulator)
         private let auth = LAContext()
     #endif
-        
-    var expiration = Date(timeIntervalSince1970: 0.0)
     private var _id: String?
+    
+    
+    var expiration = Date(timeIntervalSince1970: 0.0)
+
     var id: String? {
         get { Date() >= expiration ? nil : _id }
         set(newValue) { _id = newValue }
     }
+    
+    
     func delete() async {
         let item: [CFString: Any] = [
             kSecClass: kSecClassGenericPassword,

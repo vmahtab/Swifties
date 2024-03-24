@@ -6,54 +6,92 @@
 //
 
 import SwiftUI
-import GoogleSignIn
-import GoogleSignInSwift
+
 
 struct SigninView: View {
     @Binding var isPresented: Bool
-    private let signinClient = GIDSignIn.sharedInstance
     @State private var signupActive = false
     
-    func backendSignin(_ token: String?) {
+    @State private var username: String?
+    @State private var password: String?
+    
+    private let user = User.shared
+    @State private var showAlert = false
+    @State private var loginFailed = false
+    
+    func login() {
+        guard let username = username, !username.isEmpty, let password = password, !password.isEmpty else {
+            showAlert = true
+            return
+        }
         Task {
-            if let _ = await User.shared.addUser(token) {
-                // will save() chatterID later
-                await WanderHubID.shared.save()
-                isPresented.toggle()
+            do {
+                if let token = await user.signup(username: username, password: password) {
+                    isPresented.toggle()
+                } else {
+                    loginFailed = true
+                }
             }
         }
+        
     }
     
     var body: some View {
         VStack{
-            if let rootVC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.keyWindow?.rootViewController {
-                GoogleSignInButton {
-                    signinClient.signIn(withPresenting: rootVC){ result, error in
-                        if error != nil {
-                            print("signIn: \(error!.localizedDescription)")
-                        } else {
-                            backendSignin(result?.user.idToken?.tokenString)
-                        }
-                    }
-                }
-                .frame(width:100, height:50, alignment: Alignment.center)
-                .onAppear {
-                    if let user = signinClient.currentUser {
-                        backendSignin(user.idToken?.tokenString)
-                    } else {
-                        signinClient.restorePreviousSignIn { user, error in
-                            if error != nil {
-                                print("restorePreviousSignIn: \(error!.localizedDescription)")
-                            } else {
-                                backendSignin(user?.idToken?.tokenString)
-                            }
-                        }
-                    }
-                }
+            Text("Login to Find your Best Trip")
+                .font(.title)
+                .fontWeight(.semibold)
+                .foregroundColor(titleCol)
+            
+            TextField("Enter name", text: Binding(
+                get: { username ?? "" },
+                set: { username = $0.isEmpty ? nil : $0 }
+            ))
+                .foregroundColor(greyCol)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(lineWidth: 1)
+                        .foregroundColor(greyCol)
+                )
+                .padding(.horizontal, 40)
+            
+            SecureField("Enter password", text: Binding(get: {password ?? ""},
+                                                        set: {password = $0.isEmpty ? nil : $0}))
+                .foregroundColor(greyCol)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(lineWidth: 1)
+                        .foregroundColor(greyCol)
+                )
+                .padding(.horizontal, 40)
+            
+            Button("Login") {
+                login()
             }
-            NavigationLink(destination: SignUpView(signinProcess: $isPresented)) {
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(Color.blue)
+            .foregroundColor(backCol)
+            .cornerRadius(10)
+            .padding(.horizontal, 40)
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Error"), message: Text("Username and password cannot be empty"), dismissButton: .default(Text("OK")))
+            }
+            .alert(isPresented: $loginFailed) {
+                Alert(title: Text("Error"), message: Text("Login Failed"), dismissButton: .default(Text("OK")))
+            }
+            Spacer()
+                .frame(height: 20)
+            NavigationLink(destination: SignUpView(signinProcess: $isPresented)){
                 Text("Sign Up")
                     .foregroundColor(titleCol)
+            }
+        }
+        .onAppear {
+            if let usertoken = user.defaults.string(forKey: "usertoken") {
+                isPresented.toggle()
             }
         }
     }

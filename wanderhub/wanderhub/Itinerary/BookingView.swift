@@ -21,7 +21,6 @@ struct BookingView: View {
                     Spacer()
                         .frame(height: 50)
                     TextField("Destination", text: $destination)
-                        .foregroundColor(Color.green)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(5)
