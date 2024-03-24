@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct wanderhubApp: App {
+    init() {
+        LocManager.shared.startUpdates()
+        Task {
+            await LandmarkStore.shared.getLandmarks()
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartupPage()
+            //HomeView()
         }
     }
 }
+
