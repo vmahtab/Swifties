@@ -12,15 +12,15 @@ struct SigninView: View {
     @Binding var isPresented: Bool
     @State private var signupActive = false
     
-    @State private var username: String?
-    @State private var password: String?
+    @State private var username: String = "Traveller"
+    @State private var password: String = "Traveller"
     
     private let user = User.shared
     @State private var showAlert = false
     @State private var loginFailed = false
     
     func login() {
-        guard let username = username, !username.isEmpty, let password = password, !password.isEmpty else {
+        if username.isEmpty || password.isEmpty {
             showAlert = true
             return
         }
@@ -38,15 +38,14 @@ struct SigninView: View {
     
     var body: some View {
         VStack{
+            Spacer()
+                .frame(height: 200)
             Text("Login to Find your Best Trip")
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(titleCol)
             
-            TextField("Enter name", text: Binding(
-                get: { username ?? "" },
-                set: { username = $0.isEmpty ? nil : $0 }
-            ))
+            TextField("Enter name", text: $username)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -56,8 +55,7 @@ struct SigninView: View {
                 )
                 .padding(.horizontal, 40)
             
-            SecureField("Enter password", text: Binding(get: {password ?? ""},
-                                                        set: {password = $0.isEmpty ? nil : $0}))
+            SecureField("Enter password", text: $password)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -88,6 +86,7 @@ struct SigninView: View {
                 Text("Sign Up")
                     .foregroundColor(titleCol)
             }
+            Spacer()
         }
         .onAppear {
             if let usertoken = user.defaults.string(forKey: "usertoken") {

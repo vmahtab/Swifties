@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var username: String?
-    @State private var password: String?
-    @State private var email: String?
+    @State private var username: String = "Traveller"
+    @State private var password: String = "Traveller"
+    @State private var email: String = "Traveller"
     var user = User.shared
     @Binding var signinProcess: Bool
     
@@ -19,9 +19,7 @@ struct SignUpView: View {
     @State private var loginFailed = false
     
     func signup() {
-        guard let username = username, !username.isEmpty,
-              let password = password, !password.isEmpty,
-              let email = email, !email.isEmpty else {
+        if username.isEmpty || password.isEmpty || email.isEmpty {
             showAlert = true
             return
         }
@@ -41,15 +39,13 @@ struct SignUpView: View {
     var body: some View {
         VStack {
             Spacer()
+                .frame(height: 200)
             Text("Find your next trip")
                 .font(.title)
                 .fontWeight(.semibold)
                 .foregroundColor(titleCol)
             
-            TextField("Enter name", text: Binding(
-                get: { username ?? "" },
-                set: { username = $0.isEmpty ? nil : $0 }
-            ))
+            TextField("Enter name", text: $username)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -59,8 +55,7 @@ struct SignUpView: View {
                 )
                 .padding(.horizontal, 40)
             
-            SecureField("Enter password", text: Binding(get: {password ?? ""},
-                                                        set: {password = $0.isEmpty ? nil : $0}))
+            SecureField("Enter password", text: $password)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -70,10 +65,7 @@ struct SignUpView: View {
                 )
                 .padding(.horizontal, 40)
             
-            TextField("Enter Email", text: Binding(
-                get: { email ?? "" },
-                set: { email = $0.isEmpty ? nil : $0 }
-            ))
+            TextField("Enter Email", text: $email)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -98,7 +90,7 @@ struct SignUpView: View {
                 Alert(title: Text("Error"), message: Text("Username and password cannot be empty"), dismissButton: .default(Text("OK")))
             }
             .alert(isPresented: $loginFailed) {
-                Alert(title: Text("Error"), message: Text("Login Failed"), dismissButton: .default(Text("OK")))
+                Alert(title: Text("Error"), message: Text("Signup Failed"), dismissButton: .default(Text("OK")))
             }
             
             Spacer()
