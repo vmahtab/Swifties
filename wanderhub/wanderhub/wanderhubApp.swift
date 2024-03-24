@@ -12,7 +12,7 @@ struct wanderhubApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                CameraView()
+                UserProfileView()
             }
         }
     }
