@@ -7,18 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
-		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
-		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
-		F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */; };
+		F73A46C02BAFE08200059ECA /* GeoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A469D2BAFE08200059ECA /* GeoData.swift */; };
+		F73A46C12BAFE08200059ECA /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A469E2BAFE08200059ECA /* Globals.swift */; };
+		F73A46C22BAFE08200059ECA /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A469F2BAFE08200059ECA /* ImageData.swift */; };
+		F73A46C32BAFE08200059ECA /* Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A02BAFE08200059ECA /* Landmark.swift */; };
+		F73A46C42BAFE08200059ECA /* LandmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A12BAFE08200059ECA /* LandmarkStore.swift */; };
+		F73A46C52BAFE08200059ECA /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A32BAFE08200059ECA /* CameraView.swift */; };
+		F73A46C62BAFE08200059ECA /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A42BAFE08200059ECA /* ImageStore.swift */; };
+		F73A46C72BAFE08200059ECA /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A52BAFE08200059ECA /* Media.swift */; };
+		F73A46C82BAFE08200059ECA /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A72BAFE08200059ECA /* BookingView.swift */; };
+		F73A46C92BAFE08200059ECA /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A82BAFE08200059ECA /* ItineraryView.swift */; };
+		F73A46CA2BAFE08200059ECA /* MainTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46A92BAFE08200059ECA /* MainTripView.swift */; };
+		F73A46CB2BAFE08200059ECA /* SubmitBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46AA2BAFE08200059ECA /* SubmitBooking.swift */; };
+		F73A46CC2BAFE08200059ECA /* LocManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46AC2BAFE08200059ECA /* LocManager.swift */; };
+		F73A46CD2BAFE08200059ECA /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46AD2BAFE08200059ECA /* MapView.swift */; };
+		F73A46CE2BAFE08200059ECA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F73A46AF2BAFE08200059ECA /* Preview Assets.xcassets */; };
+		F73A46CF2BAFE08200059ECA /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B12BAFE08200059ECA /* SignIn.swift */; };
+		F73A46D02BAFE08200059ECA /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B22BAFE08200059ECA /* SignUp.swift */; };
+		F73A46D12BAFE08200059ECA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B32BAFE08200059ECA /* User.swift */; };
+		F73A46D22BAFE08200059ECA /* WanderHubID.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B42BAFE08200059ECA /* WanderHubID.swift */; };
+		F73A46D32BAFE08200059ECA /* ChildNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B62BAFE08200059ECA /* ChildNavController.swift */; };
+		F73A46D42BAFE08200059ECA /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B72BAFE08200059ECA /* ContentViewController.swift */; };
+		F73A46D52BAFE08200059ECA /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46B82BAFE08200059ECA /* MainNavController.swift */; };
+		F73A46D62BAFE08200059ECA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F73A46BA2BAFE08200059ECA /* Assets.xcassets */; };
+		F73A46D72BAFE08200059ECA /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46BB2BAFE08200059ECA /* HomeView.swift */; };
+		F73A46D82BAFE08200059ECA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F73A46BC2BAFE08200059ECA /* Info.plist */; };
+		F73A46D92BAFE08200059ECA /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46BD2BAFE08200059ECA /* StartupPage.swift */; };
+		F73A46DA2BAFE08200059ECA /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73A46BE2BAFE08200059ECA /* wanderhubApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F73A469D2BAFE08200059ECA /* GeoData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoData.swift; sourceTree = "<group>"; };
+		F73A469E2BAFE08200059ECA /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		F73A469F2BAFE08200059ECA /* ImageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageData.swift; sourceTree = "<group>"; };
+		F73A46A02BAFE08200059ECA /* Landmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Landmark.swift; sourceTree = "<group>"; };
+		F73A46A12BAFE08200059ECA /* LandmarkStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandmarkStore.swift; sourceTree = "<group>"; };
+		F73A46A32BAFE08200059ECA /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		F73A46A42BAFE08200059ECA /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		F73A46A52BAFE08200059ECA /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		F73A46A72BAFE08200059ECA /* BookingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingView.swift; sourceTree = "<group>"; };
+		F73A46A82BAFE08200059ECA /* ItineraryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
+		F73A46A92BAFE08200059ECA /* MainTripView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTripView.swift; sourceTree = "<group>"; };
+		F73A46AA2BAFE08200059ECA /* SubmitBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubmitBooking.swift; sourceTree = "<group>"; };
+		F73A46AC2BAFE08200059ECA /* LocManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocManager.swift; sourceTree = "<group>"; };
+		F73A46AD2BAFE08200059ECA /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F73A46AF2BAFE08200059ECA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F73A46B12BAFE08200059ECA /* SignIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignIn.swift; sourceTree = "<group>"; };
+		F73A46B22BAFE08200059ECA /* SignUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		F73A46B32BAFE08200059ECA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F73A46B42BAFE08200059ECA /* WanderHubID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WanderHubID.swift; sourceTree = "<group>"; };
+		F73A46B62BAFE08200059ECA /* ChildNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildNavController.swift; sourceTree = "<group>"; };
+		F73A46B72BAFE08200059ECA /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		F73A46B82BAFE08200059ECA /* MainNavController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
+		F73A46BA2BAFE08200059ECA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F73A46BB2BAFE08200059ECA /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F73A46BC2BAFE08200059ECA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F73A46BD2BAFE08200059ECA /* StartupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupPage.swift; sourceTree = "<group>"; };
+		F73A46BE2BAFE08200059ECA /* wanderhubApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
-		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,10 +78,100 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F73A46A22BAFE08200059ECA /* CommonObj */ = {
+			isa = PBXGroup;
+			children = (
+				F73A469D2BAFE08200059ECA /* GeoData.swift */,
+				F73A469E2BAFE08200059ECA /* Globals.swift */,
+				F73A469F2BAFE08200059ECA /* ImageData.swift */,
+				F73A46A02BAFE08200059ECA /* Landmark.swift */,
+				F73A46A12BAFE08200059ECA /* LandmarkStore.swift */,
+			);
+			path = CommonObj;
+			sourceTree = "<group>";
+		};
+		F73A46A62BAFE08200059ECA /* IdentifyLandmark */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46A32BAFE08200059ECA /* CameraView.swift */,
+				F73A46A42BAFE08200059ECA /* ImageStore.swift */,
+				F73A46A52BAFE08200059ECA /* Media.swift */,
+			);
+			path = IdentifyLandmark;
+			sourceTree = "<group>";
+		};
+		F73A46AB2BAFE08200059ECA /* Itinerary */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46A72BAFE08200059ECA /* BookingView.swift */,
+				F73A46A82BAFE08200059ECA /* ItineraryView.swift */,
+				F73A46A92BAFE08200059ECA /* MainTripView.swift */,
+				F73A46AA2BAFE08200059ECA /* SubmitBooking.swift */,
+			);
+			path = Itinerary;
+			sourceTree = "<group>";
+		};
+		F73A46AE2BAFE08200059ECA /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46AC2BAFE08200059ECA /* LocManager.swift */,
+				F73A46AD2BAFE08200059ECA /* MapView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		F73A46B02BAFE08200059ECA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46AF2BAFE08200059ECA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F73A46B52BAFE08200059ECA /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46B12BAFE08200059ECA /* SignIn.swift */,
+				F73A46B22BAFE08200059ECA /* SignUp.swift */,
+				F73A46B32BAFE08200059ECA /* User.swift */,
+				F73A46B42BAFE08200059ECA /* WanderHubID.swift */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		F73A46B92BAFE08200059ECA /* UtilityViews */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46B62BAFE08200059ECA /* ChildNavController.swift */,
+				F73A46B72BAFE08200059ECA /* ContentViewController.swift */,
+				F73A46B82BAFE08200059ECA /* MainNavController.swift */,
+			);
+			path = UtilityViews;
+			sourceTree = "<group>";
+		};
+		F73A46BF2BAFE08200059ECA /* wanderhub */ = {
+			isa = PBXGroup;
+			children = (
+				F73A46A22BAFE08200059ECA /* CommonObj */,
+				F73A46A62BAFE08200059ECA /* IdentifyLandmark */,
+				F73A46AB2BAFE08200059ECA /* Itinerary */,
+				F73A46AE2BAFE08200059ECA /* Map */,
+				F73A46B02BAFE08200059ECA /* Preview Content */,
+				F73A46B52BAFE08200059ECA /* SignIn */,
+				F73A46B92BAFE08200059ECA /* UtilityViews */,
+				F73A46BA2BAFE08200059ECA /* Assets.xcassets */,
+				F73A46BB2BAFE08200059ECA /* HomeView.swift */,
+				F73A46BC2BAFE08200059ECA /* Info.plist */,
+				F73A46BD2BAFE08200059ECA /* StartupPage.swift */,
+				F73A46BE2BAFE08200059ECA /* wanderhubApp.swift */,
+			);
+			path = wanderhub;
+			sourceTree = "<group>";
+		};
 		F7EAB90A2BA0B7F800F2B335 = {
 			isa = PBXGroup;
 			children = (
-				F7EAB9152BA0B7F800F2B335 /* wanderhub */,
+				F73A46BF2BAFE08200059ECA /* wanderhub */,
 				F7EAB9142BA0B7F800F2B335 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -46,25 +182,6 @@
 				F7EAB9132BA0B7F800F2B335 /* wanderhub.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F7EAB9152BA0B7F800F2B335 /* wanderhub */ = {
-			isa = PBXGroup;
-			children = (
-				F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */,
-				F7EAB9182BA0B7F800F2B335 /* ContentView.swift */,
-				F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */,
-				F7EAB91C2BA0B7FB00F2B335 /* Preview Content */,
-			);
-			path = wanderhub;
-			sourceTree = "<group>";
-		};
-		F7EAB91C2BA0B7FB00F2B335 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				F7EAB91D2BA0B7FB00F2B335 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +242,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7EAB91E2BA0B7FB00F2B335 /* Preview Assets.xcassets in Resources */,
-				F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */,
+				F73A46D62BAFE08200059ECA /* Assets.xcassets in Resources */,
+				F73A46CE2BAFE08200059ECA /* Preview Assets.xcassets in Resources */,
+				F73A46D82BAFE08200059ECA /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +255,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
-				F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */,
+				F73A46D42BAFE08200059ECA /* ContentViewController.swift in Sources */,
+				F73A46C12BAFE08200059ECA /* Globals.swift in Sources */,
+				F73A46C02BAFE08200059ECA /* GeoData.swift in Sources */,
+				F73A46C22BAFE08200059ECA /* ImageData.swift in Sources */,
+				F73A46CA2BAFE08200059ECA /* MainTripView.swift in Sources */,
+				F73A46D72BAFE08200059ECA /* HomeView.swift in Sources */,
+				F73A46C82BAFE08200059ECA /* BookingView.swift in Sources */,
+				F73A46C52BAFE08200059ECA /* CameraView.swift in Sources */,
+				F73A46D92BAFE08200059ECA /* StartupPage.swift in Sources */,
+				F73A46C42BAFE08200059ECA /* LandmarkStore.swift in Sources */,
+				F73A46D12BAFE08200059ECA /* User.swift in Sources */,
+				F73A46CF2BAFE08200059ECA /* SignIn.swift in Sources */,
+				F73A46D52BAFE08200059ECA /* MainNavController.swift in Sources */,
+				F73A46D22BAFE08200059ECA /* WanderHubID.swift in Sources */,
+				F73A46CD2BAFE08200059ECA /* MapView.swift in Sources */,
+				F73A46C62BAFE08200059ECA /* ImageStore.swift in Sources */,
+				F73A46C72BAFE08200059ECA /* Media.swift in Sources */,
+				F73A46C92BAFE08200059ECA /* ItineraryView.swift in Sources */,
+				F73A46D32BAFE08200059ECA /* ChildNavController.swift in Sources */,
+				F73A46C32BAFE08200059ECA /* Landmark.swift in Sources */,
+				F73A46D02BAFE08200059ECA /* SignUp.swift in Sources */,
+				F73A46CC2BAFE08200059ECA /* LocManager.swift in Sources */,
+				F73A46DA2BAFE08200059ECA /* wanderhubApp.swift in Sources */,
+				F73A46CB2BAFE08200059ECA /* SubmitBooking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
