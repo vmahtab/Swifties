@@ -18,6 +18,15 @@ struct CameraView: View {
     
     var body: some View {
         VStack {
+            HStack{
+                Spacer()
+                Button(action: submitAction) {
+                    Image(systemName: "paperplane")
+                        .padding(EdgeInsets(top: 6, leading: 50, bottom: 20, trailing: 30))
+                        .scaleEffect(1.2)
+                }
+                .foregroundColor(.black)
+            }
             Text("Hello \(username)")
                 .padding(.top, 30.0)
                 .foregroundColor(titleCol)
@@ -39,13 +48,7 @@ struct CameraView: View {
         }
         .background(backCol)
         .navigationTitle("Identify Landmark")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                SubmitButton()
-            }
 
-        }
         .fullScreenCover(isPresented: $isPresenting) {
             ImagePicker(sourceType: $sourceType, image: $image)
         }
@@ -60,8 +63,9 @@ struct CameraView: View {
             Image(systemName: "paperplane")
                 .padding(EdgeInsets(top: 6, leading: 60, bottom: 20, trailing: 0))
                 .scaleEffect(1)
-                .foregroundColor(.black)
         }
+        .foregroundColor(.black)
+        
     }
     
     func submitAction() {

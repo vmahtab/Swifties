@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct BookingView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
@@ -16,28 +17,44 @@ struct BookingView: View {
     @State private var alertMessage = ""
 
     var body: some View {
-        NavigationView {
-            VStack{
-                Form {
+                VStack {
+                    Spacer()
+                        .frame(height: 50)
                     TextField("Destination", text: $destination)
+                        .foregroundColor(Color.green)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
                     DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
+                    
                     DatePicker("End Date", selection: $endDate, displayedComponents: .date)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
+                    
                     
                     Button("Submit Booking") {
                         let booking = TravelBooking(destination: destination, startDate: startDate, endDate: endDate)
                         submitBooking(booking: booking)
                     }
-                    .alert(isPresented: $showingAlert) {
-                        Alert(title: Text("Booking Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                    }
+                    .padding()
+                    .foregroundColor(Color.white)
+                    .background(Color.blue)
+                    .cornerRadius(5)
+                    .shadow(radius: 1)
+                    
+                    Spacer()
+                    ChildNavController(viewModel: viewModel)
                 }
-                .navigationBarTitle("New Booking")
-                
-                Spacer()
-                ChildNavController(viewModel: viewModel)
-            }
-            .background(backCol)
-        }
+                .background(backCol)
+                .padding(.horizontal)
+                // ChildNavController or any other views you want to display
     }
 
     private func submitBooking(booking: TravelBooking) {

@@ -11,14 +11,14 @@ struct MainTripView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationView{
             VStack {
                 Text("What's next?")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top)
                     .foregroundColor(titleCol)
-
+                
                 // Options for starting a new trip or viewing the current itinerary
                 VStack {
                     NavigationLink(destination: BookingView(viewModel: viewModel)) {
@@ -32,12 +32,10 @@ struct MainTripView: View {
                 }
                 .background(backCol)
                 .padding()
-
                 
                 Spacer()
                 ChildNavController(viewModel: viewModel)
             }
-            .navigationBarHidden(true)
             .background(backCol)
         }
     }

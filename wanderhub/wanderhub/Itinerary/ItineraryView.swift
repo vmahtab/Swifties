@@ -91,10 +91,10 @@ struct ItinView: View {
               .refreshable {
                   await itineraryEntries.getLandmarks()
               }
-              .padding(.horizontal, 20)
+              .padding(.horizontal)
           }
-          .edgesIgnoringSafeArea(.bottom)
           .background(backCol)
+          Spacer()
           ChildNavController(viewModel: viewModel)
       }
   }
