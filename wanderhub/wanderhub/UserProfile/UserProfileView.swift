@@ -1,0 +1,73 @@
+//
+//  UserProfileView.swift
+//  wanderhub
+//
+//  Created by Neha Tiwari on 3/24/24.
+//
+
+import SwiftUI
+import Foundation
+import SwiftUI
+
+struct UserProfileView: View {
+    var body: some View {
+        ZStack() {
+            VStack(alignment: .trailing, spacing: 0) {
+                HStack(spacing: 12) {
+                    Text("   Settings")
+                        .font(Font.custom("Poppins", size: 16).weight(.medium))
+                        .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 16))
+                .frame(width: 343)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(10)
+
+                HStack(spacing: 12) {
+                    Text("   Preferences")
+                        .font(Font.custom("Poppins", size: 16).weight(.medium))
+                        .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 16))
+                .frame(width: 343)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+               
+                HStack(spacing: 12) {
+                    Text("   FAQs")
+                        .font(Font.custom("Poppins", size: 16).weight(.medium))
+                        .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        .frame(maxWidth: .infinity, alignment: .leading) //
+                }
+                .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 16))
+                .frame(width: 343)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(10)
+            }
+            .frame(width: 356, height: 170)
+            .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+            .cornerRadius(10)
+            .offset(x: -1.50, y: -161)
+            HStack(spacing: 161) {
+                Text("Hello \(User.shared.username ?? "User")")
+                    .font(Font.custom("Poppins", size: 26).weight(.semibold))
+                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                    //.frame(maxWidth: .infinity, alignment: .leading) //
+            }
+            .frame(width: 352, height: 39)
+            .offset(x: 0.50, y: -299.50)
+            Text("Past Trips:")
+                .font(Font.custom("Poppins", size: 16).weight(.medium))
+                .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                .offset(x: -135.50, y: -47)
+        }
+        .frame(width: 393, height: 852)
+        .background(Color(red: 0.98, green: 0.97, blue: 0.93))
+    }
+}
+
+
+#Preview {
+    UserProfileView()
+}
