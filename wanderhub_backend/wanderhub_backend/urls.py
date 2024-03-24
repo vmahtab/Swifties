@@ -23,5 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('login', views.login),
     path('signup', views.signup),
+    path('add-user-landmark', views.add_user_landmark),
+    path('get-user-landmarks', views.get_user_landmarks),
     path('test_token', views.test_token),
 ]
