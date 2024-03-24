@@ -12,12 +12,15 @@ struct HomeView: View {
                     Text("Welcome to the Home View")
                         .font(.title)
                         .padding()
+                        .foregroundColor(titleCol)
                     
                     .padding()
                     Spacer()
                     MainNavController(viewModel: viewmodel)
                 }
                 .navigationTitle("Home")
+                .foregroundColor(titleCol)
+                .background(backCol)
         }
     }
 }

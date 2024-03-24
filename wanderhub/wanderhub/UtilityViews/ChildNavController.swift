@@ -15,7 +15,7 @@ struct ChildNavController: View {
                 viewModel.viewState = .home
                 viewModel.isPresented = false
             } label: {
-                Image(systemName: "house.fill")
+                Image(systemName: "house")
                     .font(.system(size: 30))
                     .padding(.vertical, 15)
                     .padding(.horizontal, 20)
@@ -33,32 +33,33 @@ struct ChildNavController: View {
                 viewModel.viewState = .map
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "safari.fill")
-                    .font(.system(size: 30)) // Keep the font size the same
-                    .padding(.vertical, 10) // Adjust vertical padding
-                    .padding(.horizontal, 20) // Adjust horizontal padding
+                Image(systemName: "safari")
+                    .font(.system(size: 30))
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
             }
             Button {
                 viewModel.viewState = .landmark
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "camera.fill")
-                    .font(.system(size: 30)) // Keep the font size the same
-                    .padding(.vertical, 10) // Adjust vertical padding
-                    .padding(.horizontal, 20) // Adjust horizontal padding
+                Image(systemName: "camera")
+                    .font(.system(size: 30))
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
             }
             Button {
                 viewModel.viewState = .profile
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "person.fill")
-                    .font(.system(size: 30)) // Keep the font size the same
-                    .padding(.vertical, 10) // Adjust vertical padding
-                    .padding(.horizontal, 20) // Adjust horizontal padding
+                Image(systemName: "person")
+                    .font(.system(size: 30))
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
             }
         }
-        .background(Color.black)
+        .background(navBarCol)
         .frame(height: 50)
+        .foregroundColor(.black)
     }
 }
 
