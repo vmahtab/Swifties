@@ -94,7 +94,7 @@ struct ItinView: View {
               .padding(.horizontal, 20)
           }
           .edgesIgnoringSafeArea(.bottom)
-          .background(Color.black)
+          .background(backCol)
           ChildNavController(viewModel: viewModel)
       }
   }

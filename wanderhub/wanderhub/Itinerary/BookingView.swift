@@ -36,6 +36,7 @@ struct BookingView: View {
                 Spacer()
                 ChildNavController(viewModel: viewModel)
             }
+            .background(backCol)
         }
     }
 
