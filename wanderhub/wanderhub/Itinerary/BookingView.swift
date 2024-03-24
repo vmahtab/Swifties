@@ -17,20 +17,25 @@ struct BookingView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                TextField("Destination", text: $destination)
-                DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
-                DatePicker("End Date", selection: $endDate, displayedComponents: .date)
-
-                Button("Submit Booking") {
-                    let booking = TravelBooking(destination: destination, startDate: startDate, endDate: endDate)
-                    submitBooking(booking: booking)
+            VStack{
+                Form {
+                    TextField("Destination", text: $destination)
+                    DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+                    DatePicker("End Date", selection: $endDate, displayedComponents: .date)
+                    
+                    Button("Submit Booking") {
+                        let booking = TravelBooking(destination: destination, startDate: startDate, endDate: endDate)
+                        submitBooking(booking: booking)
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(title: Text("Booking Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    }
                 }
-                .alert(isPresented: $showingAlert) {
-                    Alert(title: Text("Booking Status"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                }
+                .navigationBarTitle("New Booking")
+                
+                Spacer()
+                ChildNavController(viewModel: viewModel)
             }
-            .navigationBarTitle("New Booking")
         }
     }
 
