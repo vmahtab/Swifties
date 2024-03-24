@@ -21,6 +21,7 @@ from api import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    
     path('login', views.login),
     path('signup', views.signup),
     path('add-user-landmark', views.add_user_landmark),
