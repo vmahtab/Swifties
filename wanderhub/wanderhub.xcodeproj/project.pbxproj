@@ -34,6 +34,12 @@
 		0412BB1D2BAFF3C000991ED3 /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BB012BAFF3BF00991ED3 /* StartupPage.swift */; };
 		0412BB1E2BAFF3C000991ED3 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BB022BAFF3BF00991ED3 /* wanderhubApp.swift */; };
 		0412BB2C2BAFF5DB00991ED3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0412BB2B2BAFF5DB00991ED3 /* Alamofire */; };
+		4ED93CA62BB0B2FC0053D2EC /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CA52BB0B2FC0053D2EC /* MapData.swift */; };
+		4ED93CA82BB0B3040053D2EC /* MapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CA72BB0B3040053D2EC /* MapStore.swift */; };
+		4ED93CAB2BB0B3710053D2EC /* homepageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CAA2BB0B3710053D2EC /* homepageSearch.swift */; };
+		4ED93CAD2BB0B38F0053D2EC /* searchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CAC2BB0B38F0053D2EC /* searchBarView.swift */; };
+		4ED93CB02BB0B4070053D2EC /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */; };
+		4ED93CB22BB0B4070053D2EC /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +69,10 @@
 		0412BAFF2BAFF3BF00991ED3 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0412BB012BAFF3BF00991ED3 /* StartupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupPage.swift; sourceTree = "<group>"; };
 		0412BB022BAFF3BF00991ED3 /* wanderhubApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
+		4ED93CA52BB0B2FC0053D2EC /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
+		4ED93CA72BB0B3040053D2EC /* MapStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStore.swift; sourceTree = "<group>"; };
+		4ED93CAA2BB0B3710053D2EC /* homepageSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homepageSearch.swift; sourceTree = "<group>"; };
+		4ED93CAC2BB0B38F0053D2EC /* searchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchBarView.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -71,7 +81,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ED93CB22BB0B4070053D2EC /* GoogleSignInSwift in Frameworks */,
 				0412BB2C2BAFF5DB00991ED3 /* Alamofire in Frameworks */,
+				4ED93CB02BB0B4070053D2EC /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +128,8 @@
 			children = (
 				0412BAF02BAFF3BF00991ED3 /* LocManager.swift */,
 				0412BAF12BAFF3BF00991ED3 /* MapView.swift */,
+				4ED93CA52BB0B2FC0053D2EC /* MapData.swift */,
+				4ED93CA72BB0B3040053D2EC /* MapStore.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -152,6 +166,7 @@
 		0412BB032BAFF3BF00991ED3 /* wanderhub */ = {
 			isa = PBXGroup;
 			children = (
+				4ED93CA92BB0B3510053D2EC /* homepage */,
 				0412BAE62BAFF3BF00991ED3 /* CommonObj */,
 				0412BAEA2BAFF3BF00991ED3 /* IdentifyLandmark */,
 				0412BAEF2BAFF3BF00991ED3 /* Itinerary */,
@@ -165,6 +180,15 @@
 				0412BB022BAFF3BF00991ED3 /* wanderhubApp.swift */,
 			);
 			path = wanderhub;
+			sourceTree = "<group>";
+		};
+		4ED93CA92BB0B3510053D2EC /* homepage */ = {
+			isa = PBXGroup;
+			children = (
+				4ED93CAA2BB0B3710053D2EC /* homepageSearch.swift */,
+				4ED93CAC2BB0B38F0053D2EC /* searchBarView.swift */,
+			);
+			path = homepage;
 			sourceTree = "<group>";
 		};
 		F7EAB90A2BA0B7F800F2B335 = {
@@ -201,6 +225,8 @@
 			name = wanderhub;
 			packageProductDependencies = (
 				0412BB2B2BAFF5DB00991ED3 /* Alamofire */,
+				4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */,
+				4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */,
 			);
 			productName = wanderhub;
 			productReference = F7EAB9132BA0B7F800F2B335 /* wanderhub.app */;
@@ -232,6 +258,7 @@
 			mainGroup = F7EAB90A2BA0B7F800F2B335;
 			packageReferences = (
 				0412BB2A2BAFF5DB00991ED3 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			productRefGroup = F7EAB9142BA0B7F800F2B335 /* Products */;
 			projectDirPath = "";
@@ -261,8 +288,10 @@
 			files = (
 				0412BB182BAFF3C000991ED3 /* ContentViewController.swift in Sources */,
 				0412BB052BAFF3C000991ED3 /* Globals.swift in Sources */,
+				4ED93CA82BB0B3040053D2EC /* MapStore.swift in Sources */,
 				0412BB042BAFF3C000991ED3 /* GeoData.swift in Sources */,
 				0412BB062BAFF3C000991ED3 /* ImageData.swift in Sources */,
+				4ED93CAB2BB0B3710053D2EC /* homepageSearch.swift in Sources */,
 				0412BB0E2BAFF3C000991ED3 /* MainTripView.swift in Sources */,
 				0412BB1B2BAFF3C000991ED3 /* HomeView.swift in Sources */,
 				0412BB0C2BAFF3C000991ED3 /* BookingView.swift in Sources */,
@@ -272,6 +301,7 @@
 				0412BB152BAFF3C000991ED3 /* User.swift in Sources */,
 				0412BB132BAFF3C000991ED3 /* SignIn.swift in Sources */,
 				0412BB192BAFF3C000991ED3 /* MainNavController.swift in Sources */,
+				4ED93CA62BB0B2FC0053D2EC /* MapData.swift in Sources */,
 				0412BB162BAFF3C000991ED3 /* WanderHubID.swift in Sources */,
 				0412BB112BAFF3C000991ED3 /* MapView.swift in Sources */,
 				0412BB0A2BAFF3C000991ED3 /* ImageStore.swift in Sources */,
@@ -280,6 +310,7 @@
 				0412BB172BAFF3C000991ED3 /* ChildNavController.swift in Sources */,
 				0412BB072BAFF3C000991ED3 /* Landmark.swift in Sources */,
 				0412BB142BAFF3C000991ED3 /* SignUp.swift in Sources */,
+				4ED93CAD2BB0B38F0053D2EC /* searchBarView.swift in Sources */,
 				0412BB102BAFF3C000991ED3 /* LocManager.swift in Sources */,
 				0412BB1E2BAFF3C000991ED3 /* wanderhubApp.swift in Sources */,
 				0412BB0F2BAFF3C000991ED3 /* SubmitBooking.swift in Sources */,
@@ -504,6 +535,14 @@
 				version = 5.8.0;
 			};
 		};
+		4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -511,6 +550,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0412BB2A2BAFF5DB00991ED3 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
