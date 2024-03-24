@@ -24,11 +24,15 @@ struct MainTripView: View {
                     NavigationLink(destination: BookingView(viewModel: viewModel)) {
                         OptionCardView(optionTitle: "Start New Trip", iconName: "plus.circle.fill", backgroundColor: Color.blue)
                     }
+                    .background(backCol)
                     NavigationLink(destination: ItinView(viewModel: viewModel)) {
                         OptionCardView(optionTitle: "Current Itinerary", iconName: "list.bullet", backgroundColor: Color.green)
                     }
+                    .background(backCol)
                 }
+                .background(backCol)
                 .padding()
+
                 
                 Spacer()
                 ChildNavController(viewModel: viewModel)
