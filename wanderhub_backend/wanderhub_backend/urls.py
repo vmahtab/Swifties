@@ -16,8 +16,15 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+from api import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    
+    path('login', views.login),
+    path('signup', views.signup),
+    path('add-user-landmark', views.add_user_landmark),
+    path('get-user-landmarks', views.get_user_landmarks),
+    path('test_token', views.test_token),
 ]
