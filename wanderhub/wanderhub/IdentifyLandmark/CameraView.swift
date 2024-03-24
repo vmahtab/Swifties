@@ -20,6 +20,7 @@ struct CameraView: View {
         VStack {
             Text("Hello \(username)")
                 .padding(.top, 30.0)
+                .foregroundColor(titleCol)
             HStack (alignment: .top) {
                 if let image = image {
                     Image(uiImage: image)
@@ -36,6 +37,7 @@ struct CameraView: View {
             Spacer()
             ChildNavController(viewModel: viewModel)
         }
+        .background(backCol)
         .navigationTitle("Identify Landmark")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -58,6 +60,7 @@ struct CameraView: View {
             Image(systemName: "paperplane")
                 .padding(EdgeInsets(top: 6, leading: 60, bottom: 20, trailing: 0))
                 .scaleEffect(1)
+                .foregroundColor(.black)
         }
     }
     
@@ -85,6 +88,7 @@ struct CameraView: View {
                     .scaleEffect(1.2)
             Text("Take picture")
             }
+            .foregroundColor(orangeCol)
             }
     }
     
@@ -101,5 +105,6 @@ struct CameraView: View {
             
             Text("Camera Roll")
             }}
+        .foregroundColor(orangeCol)
     }
 }

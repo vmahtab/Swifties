@@ -43,7 +43,7 @@ struct MainNavController: View {
                 viewModel.viewState = .map
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "safari.fill")
+                Image(systemName: "safari")
                     .font(.system(size: 30)) // Keep the font size the same
                     .padding(.vertical, 10) // Adjust vertical padding
                     .padding(.horizontal, 20) // Adjust horizontal padding
@@ -52,7 +52,7 @@ struct MainNavController: View {
                 viewModel.viewState = .landmark
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "camera.fill")
+                Image(systemName: "camera")
                     .font(.system(size: 30)) // Keep the font size the same
                     .padding(.vertical, 10) // Adjust vertical padding
                     .padding(.horizontal, 20) // Adjust horizontal padding
@@ -61,10 +61,10 @@ struct MainNavController: View {
                 viewModel.viewState = .profile
                 viewModel.isPresented = true
             } label: {
-                Image(systemName: "person.fill")
-                    .font(.system(size: 30)) // Keep the font size the same
-                    .padding(.vertical, 10) // Adjust vertical padding
-                    .padding(.horizontal, 20) // Adjust horizontal padding
+                Image(systemName: "person")
+                    .font(.system(size: 30))
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
             }
             
             .fullScreenCover(isPresented: $viewModel.isPresented) {
@@ -85,7 +85,7 @@ struct MainNavController: View {
             }
         }
         .frame(height: 50)
-        .background(Color.black)
-        .foregroundColor(.white)
+        .background(navBarCol)
+        .foregroundColor(.black)
     }
 }
