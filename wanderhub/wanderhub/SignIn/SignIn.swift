@@ -26,7 +26,7 @@ struct SigninView: View {
         }
         Task {
             do {
-                if let token = await user.signup(username: username, password: password) {
+                if let token = await user.signin(username: username, password: password) {
                     isPresented.toggle()
                 } else {
                     loginFailed = true
