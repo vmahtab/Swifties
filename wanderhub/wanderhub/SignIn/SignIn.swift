@@ -12,15 +12,15 @@ import GoogleSignInSwift
 struct SigninView: View {
     @Binding var isPresented: Bool
     private let signinClient = GIDSignIn.sharedInstance
-    //@State private var signupP
+    @State private var signupActive = false
     
     func backendSignin(_ token: String?) {
         Task {
             if let _ = await User.shared.addUser(token) {
                 // will save() chatterID later
                 await WanderHubID.shared.save()
+                isPresented.toggle()
             }
-            isPresented.toggle()
         }
     }
     
@@ -51,10 +51,9 @@ struct SigninView: View {
                     }
                 }
             }
-            //NavigationLink(destination: SignUpView(), isActive: $isPresented)
-            Button("Sign Up") {
-                //NavigationLink(destination: SignUpView())
-                //SigninView(isPresented: $isPresented)
+            NavigationLink(destination: SignUpView(signinProcess: $isPresented)) {
+                Text("Sign Up")
+                    .foregroundColor(titleCol)
             }
         }
     }

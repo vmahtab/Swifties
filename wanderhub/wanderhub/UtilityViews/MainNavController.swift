@@ -25,7 +25,7 @@ struct MainNavController: View {
                 viewModel.viewState = .home
                 viewModel.isPresented = false
             } label: {
-                Image(systemName: "house.fill")
+                Image(systemName: "house")
                     .font(.system(size: 30))
                     .padding(.vertical, 15)
                     .padding(.horizontal, 20)
@@ -74,7 +74,8 @@ struct MainNavController: View {
                 case .home:
                     HomeView()
                 case .itinerary:
-                    ItinView(viewModel: viewModel)
+                    //ItinView(viewModel: viewModel)
+                    MainTripView(viewModel: viewModel)
                 case .landmark:
                     CameraView(viewModel: viewModel)
                 default:
