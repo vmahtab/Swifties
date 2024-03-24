@@ -22,3 +22,10 @@ python manage.py createsuperuser
 Install rest client extension from vscode
 And look at Hasan's test.rest file for example rest api calls
 
+
+Whenever you make a major change, such as add a new model to models.py
+You need to run migrations! Otherwise django will not know what changed!
+
+If you want to be able to edit database from the admin panel in /admin route
+You need to go to admin.py and register the view!
+Then you can use the /admin route to update the database for things...
