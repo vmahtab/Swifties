@@ -9,24 +9,29 @@ import SwiftUI
 
 struct StartupPage: View {
     @State private var isActive = false
-    @State var SigninPresented = true
+    @State private var SigninPresented: Bool = true
+
     
     var body: some View {
         NavigationView{
             VStack {
                 if isActive {
-                    SigninView(isPresented: $SigninPresented)
+                    if SigninPresented {
+                        SigninView(isPresented: $SigninPresented)
+                    } else {
+                        HomeView()
+                    }
                 } else {
                     Spacer()
                     Text("WanderHub")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.blue)
+                        .foregroundColor(titleCol)
                     Spacer()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.white)
+            .background(backCol)
             .edgesIgnoringSafeArea(.all)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now()+1) {

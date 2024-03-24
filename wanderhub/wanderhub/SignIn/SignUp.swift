@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @Environment(\.presentationMode) var presentationMode
+    @State private var username: String = "Traveller"
+    @State private var password: String = "funtravel"
+    var user = User.shared
+    @Binding var signinProcess: Bool
     
     var body: some View {
         VStack {
@@ -17,39 +20,47 @@ struct SignUpView: View {
             Text("Find your next trip")
                 .font(.title)
                 .fontWeight(.semibold)
+                .foregroundColor(titleCol)
             
             TextField("Enter name", text: $username)
+                .foregroundColor(greyCol)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(lineWidth: 1)
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(greyCol)
                 )
                 .padding(.horizontal, 40)
             
             SecureField("Enter password", text: $password)
+                .foregroundColor(greyCol)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(lineWidth: 1)
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(greyCol)
                 )
                 .padding(.horizontal, 40)
             
             Button("Sign Up") {
-                // Handle sign up action here
+                // TODO: PUT THIS BACK INSIDE ONCE CONNECTED WITH BACKEND
+                Task {
+                    await user.signup(username: username, password: password)
+                }
+                signinProcess.toggle()
+                presentationMode.wrappedValue.dismiss()
             }
             .padding()
             .frame(maxWidth: .infinity)
             .background(Color.blue)
-            .foregroundColor(Color.white)
+            .foregroundColor(backCol)
             .cornerRadius(10)
             .padding(.horizontal, 40)
             
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.white)
+        .background(backCol)
         .edgesIgnoringSafeArea(.all)
     }
 }

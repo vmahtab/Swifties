@@ -23,6 +23,10 @@ class User {
     let userID: String?
     let username: String?
     
+    // TODO: For now I hardcoded sign in. connect This to backend
+    func signup(username: String?, password: String?) async -> String? {
+        return "Welcome to WanderHub"
+    }
     
     // TODO: For now I hardcoded sign in. connect This to backend
     func addUser(_ idToken: String?) async -> String? {
