@@ -34,6 +34,8 @@
 		4E0C13212BAF906C004BC1CE /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4E0C13202BAF906C004BC1CE /* GoogleSignInSwift */; };
 		4E0C13232BAF9200004BC1CE /* homepageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0C13222BAF9200004BC1CE /* homepageSearch.swift */; };
 		4E0C13262BAF94E9004BC1CE /* searchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0C13252BAF94E9004BC1CE /* searchBarView.swift */; };
+		4E1425DB2BB073E600D037EB /* MapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1425DA2BB073E600D037EB /* MapStore.swift */; };
+		4E1425DF2BB0A04F00D037EB /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1425DE2BB0A04F00D037EB /* MapData.swift */; };
 		F7EAB9172BA0B7F800F2B335 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */; };
 		F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7EAB9182BA0B7F800F2B335 /* ContentView.swift */; };
 		F7EAB91B2BA0B7FB00F2B335 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7EAB91A2BA0B7FB00F2B335 /* Assets.xcassets */; };
@@ -65,6 +67,8 @@
 		4E0C13022BAF9060004BC1CE /* WanderHubID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WanderHubID.swift; sourceTree = "<group>"; };
 		4E0C13222BAF9200004BC1CE /* homepageSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homepageSearch.swift; sourceTree = "<group>"; };
 		4E0C13252BAF94E9004BC1CE /* searchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchBarView.swift; sourceTree = "<group>"; };
+		4E1425DA2BB073E600D037EB /* MapStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapStore.swift; sourceTree = "<group>"; };
+		4E1425DE2BB0A04F00D037EB /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		F7EAB9132BA0B7F800F2B335 /* wanderhub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wanderhub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7EAB9162BA0B7F800F2B335 /* wanderhubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wanderhubApp.swift; sourceTree = "<group>"; };
 		F7EAB9182BA0B7F800F2B335 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				4E0C12F32BAF9060004BC1CE /* LocManager.swift */,
+				4E1425DA2BB073E600D037EB /* MapStore.swift */,
+				4E1425DE2BB0A04F00D037EB /* MapData.swift */,
 				4E0C12F42BAF9060004BC1CE /* MapView.swift */,
 			);
 			path = Map;
@@ -285,6 +291,7 @@
 				4E0C130C2BAF9060004BC1CE /* ItineraryView.swift in Sources */,
 				4E0C13172BAF9060004BC1CE /* SignUp.swift in Sources */,
 				4E0C13132BAF9060004BC1CE /* CameraView.swift in Sources */,
+				4E1425DF2BB0A04F00D037EB /* MapData.swift in Sources */,
 				4E0C13162BAF9060004BC1CE /* SignIn.swift in Sources */,
 				4E0C13082BAF9060004BC1CE /* LandmarkStore.swift in Sources */,
 				4E0C130B2BAF9060004BC1CE /* ItinerarySubview.swift in Sources */,
@@ -292,6 +299,7 @@
 				4E0C13192BAF9060004BC1CE /* WanderHubID.swift in Sources */,
 				4E0C130E2BAF9060004BC1CE /* MapView.swift in Sources */,
 				4E0C13092BAF9060004BC1CE /* locMarker.swift in Sources */,
+				4E1425DB2BB073E600D037EB /* MapStore.swift in Sources */,
 				F7EAB9192BA0B7F800F2B335 /* ContentView.swift in Sources */,
 				4E0C13042BAF9060004BC1CE /* GeoData.swift in Sources */,
 				4E0C13062BAF9060004BC1CE /* ImageData.swift in Sources */,
