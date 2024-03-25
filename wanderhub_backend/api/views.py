@@ -20,8 +20,11 @@ from django.utils.timezone import now
 
 import json
 
+from dotenv import load_dotenv
+import os
+
 from openai import OpenAI
-api_key = "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"
+api_key = os.environ.get("API_KEY")
 client = OpenAI(api_key=api_key)
 
 @api_view(["POST"])
