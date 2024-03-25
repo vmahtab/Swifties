@@ -10,6 +10,11 @@ import Foundation
 import SwiftUI
 
 struct UserProfileView: View {
+   // @StateObject private var userHistoryStore = UserHistoryStore()
+     //   @State private var landmarkVisits: [LandmarkVisit] = []
+    private let userHistory = UserHistoryStore.shared
+    @State private var landmarkVisits: [LandmarkVisit]?
+
     var body: some View {
         ZStack() {
             VStack(alignment: .trailing, spacing: 0) {
@@ -23,7 +28,7 @@ struct UserProfileView: View {
                 .frame(width: 343)
                 .background(Color(red: 0.94, green: 0.92, blue: 0.87))
                 .cornerRadius(10)
-
+                
                 HStack(spacing: 12) {
                     Text("   Preferences")
                         .font(Font.custom("Poppins", size: 16).weight(.medium))
@@ -33,7 +38,7 @@ struct UserProfileView: View {
                 .padding(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 16))
                 .frame(width: 343)
                 .background(Color(red: 0.94, green: 0.92, blue: 0.87))
-               
+                
                 HStack(spacing: 12) {
                     Text("   FAQs")
                         .font(Font.custom("Poppins", size: 16).weight(.medium))
@@ -53,18 +58,61 @@ struct UserProfileView: View {
                 Text("Hello \(User.shared.username ?? "User")")
                     .font(Font.custom("Poppins", size: 26).weight(.semibold))
                     .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                    //.frame(maxWidth: .infinity, alignment: .leading) //
+                    .frame(maxWidth: .infinity, alignment: .leading) //
             }
             .frame(width: 352, height: 39)
             .offset(x: 0.50, y: -299.50)
-            Text("    Past Landmarks:")
-                .font(Font.custom("Poppins", size: 16).weight(.semibold))
-                .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
-                .offset(x: -135.50, y: -47)
+            VStack(){
+                Text("    Past Landmarks:")
+                    .font(Font.custom("Poppins", size: 16).weight(.semibold))
+                    .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                    .offset(x: -135.50, y: -47)
+                
+                ScrollView {
+                    VStack(spacing: 20) {
+                        ForEach(landmarkVisits, id: \.self) { landmarkVisit in
+                            HStack {
+                                // Customize your landmark display here
+                                Text(landmarkVisit.landmarkName)
+                                    .font(Font.custom("Poppins", size: 14).weight(.semibold))
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                                
+                                Spacer()
+                                
+                                Text("\(landmarkVisit.city), \(landmarkVisit.country)")
+                                    .font(Font.custom("Poppins", size: 14))
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            }
+                            .padding()
+                            .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                            .cornerRadius(8)
+                            .shadow(color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6)
+                        }
+                    }
+                    .padding()
+                }
+            
+        
+            }
+            
         }
         .frame(width: 393, height: 852)
         .background(Color(red: 0.98, green: 0.97, blue: 0.93))
+        
+        .onAppear {
+            fetchLandmarkVisits()
+        }
     }
+    
+    private func fetchLandmarkVisits() {
+        Task {
+            if let history = await UserHistoryStore.shared.getHistory(),
+               let visits = UserHistoryStore.shared.parseLandmarkVisits(from: history) {
+                self.landmarkVisits = visits
+            }
+        }
+    }
+
 }
 
 
