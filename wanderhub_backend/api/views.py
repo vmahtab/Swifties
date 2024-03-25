@@ -86,14 +86,20 @@ def test_token(request):
 @permission_classes([IsAuthenticated])
 def make_custom_itinerary(request):
     
-    user = request.user
-    interests = request.data.get('interests')
-    city_name = request.data.get('city_name')
-    country_name = request.data.get('country_name')
-    start_date = request.data.get('start_date') #Must be YYYY-MM-DD
-    end_date = request.data.get('end_date') #Must be YYYY-MM-DD
+    #user = request.user
+    #interests = request.data.get('interests')
+    #city_name = request.data.get('city_name')
+    #country_name = request.data.get('country_name')
+    #start_date = request.data.get('start_date') #Must be YYYY-MM-DD
+    #end_date = request.data.get('end_date') #Must be YYYY-MM-DD
 
-    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you" + interests + " I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,latitude: latitude in float,longitude: longitude in float}]}"
+    #prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you" + interests + " I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,latitude: latitude in float,longitude: longitude in float}]}"
+
+    visited_cities = VisitedCities.objects.filter(user=request.user)
+    landmarks = [visit.landmark.name for visit in visited_cities]
+    landmarks_string = ", ".join(landmarks)
+
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. I have already been to these landmarks: " + landmarks_string + ". Please recommend me new landmarks that are similar to these in terms of geographic location and context (historical, touristic, etc). If I have not provided you any landmarks, then you can be more flexible and provide more generic landmarks as you see fit. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name, landmarks: [list of landmarks in string format], duration: recommended_duration_of_travel}"
 
     try:
         completion = client.chat.completions.create(
@@ -112,9 +118,9 @@ def make_custom_itinerary(request):
 
     response_data = json.loads(generated_text)
 
-    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
-    for item in response_data["itinerary"]:
-        ItineraryItems.objects.create(it_id = new_it, landmark_name=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
+    #new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
+    #for item in response_data["itinerary"]:
+       #ItineraryItems.objects.create(it_id = new_it, landmark_name=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
 
     return Response(generated_text)
 

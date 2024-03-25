@@ -30,8 +30,8 @@ import math
 def post_landmarks(request):
     # loading multipart/form-data
     username = request.POST.get("username")
-    # timestamp = request.POST.get("timestamp")
     timestamp = request.POST.get("timestamp")
+    # timestamp = time.time()
 
     if request.FILES.get("image"):
         content = request.FILES['image']
@@ -66,6 +66,7 @@ def post_landmarks(request):
     else:
         # Handle validation errors
         errors = serializer.errors
+        return Response({"error": errors})
     return Response({"success": serializer.is_valid(), "url_for_image": imageUrl})
 
 @api_view(["GET"])
@@ -102,24 +103,25 @@ def landmarkDetection(file_path):
     )
 
     # gives the path of demo.py 
-    path = os.path.realpath(__file__) 
+    # path = os.path.realpath(__file__) 
     
     # gives the directory where demo.py  
     # exists 
-    dir = os.path.dirname(path) 
+    # dir = os.path.dirname(path) 
     
     # replaces folder name of Sibling_1 to  
     # Sibling_2 in directory 
-    dir = dir.replace('api', 'media') 
+    # dir = dir.replace('api', 'media') 
     
     # changes the current directory to  
     # Sibling_2 folder 
-    os.chdir(dir) 
+    # os.chdir(dir) 
 
-    filepath = file_path.strip("/")
-    
+    # filepath = file_path.strip("/")
+    # print(file_path)
+
     # Load the image into memory
-    with open(filepath, 'rb') as image_file:
+    with open(file_path, 'rb') as image_file:
         content = image_file.read()
 
     image = vision.Image(content=content)
@@ -154,7 +156,7 @@ def landmarkDetection(file_path):
         #landmark_descriptions.append(landmark.description)
             
     # image_file.close()
-    os.remove(filepath)
+    # os.remove(filepath)
 
     return closest_landmark
 
