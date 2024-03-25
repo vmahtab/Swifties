@@ -119,9 +119,9 @@ def landmarkDetection(file_path):
 
     filepath = file_path.strip("/")
     # print(file_path)
-
+    absolute_path = "/home/ubuntu/Swifties/wanderhub_backend/media" + file_path
     # Load the image into memory
-    with open(file_path, 'rb') as image_file:
+    with open(absolute_path, 'rb') as image_file:
         content = image_file.read()
 
     image = vision.Image(content=content)
