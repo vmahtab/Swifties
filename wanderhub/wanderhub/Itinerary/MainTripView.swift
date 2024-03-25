@@ -25,7 +25,7 @@ struct MainTripView: View {
                         OptionCardView(optionTitle: "Start New Trip", iconName: "plus.circle.fill", backgroundColor: Color.blue)
                     }
                     .background(backCol)
-                    NavigationLink(destination: ItinView(viewModel: viewModel)) {
+                    NavigationLink(destination: ItineraryView(viewModel: viewModel)) {
                         OptionCardView(optionTitle: "Current Itinerary", iconName: "list.bullet", backgroundColor: Color.green)
                     }
                     .background(backCol)

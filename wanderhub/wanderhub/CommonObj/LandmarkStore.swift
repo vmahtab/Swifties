@@ -15,12 +15,35 @@ final class LandmarkStore: ObservableObject {
     // instances can be created
     @Published var landmarks = [Landmark]()
     // TODO: FIXME get rid of this and fix setters and getters
+    
+    // private constructor (we don't actually want instances of this since dummy data)
     private init() {
-        self.landmarks.append(Landmark(name: "Bell Tower", timestamp: "now", geodata: GeoData(lat: 42.2743155694, lon: -83.736413721)))
-        self.landmarks.append(Landmark(name: "University of Michigan - Ann Arbor:", timestamp: "now", geodata: GeoData(lat:  42.278564, lon: -83.737998)))
-        self.landmarks.append(Landmark(name: "The Big House", timestamp: "now", geodata: GeoData(lat: 42.265649, lon: -83.748443)))
-        self.landmarks.append(Landmark(name: "Nichols Arboretum", timestamp: "now", geodata: GeoData(lat: 42.280800, lon: -83.726784)))
-    }                // and make the constructor private so no other
+        
+        self.landmarks.append(contentsOf: [
+            
+            // Bell Tower
+            Landmark(name: "Bell Tower", 
+                     message: "Ding Dong",
+                     timestamp: "now",
+                     geodata: GeoData(lat: 42.2743155694, lon: -83.736413721)),
+            
+            // UMich
+            Landmark(name: "University of Michigan - Ann Arbor", 
+                     timestamp: "now",
+                     geodata: GeoData(lat:  42.278564, lon: -83.737998)),
+            
+            // Big House
+            Landmark(name: "The Big House", 
+                     message: "Hail to The Victors!",
+                     timestamp: "now",
+                     geodata: GeoData(lat: 42.265649, lon: -83.748443)),
+            
+            // Arb
+            Landmark(name: "Nichols Arboretum", 
+                     timestamp: "now",
+                     geodata: GeoData(lat: 42.280800, lon: -83.726784))
+        ])
+    }
     
     private let nFields = Mirror(reflecting: Landmark()).children.count
     
@@ -28,7 +51,7 @@ final class LandmarkStore: ObservableObject {
 //    private let serverUrl = "https://3.22.222.79/"
     
     // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
-    func removeLandmard(index: Int) {
+    func removeLandmark(index: Int) {
         
         // TODO: Call backend to remove the landmark from the itinerary
         
