@@ -13,6 +13,8 @@ class NavigationControllerViewModel: ObservableObject {
     @Published var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     @Published var viewState: ViewState = .home
     @Published var isPresented: Bool = false
+    
+    @Published var NevagateToCurrentTrip = false
 
 }
 
