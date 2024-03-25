@@ -35,3 +35,12 @@ Content-Type: application/json
 Authorization: Token 471bc5e12073b6453fcf814e8b72ea46af683fa1
 
 {}
+
+
+###
+
+POST http://127.0.0.1:8000/make-custom-itinerary
+Content-Type: application/json
+Authorization: Token 0c1b283d8a6a94def293497b18a0c1fde0f16914
+
+{"interests": "biking and art", "city_name": "dallas", "country_name": "USA", "start_date": "2024-05-24", "end_date": "2024-05-27"}

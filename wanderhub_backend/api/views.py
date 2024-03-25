@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import requests
 
 from .serializers import UserSerializer
 from rest_framework import status
@@ -20,9 +21,8 @@ from django.utils.timezone import now
 import json
 
 from openai import OpenAI
-api_key = "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"
+api_key = "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"
 client = OpenAI(api_key=api_key)
-
 
 @api_view(["POST"])
 def login(request):
@@ -84,33 +84,17 @@ def test_token(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def make_custom_itinerary(request):
-    user = request.user
-    itinerary_prompt = '''\You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks.
-      Here is some information about me to help you
-      {interests}
-      I am travelling to {city_name}, {country_name}
-      with dates from {start_date} to {end_date}
-      Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.
-        {
-        "itinerary_name": "Fun Itinerary Name",
-        "itinerary": [
-            {
-            "date_time": "Date Time in django parsable format",
-            "landmark": "landmark name",
-            "latitude": "latitude in float",
-            "longitude": "longitude in float"
-            }
-        ]
-        }'''
     
-    interests = request.data.get('interests', '')
-    city_name = request.data.get('city_name', '')
-    country_name = request.data.get('country_name', '')
-    start_date = request.data.get('start_date', '')
-    end_date = request.data.get('end_date', '')
+    user = request.user
+    interests = request.data.get('interests')
+    city_name = request.data.get('city_name')
+    country_name = request.data.get('country_name')
+    start_date = request.data.get('start_date') #Must be YYYY-MM-DD
+    end_date = request.data.get('end_date') #Must be YYYY-MM-DD
+
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you" + interests + " I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,latitude: latitude in float,longitude: longitude in float}]}"
 
     try:
-        prompt_with_input = itinerary_prompt.format(interests=interests, city_name=city_name, country_name=country_name, start_date=start_date, end_date=end_date)
         completion = client.chat.completions.create(
             messages=[
                 {
@@ -118,7 +102,7 @@ def make_custom_itinerary(request):
                     "content": prompt_with_input,
                 }
             ],
-            model="gpt-3.5-turbo=1106",
+            model="gpt-3.5-turbo",
             response_format={"type": "json_object"}
         )
         generated_text = completion.choices[0].message.content
@@ -129,10 +113,9 @@ def make_custom_itinerary(request):
 
     new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
     for item in response_data["itinerary"]:
-        ItineraryItems.objects.create(it_id = new_it.id, landmark=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
+        ItineraryItems.objects.create(it_id = new_it, landmark_name=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
 
     return Response(generated_text)
-
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])

@@ -35,7 +35,7 @@ class Itineraries(models.Model):
 class ItineraryItems(models.Model):
     id = models.AutoField(primary_key=True)
     it_id = models.ForeignKey(Itineraries, on_delete=models.CASCADE)
-    landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE)
+    landmark_name = models.CharField(max_length=200)
     date_time = models.DateTimeField()
     latitude = models.FloatField()
     longitude = models.FloatField()
