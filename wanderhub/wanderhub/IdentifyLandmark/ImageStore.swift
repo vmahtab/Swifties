@@ -18,30 +18,20 @@ class ImageStore {
     // instances can be created
     //private(set) var chatts = [ImageData]()
     //private let nFields = Mirror(reflecting: ImageData()).children.count
+
     
-<<<<<<< Updated upstream
-    
-    // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
-    func postImage(_ imagedata: ImageData, image: UIImage?) async -> Data? {
-        guard let apiUrl = URL(string: "\(serverUrl)postimages/") else {
-=======
     func postImage(_ imagedata: ImageData, image: UIImage?) async -> String? {
         guard let apiUrl = URL(string: "\(serverUrl)add-user-landmark/") else {
->>>>>>> Stashed changes
-            print("postChatt: Bad URL")
+           print("postChatt: Bad URL")
             return nil
         }
         
-<<<<<<< Updated upstream
         if let token = UserDefaults.standard.string(forKey: "usertoken") {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
             return
         }
         
-        return try? await AF.upload(multipartFormData: { mpFD in
-            if let usernameData = imagedata.username?.data(using: .utf8) {
-=======
         var landmarkName: String?
 
         var request = URLRequest(url: apiUrl)
@@ -57,7 +47,6 @@ class ImageStore {
         
         let response = AF.upload(multipartFormData: { mpFD in
             if let usernameData = imagedata.username.data(using: .utf8) {
->>>>>>> Stashed changes
                 mpFD.append(usernameData, withName: "username")
             }
             if let timestampData = imagedata.timestamp.data(using: .utf8) {
