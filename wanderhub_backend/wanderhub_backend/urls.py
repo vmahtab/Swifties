@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, re_path
-from api import views
+from api import views, landmarks
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -27,4 +27,7 @@ urlpatterns = [
     path('add-user-landmark', views.add_user_landmark),
     path('get-user-landmarks', views.get_user_landmarks),
     path('test_token', views.test_token),
+
+    path('post_landmarks', landmarks.post_landmarks),
+    path('get_landmarks', landmarks.get_landmark),
 ]
