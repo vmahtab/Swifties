@@ -7,42 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0412BB2C2BAFF5DB00991ED3 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0412BB2B2BAFF5DB00991ED3 /* Alamofire */; };
-		0418F4302BB1121D00B58F0B /* GeoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4012BB1121D00B58F0B /* GeoData.swift */; };
-		0418F4312BB1121D00B58F0B /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4022BB1121D00B58F0B /* Globals.swift */; };
-		0418F4322BB1121D00B58F0B /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4032BB1121D00B58F0B /* ImageData.swift */; };
-		0418F4332BB1121D00B58F0B /* Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4042BB1121D00B58F0B /* Landmark.swift */; };
-		0418F4342BB1121D00B58F0B /* LandmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4052BB1121D00B58F0B /* LandmarkStore.swift */; };
-		0418F4352BB1121D00B58F0B /* homepageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4072BB1121D00B58F0B /* homepageSearch.swift */; };
-		0418F4362BB1121D00B58F0B /* searchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4082BB1121D00B58F0B /* searchBarView.swift */; };
-		0418F4372BB1121D00B58F0B /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F40A2BB1121D00B58F0B /* CameraView.swift */; };
-		0418F4382BB1121D00B58F0B /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F40B2BB1121D00B58F0B /* ImageStore.swift */; };
-		0418F4392BB1121D00B58F0B /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F40C2BB1121D00B58F0B /* Media.swift */; };
-		0418F43A2BB1121D00B58F0B /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F40E2BB1121D00B58F0B /* BookingView.swift */; };
-		0418F43B2BB1121D00B58F0B /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F40F2BB1121D00B58F0B /* ItineraryView.swift */; };
-		0418F43C2BB1121D00B58F0B /* MainTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4102BB1121D00B58F0B /* MainTripView.swift */; };
-		0418F43D2BB1121D00B58F0B /* SubmitBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4112BB1121D00B58F0B /* SubmitBooking.swift */; };
-		0418F43E2BB1121D00B58F0B /* LocManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4132BB1121D00B58F0B /* LocManager.swift */; };
-		0418F43F2BB1121D00B58F0B /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4142BB1121D00B58F0B /* MapData.swift */; };
-		0418F4402BB1121D00B58F0B /* MapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4152BB1121D00B58F0B /* MapStore.swift */; };
-		0418F4412BB1121D00B58F0B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4162BB1121D00B58F0B /* MapView.swift */; };
-		0418F4422BB1121D00B58F0B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0418F4182BB1121D00B58F0B /* Preview Assets.xcassets */; };
-		0418F4432BB1121D00B58F0B /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F41A2BB1121D00B58F0B /* SignIn.swift */; };
-		0418F4442BB1121D00B58F0B /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F41B2BB1121D00B58F0B /* SignUp.swift */; };
-		0418F4452BB1121D00B58F0B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F41C2BB1121D00B58F0B /* User.swift */; };
-		0418F4462BB1121D00B58F0B /* WanderHubID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F41D2BB1121D00B58F0B /* WanderHubID.swift */; };
-		0418F4472BB1121D00B58F0B /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F41F2BB1121D00B58F0B /* OnboardView.swift */; };
-		0418F4482BB1121D00B58F0B /* UserHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4202BB1121D00B58F0B /* UserHistoryStore.swift */; };
-		0418F4492BB1121D00B58F0B /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4212BB1121D00B58F0B /* UserProfileView.swift */; };
-		0418F44A2BB1121D00B58F0B /* ChildNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4232BB1121D00B58F0B /* ChildNavController.swift */; };
-		0418F44B2BB1121D00B58F0B /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4242BB1121D00B58F0B /* ContentViewController.swift */; };
-		0418F44C2BB1121D00B58F0B /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4252BB1121D00B58F0B /* MainNavController.swift */; };
-		0418F44D2BB1121D00B58F0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0418F4272BB1121D00B58F0B /* Assets.xcassets */; };
-		0418F44E2BB1121D00B58F0B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4282BB1121D00B58F0B /* HomeView.swift */; };
-		0418F44F2BB1121D00B58F0B /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F4292BB1121D00B58F0B /* StartupPage.swift */; };
-		0418F4502BB1121D00B58F0B /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0418F42A2BB1121D00B58F0B /* wanderhubApp.swift */; };
-		4ED93CB02BB0B4070053D2EC /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */; };
-		4ED93CB22BB0B4070053D2EC /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */; };
+		0412BB042BAFF3C000991ED3 /* GeoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE12BAFF3BF00991ED3 /* GeoData.swift */; };
+		0412BB052BAFF3C000991ED3 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE22BAFF3BF00991ED3 /* Globals.swift */; };
+		0412BB062BAFF3C000991ED3 /* ImageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE32BAFF3BF00991ED3 /* ImageData.swift */; };
+		0412BB072BAFF3C000991ED3 /* Landmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE42BAFF3BF00991ED3 /* Landmark.swift */; };
+		0412BB082BAFF3C000991ED3 /* LandmarkStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE52BAFF3BF00991ED3 /* LandmarkStore.swift */; };
+		0412BB092BAFF3C000991ED3 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE72BAFF3BF00991ED3 /* CameraView.swift */; };
+		0412BB0A2BAFF3C000991ED3 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE82BAFF3BF00991ED3 /* ImageStore.swift */; };
+		0412BB0B2BAFF3C000991ED3 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAE92BAFF3BF00991ED3 /* Media.swift */; };
+		0412BB0C2BAFF3C000991ED3 /* BookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAEB2BAFF3BF00991ED3 /* BookingView.swift */; };
+		0412BB0D2BAFF3C000991ED3 /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAEC2BAFF3BF00991ED3 /* ItineraryView.swift */; };
+		0412BB0E2BAFF3C000991ED3 /* MainTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAED2BAFF3BF00991ED3 /* MainTripView.swift */; };
+		0412BB0F2BAFF3C000991ED3 /* SubmitBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAEE2BAFF3BF00991ED3 /* SubmitBooking.swift */; };
+		0412BB102BAFF3C000991ED3 /* LocManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF02BAFF3BF00991ED3 /* LocManager.swift */; };
+		0412BB112BAFF3C000991ED3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF12BAFF3BF00991ED3 /* MapView.swift */; };
+		0412BB122BAFF3C000991ED3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0412BAF32BAFF3BF00991ED3 /* Preview Assets.xcassets */; };
+		0412BB132BAFF3C000991ED3 /* SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF52BAFF3BF00991ED3 /* SignIn.swift */; };
+		0412BB142BAFF3C000991ED3 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF62BAFF3BF00991ED3 /* SignUp.swift */; };
+		0412BB152BAFF3C000991ED3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF72BAFF3BF00991ED3 /* User.swift */; };
+		0412BB162BAFF3C000991ED3 /* WanderHubID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAF82BAFF3BF00991ED3 /* WanderHubID.swift */; };
+		0412BB172BAFF3C000991ED3 /* ChildNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAFA2BAFF3BF00991ED3 /* ChildNavController.swift */; };
+		0412BB182BAFF3C000991ED3 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAFB2BAFF3BF00991ED3 /* ContentViewController.swift */; };
+		0412BB192BAFF3C000991ED3 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAFC2BAFF3BF00991ED3 /* MainNavController.swift */; };
+		0412BB1A2BAFF3C000991ED3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0412BAFE2BAFF3BF00991ED3 /* Assets.xcassets */; };
+		0412BB1B2BAFF3C000991ED3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BAFF2BAFF3BF00991ED3 /* HomeView.swift */; };
+		0412BB1D2BAFF3C000991ED3 /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BB012BAFF3BF00991ED3 /* StartupPage.swift */; };
+		0412BB1E2BAFF3C000991ED3 /* wanderhubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0412BB022BAFF3BF00991ED3 /* wanderhubApp.swift */; };
+		25870D3F2BB0C62300F35B18 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25870D3E2BB0C62300F35B18 /* UserProfileView.swift */; };
+		25870D412BB0CB6B00F35B18 /* UserHistoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25870D402BB0CB6B00F35B18 /* UserHistoryStore.swift */; };
+		25870D452BB104D700F35B18 /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25870D442BB104D700F35B18 /* OnboardView.swift */; };
+		4ED93CA62BB0B2FC0053D2EC /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CA52BB0B2FC0053D2EC /* MapData.swift */; };
+		4ED93CA82BB0B3040053D2EC /* MapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CA72BB0B3040053D2EC /* MapStore.swift */; };
+		4ED93CAB2BB0B3710053D2EC /* homepageSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CAA2BB0B3710053D2EC /* homepageSearch.swift */; };
+		4ED93CAD2BB0B38F0053D2EC /* searchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED93CAC2BB0B38F0053D2EC /* searchBarView.swift */; };
+		4ED93CB42BB10E7A0053D2EC /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CB32BB10E7A0053D2EC /* GoogleSignIn */; };
+		4ED93CB62BB10E7A0053D2EC /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CB52BB10E7A0053D2EC /* GoogleSignInSwift */; };
+		4ED93CB82BB10E830053D2EC /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4ED93CB72BB10E830053D2EC /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,9 +88,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ED93CB22BB0B4070053D2EC /* GoogleSignInSwift in Frameworks */,
-				0412BB2C2BAFF5DB00991ED3 /* Alamofire in Frameworks */,
-				4ED93CB02BB0B4070053D2EC /* GoogleSignIn in Frameworks */,
+				4ED93CB82BB10E830053D2EC /* Alamofire in Frameworks */,
+				4ED93CB42BB10E7A0053D2EC /* GoogleSignIn in Frameworks */,
+				4ED93CB62BB10E7A0053D2EC /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,9 +256,9 @@
 			);
 			name = wanderhub;
 			packageProductDependencies = (
-				0412BB2B2BAFF5DB00991ED3 /* Alamofire */,
-				4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */,
-				4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */,
+				4ED93CB32BB10E7A0053D2EC /* GoogleSignIn */,
+				4ED93CB52BB10E7A0053D2EC /* GoogleSignInSwift */,
+				4ED93CB72BB10E830053D2EC /* Alamofire */,
 			);
 			productName = wanderhub;
 			productReference = F7EAB9132BA0B7F800F2B335 /* wanderhub.app */;
@@ -589,20 +589,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0412BB2B2BAFF5DB00991ED3 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0412BB2A2BAFF5DB00991ED3 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		4ED93CAF2BB0B4070053D2EC /* GoogleSignIn */ = {
+		4ED93CB32BB10E7A0053D2EC /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
-		4ED93CB12BB0B4070053D2EC /* GoogleSignInSwift */ = {
+		4ED93CB52BB10E7A0053D2EC /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4ED93CAE2BB0B4070053D2EC /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		4ED93CB72BB10E830053D2EC /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0412BB2A2BAFF5DB00991ED3 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

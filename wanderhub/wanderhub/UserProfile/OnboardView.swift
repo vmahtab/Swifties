@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct Onboard: View {
-    @State private var isButtonPressed = false // State variable to track button press
+    @State private var mountainButton = false // State variable to track button press
+    @State private var beachButton = false
+    @State private var jungleButton = false
+    @State private var ratingButton = false
+    @State private var campingButton = false
+    @State private var lakeButton = false
+    @State private var continueButton = false
     
     var body: some View {
-        
         VStack(spacing: 41) {
             VStack(spacing: 10) {
-                Text("Hello John")
+                Text("Hello \(User.shared.username ?? "User")")
                     .font(Font.custom("Poppins", size: 26).weight(.semibold))
-                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                    .foregroundColor(Color(red: 25/255, green: 52/255, blue: 82/255))
                 Text("What do you like to do?")
                     .font(Font.custom("Poppins", size: 25).weight(.medium))
                     .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
@@ -26,7 +31,7 @@ struct Onboard: View {
                 
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.mountainButton.toggle()
                 }) {
                     VStack(spacing: 10) {
                         Image("Mountains")
@@ -40,39 +45,15 @@ struct Onboard: View {
                         Text("Mountain")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(self.isButtonPressed ? Color.blue : Color(red: 0.12, green: 0.16, blue: 0.22))
+                            .foregroundColor(self.mountainButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
                     }
                 }
                 .padding(10)
                 .frame(width: 102, height: 138)
                 .offset(x: -80, y: -146.50)
-                //                        VStack(spacing: 10) {
-                //                            HStack(spacing: 0) {
-                //                                Rectangle()
-                //                                    .foregroundColor(.clear)
-                //                                    .frame(width: 82, height: 82)
-                //                                    .background(
-                //                                        Image("Mountains")
-                //                                                .resizable()
-                //                                                .scaledToFit()                                    )
-                //                            }
-                //                            .frame(width: 82, height: 82)
-                //                            .background(Color(red: 1, green: 1, blue: 1))
-                //                            .cornerRadius(8)
-                //                            .shadow(
-                //                                color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                //                            )
-                //                            Text("Mountain")
-                //                                .font(Font.custom("Cabin", size: 16).weight(.medium))
-                //                                .lineSpacing(25.60)
-                //                                .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
-                //                        }
-                //                        .padding(10)
-                //                        .frame(width: 102, height: 138)
-                //                        .offset(x: -80, y: -146.50)
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.beachButton.toggle()
                 }) {
                     
                     VStack(spacing: 10) {
@@ -94,15 +75,17 @@ struct Onboard: View {
                         Text("Beach")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }       }
+                            .foregroundColor(self.beachButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
+                        
+                    }
+                }
                 .padding(10)
                 .frame(width: 102, height: 138)
                 .offset(x: 80, y: -146.50)
                 
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.jungleButton.toggle()
                 }) {
                     
                     VStack(alignment: .leading, spacing: 10) {
@@ -125,7 +108,7 @@ struct Onboard: View {
                         Text("Jungle Safa")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
+                            .foregroundColor(self.jungleButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
                     }
                 }
                 .padding(10)
@@ -134,7 +117,7 @@ struct Onboard: View {
                 
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.ratingButton.toggle()
                 }) {
                     
                     VStack(spacing: 10) {
@@ -156,7 +139,7 @@ struct Onboard: View {
                         Text("Rafting")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
+                            .foregroundColor(self.ratingButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
                     }
                     
                 }                  .padding(10)
@@ -164,7 +147,7 @@ struct Onboard: View {
                     .offset(x: 80, y: 0.50)
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.campingButton.toggle()
                 }) {
                     
                     
@@ -187,7 +170,7 @@ struct Onboard: View {
                         Text("Camping")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
+                            .foregroundColor(self.campingButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
                     }
                     
                     
@@ -197,7 +180,7 @@ struct Onboard: View {
                 
                 Button(action: {
                     // Action to perform when button is pressed
-                    self.isButtonPressed.toggle()
+                    self.lakeButton.toggle()
                 }) {
                     
                     
@@ -221,7 +204,7 @@ struct Onboard: View {
                         Text("Lake")
                             .font(Font.custom("Cabin", size: 16).weight(.medium))
                             .lineSpacing(25.60)
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.22))
+                            .foregroundColor(self.lakeButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
                     }
                     
                     
@@ -230,6 +213,21 @@ struct Onboard: View {
                     .offset(x: 80, y: 146.50)
             }
             .frame(width: 262, height: 431)
+            
+            Button(action: {
+                // Action to perform when button is pressed
+                self.continueButton.toggle()
+            }) {
+                VStack(spacing: 10) {
+                    Image("arrow_right")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                
+                
+            }     
+            .frame(maxWidth: .infinity)
         }
         .padding(EdgeInsets(top: 147, leading: 49, bottom: 146, trailing: 50))
         .frame(width: 393, height: 852)
