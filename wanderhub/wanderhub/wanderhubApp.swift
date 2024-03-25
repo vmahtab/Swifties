@@ -18,8 +18,10 @@ struct wanderhubApp: App {
     
     var body: some Scene {
         WindowGroup {
+            
+            UserProfileView()
             //Onboard()
-            StartupPage()
+            //StartupPage()
             //HomeView()
         }
     }

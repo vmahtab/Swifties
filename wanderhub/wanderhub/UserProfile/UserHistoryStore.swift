@@ -40,13 +40,13 @@ class UserHistoryStore {
         var request = URLRequest(url: apiUrl)
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
-        request.httpMethod = "Get"
+        request.httpMethod = "GET"
         //request.httpBody = jsonData
         
         if let token = UserDefaults.standard.string(forKey: "usertoken") {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
-            exit(-1);
+            return
         }
         
         AF.request(apiUrl, method: .get).responseData { response in
