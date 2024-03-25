@@ -4,7 +4,7 @@
 //
 //  Created by Neha Pinnu on 3/24/24.
 //
-
+// TODO: FIXME this search bar might be useful later
 import UIKit
 
 class SearchBar: UIViewController, UISearchBarDelegate {
