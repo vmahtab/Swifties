@@ -12,8 +12,8 @@ struct SigninView: View {
     @Binding var isPresented: Bool
     @State private var signupActive = false
     
-    @State private var username: String = "Traveller"
-    @State private var password: String = "Traveller"
+    @State private var username: String = ""
+    @State private var password: String = ""
     
     private let user = User.shared
     @State private var showAlert = false
