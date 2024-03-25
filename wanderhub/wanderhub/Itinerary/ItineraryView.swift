@@ -251,16 +251,18 @@ struct ItineraryView: View {
                                     draggedLandmark: $draggedLandmark
                                 ))
                         
-//                            .onTapGesture(count: 1) {
+                            .onTapGesture(count: 1) {
+                                viewModel.itineraryDirectNavigation(landmark: landmark)
+                            }
 //                                NavigationView(content: {
-//                                    NavigationLink(destination: Text("Destination")) { /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/ }
+//                                    NavigationLink(destination: Text("Destination")) {     }
 //                                })
 //                            }
                         
-                            .onTapGesture(count: 2) {
-                                itineraryEntries.removeLandmark(index: index)
-                                
-                            }
+//                            .onTapGesture(count: 2) {
+//                                itineraryEntries.removeLandmark(index: index)
+//                                
+//                            }
                     }
                 }
             }
