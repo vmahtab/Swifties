@@ -1,6 +1,5 @@
 # Swift-related
 .DS_Store
-*.xcodeproj
 xcuserdata/
 DerivedData/
 *.hmap
