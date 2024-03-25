@@ -25,6 +25,8 @@ from google.cloud import vision
 import math
 
 @api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def post_landmarks(request):
     # loading multipart/form-data
     username = request.POST.get("username")
@@ -67,8 +69,8 @@ def post_landmarks(request):
     return Response({"success": serializer.is_valid(), "url_for_image": imageUrl})
 
 @api_view(["GET"])
-# @authentication_classes([SessionAuthentication, TokenAuthentication])
-# @permission_classes([IsAuthenticated])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_landmark(request):
     # user = request.user
     # user = "cctran"
