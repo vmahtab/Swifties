@@ -10,11 +10,11 @@ import Foundation
 import SwiftUI
 
 struct UserProfileView: View {
-   // @StateObject private var userHistoryStore = UserHistoryStore()
-     //   @State private var landmarkVisits: [LandmarkVisit] = []
+    // @StateObject private var userHistoryStore = UserHistoryStore()
+    //   @State private var landmarkVisits: [LandmarkVisit] = []
     private let userHistory = UserHistoryStore.shared
-    @State private var landmarkVisits: [LandmarkVisit]?
-
+    @State private var landmarkVisits: [LandmarkVisit]
+    
     var body: some View {
         ZStack() {
             VStack(alignment: .trailing, spacing: 0) {
@@ -70,13 +70,19 @@ struct UserProfileView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        ForEach(landmarkVisits, id: \.self) { landmarkVisit in
+                        ForEach(landmarkVisits, id: \.landmarkName) { landmarkVisit in
+                            
                             HStack {
                                 // Customize your landmark display here
-                                Text(landmarkVisit.landmarkName)
+                                Text("\(landmarkVisit.landmarkName)")
                                     .font(Font.custom("Poppins", size: 14).weight(.semibold))
                                     .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
                                 
+                                Spacer()
+                                
+                                Text("\(landmarkVisit.city), \(landmarkVisit.country)")
+                                    .font(Font.custom("Poppins", size: 14))
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
                                 Spacer()
                                 
                                 Text("\(landmarkVisit.city), \(landmarkVisit.country)")
@@ -89,13 +95,14 @@ struct UserProfileView: View {
                             .shadow(color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6)
                         }
                     }
-                    .padding()
                 }
-            
-        
+                .padding()
             }
             
+            
         }
+        
+        
         .frame(width: 393, height: 852)
         .background(Color(red: 0.98, green: 0.97, blue: 0.93))
         
@@ -112,13 +119,14 @@ struct UserProfileView: View {
             }
         }
     }
-
 }
 
 
-#Preview {
-    UserProfileView()
-}
+
+//
+//#Preview {
+//    UserProfileView()
+//}
 
 //HStack(spacing: 24) {
 //    HStack(spacing: 0) {

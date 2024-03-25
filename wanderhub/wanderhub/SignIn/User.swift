@@ -68,7 +68,7 @@ class User {
                 return nil
             }
             
-            guard let token = jsonObj["token"] as? String else {
+            guard let token = jsonObj["Token"] as? String else {
                 return nil
             }
             // TODO: implement once ready to store in keychain
