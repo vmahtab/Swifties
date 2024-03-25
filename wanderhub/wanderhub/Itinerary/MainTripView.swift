@@ -11,7 +11,7 @@ struct MainTripView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             VStack {
                 Text("What's next?")
                     .font(.largeTitle)
@@ -37,6 +37,10 @@ struct MainTripView: View {
                 ChildNavController(viewModel: viewModel)
             }
             .background(backCol)
+            .navigationDestination(isPresented: $viewModel.NavigatingToCurrentTrip) {
+                ItineraryView(viewModel: viewModel)
+            }
+            
         }
     }
 }
