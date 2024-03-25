@@ -21,13 +21,18 @@ final class ImageStore {
     private(set) var chatts = [ImageData]()
     private let nFields = Mirror(reflecting: ImageData()).children.count
     
-//    private let serverUrl = "https://127.0.0.1:8080/"
     
     // TODO: ADD AUTHORIZATION. USE WanderHubID.shared.id TO SEND REQUEST TO BACKEND
     func postImage(_ imagedata: ImageData, image: UIImage?) async -> Data? {
         guard let apiUrl = URL(string: "\(serverUrl)postimages/") else {
             print("postChatt: Bad URL")
             return nil
+        }
+        
+        if let token = UserDefaults.standard.string(forKey: "usertoken") {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        } else {
+            return
         }
         
         return try? await AF.upload(multipartFormData: { mpFD in
