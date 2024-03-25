@@ -30,7 +30,7 @@ struct ChildNavController: View {
                     .padding(.horizontal, 20)
             }
             Button {
-                viewModel.viewState = .map
+                viewModel.viewState = .map(nil)
                 viewModel.isPresented = true
             } label: {
                 Image(systemName: "safari")

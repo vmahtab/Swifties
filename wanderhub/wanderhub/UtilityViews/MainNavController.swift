@@ -13,7 +13,11 @@ class NavigationControllerViewModel: ObservableObject {
     @Published var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     @Published var viewState: ViewState = .home
     @Published var isPresented: Bool = false
-
+    
+    func itineraryDirectNavigation(landmark: Landmark) {
+        viewState = .map(landmark)
+    }
+    
 }
 
 struct MainNavController: View {
@@ -40,7 +44,7 @@ struct MainNavController: View {
                     .padding(.horizontal, 20)
             }
             Button {
-                viewModel.viewState = .map
+                viewModel.viewState = .map(nil)
                 viewModel.isPresented = true
             } label: {
                 Image(systemName: "safari")
@@ -69,8 +73,8 @@ struct MainNavController: View {
             
             .fullScreenCover(isPresented: $viewModel.isPresented) {
                 switch viewModel.viewState {
-                case .map:
-                    MapView(viewModel: viewModel, cameraPosition: $viewModel.cameraPosition, landmark: nil)
+                case .map(let selectedLandmark):
+                    MapView(viewModel: viewModel, cameraPosition: $viewModel.cameraPosition, landmark: selectedLandmark)
                 case .home:
                     HomeView()
                 case .itinerary:
