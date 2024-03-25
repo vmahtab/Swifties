@@ -66,6 +66,7 @@ struct SigninView: View {
                 .padding(.horizontal, 40)
             
             Button("Login") {
+                isPresented.toggle()
                 login()
             }
             .padding()

@@ -22,7 +22,7 @@ class SearchBar: UIViewController, UISearchBarDelegate {
     func setupSearch () {
         searchBar.delegate = self
         self.view.addSubview(searchBar)
-        
+        searchBar.barTintColor = UIColor(backCol)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

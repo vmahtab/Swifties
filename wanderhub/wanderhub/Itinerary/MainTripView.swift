@@ -11,7 +11,7 @@ struct MainTripView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             VStack {
                 Text("What's next?")
                     .font(.largeTitle)
@@ -25,7 +25,7 @@ struct MainTripView: View {
                         OptionCardView(optionTitle: "Start New Trip", iconName: "plus.circle.fill", backgroundColor: Color.blue)
                     }
                     .background(backCol)
-                    NavigationLink(destination: ItinView(viewModel: viewModel)) {
+                    NavigationLink(destination: ItineraryView(viewModel: viewModel)) {
                         OptionCardView(optionTitle: "Current Itinerary", iconName: "list.bullet", backgroundColor: Color.green)
                     }
                     .background(backCol)
@@ -37,6 +37,9 @@ struct MainTripView: View {
                 ChildNavController(viewModel: viewModel)
             }
             .background(backCol)
+            .navigationDestination(isPresented: $viewModel.NevagateToCurrentTrip) {
+                ItineraryView(viewModel: viewModel)
+            }
         }
     }
 }
