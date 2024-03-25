@@ -21,6 +21,7 @@ struct wanderhubApp: App {
             //Onboard()
             StartupPage()
             //HomeView()
+            //UserProfileView()
         }
     }
 }

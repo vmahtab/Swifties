@@ -16,6 +16,9 @@ struct Onboard: View {
     @State private var lakeButton = false
     @State private var continueButton = false
     
+    
+    @Binding var signinProcess: Bool
+    
     var body: some View {
         VStack(spacing: 41) {
             VStack(spacing: 10) {
@@ -216,7 +219,9 @@ struct Onboard: View {
             
             Button(action: {
                 // Action to perform when button is pressed
-                self.continueButton.toggle()
+                //self.continueButton.toggle()
+                signinProcess.toggle()
+                
             }) {
                 VStack(spacing: 10) {
                     Image("arrow_right")
@@ -234,8 +239,4 @@ struct Onboard: View {
         .background(Color(red: 0.98, green: 0.97, blue: 0.93))
         
     }
-}
-
-#Preview {
-    Onboard()
 }

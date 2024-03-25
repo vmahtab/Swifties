@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 struct UserProfileView: View {
+    @ObservedObject var viewModel: NavigationControllerViewModel
     // @StateObject private var userHistoryStore = UserHistoryStore()
     //   @State private var landmarkVisits: [LandmarkVisit] = []
     private let userHistory = UserHistoryStore.shared
@@ -63,6 +64,7 @@ struct UserProfileView: View {
             }
             .frame(width: 352, height: 39)
             .offset(x: 0.50, y: -299.50)
+            
             VStack(){
                 Text("    Past Landmarks:")
                     .font(Font.custom("Poppins", size: 16).weight(.semibold))
@@ -182,11 +184,5 @@ struct LandmarkListRow: View {
             .offset(x:0, y:80)
         }
     }
-    
-    
-    //
-    //#Preview {
-    //    UserProfileView()
-    //}
     
 }

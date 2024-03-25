@@ -46,7 +46,7 @@ class UserHistoryStore {
         if let token = UserDefaults.standard.string(forKey: "usertoken") {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         } else {
-            exit(-1);
+            return
         }
         
         AF.request(apiUrl, method: .get).responseData { response in

@@ -84,6 +84,8 @@ struct MainNavController: View {
                     MainTripView(viewModel: viewModel)
                 case .landmark:
                     CameraView(viewModel: viewModel)
+                case .profile:
+                    UserProfileView(viewModel: viewModel)
                 default:
                     Text("Other view")
                     ChildNavController(viewModel: viewModel)
