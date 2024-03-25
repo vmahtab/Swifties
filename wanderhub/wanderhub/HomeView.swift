@@ -11,18 +11,21 @@ struct HomeView: View {
         VStack() {
             Spacer().frame(height: 75)
             HStack(){
+                Spacer().frame(width: 5)
                 Text("Hello \(User.shared.username ?? "User")")                    .font(Font.custom("Poppins", size: 26).weight(.bold))
                     .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
                     .offset(x: 10, y: 30)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(alignment: .leading)
+                Spacer()
                 
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            
-            SearchBarViewControllerRepresentable()
-                .frame(height: 44)
-                .offset(x: 0, y: 30)
-            
+      
+           //no search needed here
+//            SearchBarViewControllerRepresentable()
+//                .frame(height: 44)
+//                .offset(x: 0, y: 30)
+//            
             HStack(spacing: 23) {
                 ZStack() {
                     Rectangle()
@@ -33,6 +36,9 @@ struct HomeView: View {
                         .offset(x: 0, y: 0)
                     
                     Button(action: {
+                        viewmodel.viewState = ViewState.itinerary
+                        viewmodel.isPresented = true
+                        viewmodel.NavigatingToCurrentTrip = true
                     }) {
                         Text("Go to current trip")
                             .font(Font.custom("Poppins", size: 16).weight(.medium))
@@ -49,6 +55,8 @@ struct HomeView: View {
                         .cornerRadius(10)
                         .offset(x: 0, y: 0)
                     Button(action: {
+                        viewmodel.viewState = ViewState.map(nil)
+                        viewmodel.isPresented = true
                     }) {
                         Text("Explore Nearby")
                             .font(Font.custom("Poppins", size: 16).weight(.medium))
@@ -69,6 +77,7 @@ struct HomeView: View {
                            .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
                            .offset(x: 10, y: 75)
                            .frame(maxWidth: .infinity, alignment: .leading)
+                           .padding()
               
                 HStack(spacing: 24) {
                     HStack(spacing: 0) {
@@ -234,8 +243,10 @@ struct HomeView: View {
 
             }
             Spacer()
-            MainNavController(viewModel: viewmodel)
             
+            MainNavController(viewModel: viewmodel)
+            Spacer()
+                .frame(height:15)
             
         }
         .background(backCol)
