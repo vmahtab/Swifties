@@ -13,7 +13,8 @@ struct UserProfileView: View {
     // @StateObject private var userHistoryStore = UserHistoryStore()
     //   @State private var landmarkVisits: [LandmarkVisit] = []
     private let userHistory = UserHistoryStore.shared
-    @State private var landmarkVisits: [LandmarkVisit]
+    // @State private var landmarkVisits: [LandmarkVisit]
+    
     
     var body: some View {
         ZStack() {
@@ -68,35 +69,47 @@ struct UserProfileView: View {
                     .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
                     .offset(x: -135.50, y: -47)
                 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(landmarkVisits, id: \.landmarkName) { landmarkVisit in
-                            
-                            HStack {
-                                // Customize your landmark display here
-                                Text("\(landmarkVisit.landmarkName)")
-                                    .font(Font.custom("Poppins", size: 14).weight(.semibold))
-                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                                
-                                Spacer()
-                                
-                                Text("\(landmarkVisit.city), \(landmarkVisit.country)")
-                                    .font(Font.custom("Poppins", size: 14))
-                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                                Spacer()
-                                
-                                Text("\(landmarkVisit.city), \(landmarkVisit.country)")
-                                    .font(Font.custom("Poppins", size: 14))
-                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                            }
-                            .padding()
-                            .background(Color(red: 0.94, green: 0.92, blue: 0.87))
-                            .cornerRadius(8)
-                            .shadow(color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6)
-                        }
-                    }
+                List(userHistory.landmarkVisits.indices, id: \.self) {
+                    LandmarkListRow(visit: userHistory.landmarkVisits[$0])
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color(($0 % 2 == 0) ? .systemGray5 : .systemGray6))
                 }
-                .padding()
+                .listStyle(.plain)
+                
+                //                ScrollView {
+                //                    VStack(spacing: 20) {
+                //                        ForEach(UserHistoryStore.shared.$landmarkVisits, id: \.landmarkName) { landmarkVisit in
+                //
+                //                            HStack {
+                //                                // Customize your landmark display here
+                //                                TextField("", text: landmarkVisit.landmarkName)
+                //                                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                //                                    .font(Font.custom("Poppins", size: 14).weight(.semibold))
+                //                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                //
+                //                                Spacer()
+                //
+                //                                TextField("", text: landmarkVisit.city)
+                //                                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                //                                    .font(Font.custom("Poppins", size: 14))
+                //                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                //                                Spacer()
+                //
+                //                                TextField("", text: landmarkVisit.country)
+                //                                    .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                //                                    .font(Font.custom("Poppins", size: 14))
+                //                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                //
+                //
+                //                            }
+                //                            .padding()
+                //                            .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                //                            .cornerRadius(8)
+                //                            .shadow(color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6)
+                //                        }
+                //                    }
+                //                }
+                //                .padding()
             }
             
             
@@ -113,58 +126,67 @@ struct UserProfileView: View {
     
     private func fetchLandmarkVisits() {
         Task {
-            if let history = await UserHistoryStore.shared.getHistory(),
-               let visits = UserHistoryStore.shared.parseLandmarkVisits(from: history) {
-                self.landmarkVisits = visits
-            }
+            UserHistoryStore.shared.getHistory()
         }
     }
 }
 
 
 
-//
-//#Preview {
-//    UserProfileView()
-//}
-
-//HStack(spacing: 24) {
-//    HStack(spacing: 0) {
-//        Rectangle()
-//            .foregroundColor(.clear)
-//            .frame(width: 80, height: 79.94)
-//            .background(
-//                Image("Mountains")
-//                        .resizable()
-//                        .scaledToFit()
-//            )
-//    }
-//    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
-//    .frame(width: 80, height: 80)
-//    .background(Color(red: 1, green: 1, blue: 1))
-//    .cornerRadius(8)
-//    .shadow(
-//        color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-//    )
-//    VStack(alignment: .leading, spacing: 2) {
-//        HStack(spacing: 0) {
-//            HStack(alignment: .top, spacing: 38) {
-//                Text("Bell Tower")
-//                    .font(Font.custom("Cabin", size: 14).weight(.semibold))
-//                    .lineSpacing(22.40)
-//                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-//            }
-//            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        }
-//        .frame(width: 234)
-//    }
-//    .frame(maxWidth: .infinity)
-//}
-//.padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-//.frame(width: 370, height: 96)
-//.background(Color(red: 0.94, green: 0.92, blue: 0.87))
-//.cornerRadius(8)
-//.shadow(
-//    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-//)
-//.offset(x:0, y:80)
+struct LandmarkListRow: View {
+    let visit: LandmarkVisit
+    var body: some View {
+        
+        HStack(spacing: 24) {
+            HStack(spacing: 0) {
+                HStack(alignment: .top) {
+                    if let urlString = visit.imageUrl, let imageUrl = URL(string: urlString) {
+                        AsyncImage(url: imageUrl) {
+                            $0.resizable()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .scaledToFit()
+                        .frame(height: 181)
+                    }
+                }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
+                .frame(width: 80, height: 80)
+                .background(Color(red: 1, green: 1, blue: 1))
+                .cornerRadius(8)
+                .shadow(
+                    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                )
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 0) {
+                        HStack(alignment: .top, spacing: 38) {
+                            Text("\(visit.landmarkName), \(visit.city), \(visit.country)")
+                                .font(Font.custom("Cabin", size: 14).weight(.semibold))
+                                .lineSpacing(22.40)
+                                .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    .frame(width: 234)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            .frame(width: 370, height: 96)
+            .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+            .cornerRadius(8)
+            .shadow(
+                color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+            )
+            .offset(x:0, y:80)
+        }
+    }
+    
+    
+    //
+    //#Preview {
+    //    UserProfileView()
+    //}
+    
+}
