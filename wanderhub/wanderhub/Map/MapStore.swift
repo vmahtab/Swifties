@@ -19,7 +19,7 @@ final class MapStore {
     private(set) var chatts = [MapData]()
     private let nFields = Mirror(reflecting: MapData()).children.count
     
-    private let serverUrl = "https://34.172.120.53/"
+//    private let serverUrl = "https://34.172.120.53/"
     
     func getChatts() {
         guard let apiUrl = URL(string: "\(serverUrl)getchatts/") else {
