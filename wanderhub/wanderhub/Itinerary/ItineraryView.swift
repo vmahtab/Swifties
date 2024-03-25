@@ -259,6 +259,7 @@ struct ItineraryView: View {
 //                                })
 //                            }
                         
+                            // TODO: make a new gesture
 //                            .onTapGesture(count: 2) {
 //                                itineraryEntries.removeLandmark(index: index)
 //                                
