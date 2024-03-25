@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, re_path
-from api import views
+from api import views, landmarks
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,4 +30,7 @@ urlpatterns = [
     path('get-user-itineraries', views.get_user_itineraries),
     path('remove-from-itinerary', views.remove_from_itinerary),
     path('test_token', views.test_token),
+
+    path('post_landmarks', landmarks.post_landmarks),
+    path('get_landmarks', landmarks.get_landmark),
 ]

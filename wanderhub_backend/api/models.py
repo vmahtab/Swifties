@@ -22,6 +22,18 @@ class VisitedCities(models.Model):
     def __str__(self):
         return f"{self.user.username} visited {self.landmark.city_name} on {self.visit_time}"
     
+class LandmarkIdentification(models.Model):
+    username = models.CharField(max_length=100, null=True, blank=True)
+    timestamp = models.DateTimeField(null=True, blank=True)
+    url_for_image = models.CharField(max_length=255, null=True, blank=True)
+    lat = models.FloatField(default=0.0)
+    lon = models.FloatField(default=0.0)
+    place = models.CharField(max_length=100, default="Unknown")
+    facing = models.CharField(max_length=100, default="Unknown")
+    speed = models.CharField(max_length=100, default="Unknown")
+
+    def __str__(self):
+        return f"LandmarkIdentification - Username: {self.username}, Timestamp: {self.timestamp}"
     
 class Itineraries(models.Model):
     id = models.AutoField(primary_key=True)
