@@ -5,130 +5,284 @@ struct HomeView: View {
     @State var cameraPosition: MapCameraPosition = .userLocation(fallback: .automatic)
     @State var selected: Landmark?
     @StateObject var viewmodel = NavigationControllerViewModel()
-
+    
     var body: some View {
-        ZStack() {
-            Group {
-                Text("Hello \(User.shared.username ?? "User")")                    .font(Font.custom("Poppins", size: 26).weight(.semibold))
+        
+        VStack() {
+            Spacer().frame(height: 75)
+            HStack(){
+                Text("Hello \(User.shared.username ?? "User")")                    .font(Font.custom("Poppins", size: 26).weight(.bold))
                     .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                    .offset(x: -106.50, y: -304.50)
-                Text("Destinations for you")
-                    .font(Font.custom("Poppins", size: 18).weight(.semibold))
-                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                    .offset(x: -84, y: -74.50)
-               
-                HStack(spacing: 23) {
-                    ZStack() {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 166, height: 84)
-                            .background(Color(red: 1, green: 0.83, blue: 0.51))
-                            .cornerRadius(10)
-                            .offset(x: 0, y: 0)
-                    }
-                    .frame(width: 166, height: 84)
-                    ZStack() {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 165, height: 84)
-                            .background(Color(red: 1, green: 0.83, blue: 0.51))
-                            .cornerRadius(10)
-                            .offset(x: 0, y: 0)
-                    }
-                    .frame(width: 165, height: 84)
-                }
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                .frame(width: 393, height: 86)
-                .offset(x: 0, y: -159)
-                Text("Go to current trip")
-                    .font(Font.custom("Poppins", size: 16).weight(.medium))
-                    .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
-                    .offset(x: -94, y: -134)
-                Text("Explore nearby")
-                    .font(Font.custom("Poppins", size: 16).weight(.medium))
-                    .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
-                    .offset(x: 93.50, y: -134)
-                Rectangle()
-                    .foregroundColor(.clear)
-                    .frame(width: 350, height: 46)
-                    .cornerRadius(25)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 25)
-                            .inset(by: 0.50)
-                            .stroke(Color(red: 0.91, green: 0.91, blue: 0.91), lineWidth: 0.50)
-                    )
-                    .offset(x: -1.50, y: -249)
-                HStack(spacing: 0) {
-                    ZStack() {
-                        ZStack() {
-                            Ellipse()
-                                .foregroundColor(.clear)
-                                .frame(width: 17.98, height: 17.98)
-                                .overlay(
-                                    Ellipse()
-                                        .stroke(Color(red: 0.67, green: 0.67, blue: 0.67), lineWidth: 0.75)
-                                )
-                                .offset(x: -0.39, y: -0.62)
-                        }
-                        .frame(width: 18.76, height: 19.22)
-                    }
-                    .frame(width: 24, height: 24)
-                }
-                .frame(width: 24, height: 24)
-                .offset(x: -147.50, y: -249)
-                Text("Where do you want to go?")
-                    .font(Font.custom("Poppins", size: 16))
-                    .foregroundColor(Color(red: 0.66, green: 0.66, blue: 0.66))
-                    .offset(x: -19.50, y: -250)
+                    .offset(x: 10, y: 30)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            
             SearchBarViewControllerRepresentable()
-            .frame(height: 44)
-        MainNavController(viewModel: viewmodel)
+                .frame(height: 44)
+                .offset(x: 0, y: 30)
+            
+            HStack(spacing: 23) {
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 166, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
+                    
+                    Button(action: {
+                    }) {
+                        Text("Go to current trip")
+                            .font(Font.custom("Poppins", size: 16).weight(.medium))
+                            .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        
+                    }
+                }
+                
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 165, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
+                    Button(action: {
+                    }) {
+                        Text("Explore Nearby")
+                            .font(Font.custom("Poppins", size: 16).weight(.medium))
+                            .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            .frame(width: 393, height: 86)
+            .offset(x: 0, y: 50)
+            VStack(){
+                Text("Destinations for you")
+                           .font(Font.custom("Poppins", size: 18).weight(.semibold))
+                           .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                           .offset(x: 10, y: 75)
+                           .frame(maxWidth: .infinity, alignment: .leading)
+              
+                HStack(spacing: 24) {
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 80, height: 79.94)
+                            .background(
+                                Image("Mountains")
+                                        .resizable()
+                                        .scaledToFit()                            )
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
+                    .frame(width: 80, height: 80)
+                    .background(Color(red: 1, green: 1, blue: 1))
+                    .cornerRadius(8)
+                    .shadow(
+                        color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                    )
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 0) {
+                            HStack(alignment: .top, spacing: 38) {
+                                Text("Huron-Manistee National Forest")
+                                    .font(Font.custom("Cabin", size: 14).weight(.semibold))
+                                    .lineSpacing(22.40)
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .frame(width: 234)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .frame(width: 370, height: 96)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(8)
+                .shadow(
+                    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                )
+                .offset(x:0, y:80)
+// destination 2
+                HStack(spacing: 24) {
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 80, height: 79.94)
+                            .background(
+                                Image("Forest")
+                                        .resizable()
+                                        .scaledToFit()
+                            )
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
+                    .frame(width: 80, height: 80)
+                    .background(Color(red: 1, green: 1, blue: 1))
+                    .cornerRadius(8)
+                    .shadow(
+                        color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                    )
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 0) {
+                            HStack(alignment: .top, spacing: 38) {
+                                Text("Bell Tower")
+                                    .font(Font.custom("Cabin", size: 14).weight(.semibold))
+                                    .lineSpacing(22.40)
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .frame(width: 234)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .frame(width: 370, height: 96)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(8)
+                .shadow(
+                    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                )
+                .offset(x:0, y:80)
+//destination 3
+                HStack(spacing: 24) {
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 80, height: 79.94)
+                            .background(
+                                Image("Shore")
+                                    .resizable()
+                                    .scaledToFit()
+                            )
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
+                    .frame(width: 80, height: 80)
+                    .background(Color(red: 1, green: 1, blue: 1))
+                    .cornerRadius(8)
+                    .shadow(
+                        color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                    )
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 0) {
+                            HStack(alignment: .top, spacing: 38) {
+                                Text("White Shore Lake")
+                                    .font(Font.custom("Cabin", size: 14).weight(.semibold))
+                                    .lineSpacing(22.40)
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .frame(width: 234)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .frame(width: 370, height: 96)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(8)
+                .shadow(
+                    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                )
+                .offset(x:0, y:80)
+//destination 4
+                HStack(spacing: 24) {
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .foregroundColor(.clear)
+                            .frame(width: 80, height: 79.94)
+                            .background(
+                                Image("Greenland")
+                                        .resizable()
+                                        .scaledToFit()                            )
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0.06, trailing: 0))
+                    .frame(width: 80, height: 80)
+                    .background(Color(red: 1, green: 1, blue: 1))
+                    .cornerRadius(8)
+                    .shadow(
+                        color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                    )
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: 0) {
+                            HStack(alignment: .top, spacing: 38) {
+                                Text("Nichols Arboretum")
+                                    .font(Font.custom("Cabin", size: 14).weight(.semibold))
+                                    .lineSpacing(22.40)
+                                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
+                        .frame(width: 234)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .frame(width: 370, height: 96)
+                .background(Color(red: 0.94, green: 0.92, blue: 0.87))
+                .cornerRadius(8)
+                .shadow(
+                    color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
+                )
+                .offset(x:0, y:80)
+
+            }
+            Spacer()
+            MainNavController(viewModel: viewmodel)
+            
+            
         }
-        .frame(width: 393, height: 852)
         .background(backCol)
-//                VStack {
-//                    Text("Hello User")
-//                        .font(.title)
-//                        .padding()
-//                        .foregroundColor(titleCol)
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Text("Go to current trip")
-//                            .frame(minWidth: 0, maxWidth: .infinity)
-//                            .padding()
-//                            .foregroundColor(.white)
-//                            .background(Color.yellow)
-//                            .cornerRadius(10)
-//                    }
-//                    .padding(.horizontal)
-//                    
-//                    Button(action: {
-//                    }) {
-//                        Text("Explore nearby")
-//                            .frame(minWidth: 0, maxWidth: .infinity)
-//                            .padding()
-//                            .foregroundColor(.white)
-//                            .background(Color.yellow)
-//                            .cornerRadius(10)
-//                    }
-//                    
-//                    .padding()
-//                    Spacer()
-//                    SearchBarViewControllerRepresentable()
-//                        .frame(height: 44)
-//                    MainNavController(viewModel: viewmodel)
-//                }
-//                .navigationTitle("Home")
-//                .foregroundColor(titleCol)
-//                .background(backCol)
-        }
+        //
+        
+        //                VStack {
+        //                    Text("Hello User")
+        //                        .font(.title)
+        //                        .padding()
+        //                        .foregroundColor(titleCol)
+        //
+        //                    Button(action: {
+        //                    }) {
+        //                        Text("Go to current trip")
+        //                            .frame(minWidth: 0, maxWidth: .infinity)
+        //                            .padding()
+        //                            .foregroundColor(.white)
+        //                            .background(Color.yellow)
+        //                            .cornerRadius(10)
+        //                    }
+        //                    .padding(.horizontal)
+        //
+        //                    Button(action: {
+        //                    }) {
+        //                        Text("Explore nearby")
+        //                            .frame(minWidth: 0, maxWidth: .infinity)
+        //                            .padding()
+        //                            .foregroundColor(.white)
+        //                            .background(Color.yellow)
+        //                            .cornerRadius(10)
+        //                    }
+        //
+        //                    .padding()
+        //                    Spacer()
+        //                    SearchBarViewControllerRepresentable()
+        //                        .frame(height: 44)
+        //                    MainNavController(viewModel: viewmodel)
+        //                }
+        //                .navigationTitle("Home")
+        //                .foregroundColor(titleCol)
+        //                .background(backCol)
+    }
 }
 
 
 #Preview {
-   HomeView()
+    HomeView()
 }
 
 
