@@ -14,7 +14,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedCities, Landmark
+from .models import VisitedCities, Landmark, Itineraries, ItineraryItems
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -123,9 +123,9 @@ def make_custom_itinerary(request):
 @permission_classes([IsAuthenticated])
 def get_user_itineraries(request):
     user = request.user
-    user_itineraries = Itineraries.objects.filter(user=user).select_related('it_name')
+    user_itineraries = Itineraries.objects.filter(user=user).values('it_name')
     itineraries = [{"city_name": i.city_name, "it_name": i.it_name, "start_date": i.start_date.strftime("%Y-%m-%d")} 
-                      for i in itineraries]
+                      for i in user_itineraries]
     return Response(itineraries)
 
 @api_view(["DELETE"])
