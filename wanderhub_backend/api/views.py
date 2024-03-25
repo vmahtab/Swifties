@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import requests
 
 from .serializers import UserSerializer
 from rest_framework import status
@@ -17,6 +18,11 @@ from .models import VisitedCities, Landmark
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
+import json
+
+from openai import OpenAI
+api_key = "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"
+client = OpenAI(api_key=api_key)
 
 @api_view(["POST"])
 def login(request):
@@ -75,3 +81,63 @@ def test_token(request):
     return Response("passed for {}".format(request.user.email))
 
 
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def make_custom_itinerary(request):
+    
+    user = request.user
+    interests = request.data.get('interests')
+    city_name = request.data.get('city_name')
+    country_name = request.data.get('country_name')
+    start_date = request.data.get('start_date') #Must be YYYY-MM-DD
+    end_date = request.data.get('end_date') #Must be YYYY-MM-DD
+
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you" + interests + " I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,latitude: latitude in float,longitude: longitude in float}]}"
+
+    try:
+        completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_with_input,
+                }
+            ],
+            model="gpt-3.5-turbo",
+            response_format={"type": "json_object"}
+        )
+        generated_text = completion.choices[0].message.content
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+    response_data = json.loads(generated_text)
+
+    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
+    for item in response_data["itinerary"]:
+        ItineraryItems.objects.create(it_id = new_it, landmark_name=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
+
+    return Response(generated_text)
+
+@api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user_itineraries(request):
+    user = request.user
+    user_itineraries = Itineraries.objects.filter(user=user).select_related('it_name')
+    itineraries = [{"city_name": i.city_name, "it_name": i.it_name, "start_date": i.start_date.strftime("%Y-%m-%d")} 
+                      for i in itineraries]
+    return Response(itineraries)
+
+@api_view(["DELETE"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def remove_from_itinerary(request):
+    item_id = request.data.get("id")
+    try:
+        item = ItineraryItems.objects.get(id=item_id)
+    except ItineraryItems.DoesNotExist:
+        raise NotFound("Itinerary Item not found")
+    
+    ItineraryItems.objects.get(id = item_id).delete()
+    return Response(f"Itinerary Item deleted")
+    

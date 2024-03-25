@@ -37,9 +37,10 @@ struct MainTripView: View {
                 ChildNavController(viewModel: viewModel)
             }
             .background(backCol)
-            .navigationDestination(isPresented: $viewModel.NevagateToCurrentTrip) {
+            .navigationDestination(isPresented: $viewModel.NavigatingToCurrentTrip) {
                 ItineraryView(viewModel: viewModel)
             }
+            
         }
     }
 }

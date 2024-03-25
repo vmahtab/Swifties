@@ -9,40 +9,60 @@ struct HomeView: View {
     @State private var isCurrentItineraryActive = false
     
     var body: some View {
-        NavigationView{
-            VStack() {
-                Spacer().frame(height: 75)
-                HStack(){
-                    Text("Hello \(User.shared.username ?? "User")")                    .font(Font.custom("Poppins", size: 26).weight(.bold))
-                        .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
-                        .offset(x: 10, y: 30)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+        VStack() {
+            Spacer().frame(height: 75)
+            HStack(){
+                Spacer().frame(width: 5)
+                Text("Hello \(User.shared.username ?? "User")")                    .font(Font.custom("Poppins", size: 26).weight(.bold))
+                    .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                    .offset(x: 10, y: 30)
+                    .frame(alignment: .leading)
+                Spacer()
+                
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+      
+           //no search needed here
+//            SearchBarViewControllerRepresentable()
+//                .frame(height: 44)
+//                .offset(x: 0, y: 30)
+//            
+            HStack(spacing: 23) {
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 166, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
                     
+                    Button(action: {
+                        viewmodel.viewState = ViewState.itinerary
+                        viewmodel.isPresented = true
+                        viewmodel.NavigatingToCurrentTrip = true
+                    }) {
+                        Text("Go to current trip")
+                            .font(Font.custom("Poppins", size: 16).weight(.medium))
+                            .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                        
+                    }
                 }
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
                 
-                SearchBarViewControllerRepresentable()
-                    .frame(height: 44)
-                    .offset(x: 0, y: 30)
-                
-                HStack(spacing: 23) {
-                    ZStack() {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .frame(width: 166, height: 84)
-                            .background(Color(red: 1, green: 0.83, blue: 0.51))
-                            .cornerRadius(10)
-                            .offset(x: 0, y: 0)
-                        
-                        Button {
-                            viewmodel.viewState = ViewState.itinerary
-                            viewmodel.isPresented = true
-                            viewmodel.NevagateToCurrentTrip = true
-                        } label: {
-                            Text("Go to current trip")
-                                .font(Font.custom("Poppins", size: 16).weight(.medium))
-                                .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
-                        }
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 165, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
+                    Button(action: {
+                        viewmodel.viewState = ViewState.map(nil)
+                        viewmodel.isPresented = true
+                    }) {
+                        Text("Explore Nearby")
+                            .font(Font.custom("Poppins", size: 16).weight(.medium))
+                            .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
                         
 //                        Button(action: {
 //                            viewmodel.viewState = ViewState.itinerary
@@ -56,7 +76,23 @@ struct HomeView: View {
 //                        }
                     }
                     
-                    ZStack() {
+                    
+                }
+                
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            .frame(width: 393, height: 86)
+            .offset(x: 0, y: 50)
+            VStack(){
+                Text("Destinations for you")
+                           .font(Font.custom("Poppins", size: 18).weight(.semibold))
+                           .foregroundColor(Color(red: 0, green: 0.15, blue: 0.71))
+                           .offset(x: 10, y: 75)
+                           .frame(maxWidth: .infinity, alignment: .leading)
+                           .padding()
+              
+                HStack(spacing: 24) {
+                    HStack(spacing: 0) {
                         Rectangle()
                             .foregroundColor(.clear)
                             .frame(width: 165, height: 84)
@@ -254,7 +290,12 @@ struct HomeView: View {
                 
                 
             }
-            .background(backCol)
+            Spacer()
+            
+            MainNavController(viewModel: viewmodel)
+            Spacer()
+                .frame(height:15)
+            
         }
         //
         
