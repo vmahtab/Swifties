@@ -103,21 +103,21 @@ def landmarkDetection(file_path):
     )
 
     # gives the path of demo.py 
-    # path = os.path.realpath(__file__) 
+    path = os.path.realpath(__file__) 
     
     # gives the directory where demo.py  
     # exists 
-    # dir = os.path.dirname(path) 
+    dir = os.path.dirname(path) 
     
     # replaces folder name of Sibling_1 to  
     # Sibling_2 in directory 
-    # dir = dir.replace('api', 'media') 
+    dir = dir.replace('api', 'media') 
     
     # changes the current directory to  
     # Sibling_2 folder 
-    # os.chdir(dir) 
+    os.chdir(dir) 
 
-    # filepath = file_path.strip("/")
+    filepath = file_path.strip("/")
     # print(file_path)
 
     # Load the image into memory
