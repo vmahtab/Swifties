@@ -89,9 +89,14 @@ def get_landmark(request):
 
 def landmarkDetection(file_path):
     """Detects landmarks in the local file."""
+    # Open the file
+    with open('apiKey.txt', 'r') as file:
+        # Read the contents of the file
+        file_contents = file.read()
+
     # Initialize the Google Cloud client library
     client = vision.ImageAnnotatorClient(
-        client_options={"api_key": "AIzaSyA5vyof07KCRP1ctCnXqBeOm5xuqENix40", "quota_project_id": "eecs-441-417520"}
+        client_options={"api_key": file_contents, "quota_project_id": "eecs-441-417520"}
     )
 
     # gives the path of demo.py 
@@ -146,7 +151,7 @@ def landmarkDetection(file_path):
 
         #landmark_descriptions.append(landmark.description)
             
-    image_file.close()
+    # image_file.close()
     os.remove(filepath)
 
     return closest_landmark
