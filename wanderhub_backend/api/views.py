@@ -19,9 +19,9 @@ from django.utils.timezone import now
 
 import json
 
-from openai import ChatCompletion
+from openai import OpenAI
 api_key = "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"
-chat_completion = ChatCompletion(api_key)
+client = OpenAI(api_key=api_key)
 
 
 @api_view(["POST"])
@@ -111,8 +111,17 @@ def make_custom_itinerary(request):
 
     try:
         prompt_with_input = itinerary_prompt.format(interests=interests, city_name=city_name, country_name=country_name, start_date=start_date, end_date=end_date)
-        response = chat_completion.create_chat_completion(prompt=prompt_with_input)
-        generated_text = response.choices[0].text.strip()
+        completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_with_input,
+                }
+            ],
+            model="gpt-3.5-turbo=1106",
+            response_format={"type": "json_object"}
+        )
+        generated_text = completion.choices[0].message.content
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
@@ -135,7 +144,7 @@ def get_user_itineraries(request):
                       for i in itineraries]
     return Response(itineraries)
 
-@api_view(["POST"])
+@api_view(["DELETE"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def remove_from_itinerary(request):
