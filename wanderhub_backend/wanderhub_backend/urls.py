@@ -26,5 +26,8 @@ urlpatterns = [
     path('signup', views.signup),
     path('add-user-landmark', views.add_user_landmark),
     path('get-user-landmarks', views.get_user_landmarks),
+    path('make-custom-itinerary', views.make_custom_itinerary),
+    path('get-user-itineraries', views.get_user_itineraries),
+    path('remove-from-itinerary', views.remove_from_itinerary),
     path('test_token', views.test_token),
 ]
