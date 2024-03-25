@@ -22,11 +22,13 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import time
 from google.cloud import vision
+import math
 
 @api_view(["POST"])
 def post_landmarks(request):
     # loading multipart/form-data
     username = request.POST.get("username")
+    # timestamp = request.POST.get("timestamp")
     timestamp = request.POST.get("timestamp")
 
     if request.FILES.get("image"):
@@ -79,6 +81,7 @@ def get_landmark(request):
     image_url = latest_object.url_for_image  # Replace 'image_url' with the actual field name in your model
 
     # Call the function to perform landmark detection
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "eecs-441-417520-db5559970077.json"
     result = landmarkDetection(image_url)
 
     # Process the result as needed
@@ -87,7 +90,9 @@ def get_landmark(request):
 def landmarkDetection(file_path):
     """Detects landmarks in the local file."""
     # Initialize the Google Cloud client library
-    client = vision.ImageAnnotatorClient()
+    client = vision.ImageAnnotatorClient(
+        client_options={"api_key": "AIzaSyA5vyof07KCRP1ctCnXqBeOm5xuqENix40", "quota_project_id": "eecs-441-417520"}
+    )
 
     # gives the path of demo.py 
     path = os.path.realpath(__file__) 
@@ -120,10 +125,34 @@ def landmarkDetection(file_path):
     landmarks = response.landmark_annotations
     
     # Create a list to store landmark descriptions
-    landmark_descriptions = []
+    latest_object = LandmarkIdentification.objects.order_by('-timestamp').first()
+    latitude = (latest_object.lat)
+    longitude = (latest_object.lon)
+    current_coord = (latitude, longitude)
+    closest_landmark = "Landmark could not be identified"
+    min_distance = float('inf')
 
     # Append each landmark description to the list
     for landmark in landmarks:
-        landmark_descriptions.append(landmark.description)
+        lat_lng = landmark.locations[0].lat_lng
+        latitude = (lat_lng.latitude)
+        longitude = (lat_lng.longitude)
+        coord = (latitude, longitude)
 
-    return landmark_descriptions
+        dist = distance(current_coord, coord)
+        if dist < min_distance:
+            min_distance = dist
+            closest_landmark = landmark.description
+
+        #landmark_descriptions.append(landmark.description)
+            
+    image_file.close()
+    os.remove(filepath)
+
+    return closest_landmark
+
+def distance(coord1, coord2):
+    """Calculate the Euclidean distance between two coordinates."""
+    x1, y1 = coord1
+    x2, y2 = coord2
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
