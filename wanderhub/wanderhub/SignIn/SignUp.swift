@@ -9,9 +9,10 @@ import SwiftUI
 
 struct SignUpView: View {
     @Environment(\.presentationMode) var presentationMode
-    @State private var username: String = "Traveller"
-    @State private var password: String = "Traveller"
-    @State private var email: String = "Traveller"
+    @State private var username: String = ""
+    @State private var password: String = ""
+    @State private var email:    String = ""
+    
     var user = User.shared
     @Binding var signinProcess: Bool
     

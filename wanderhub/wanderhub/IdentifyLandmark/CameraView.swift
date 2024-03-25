@@ -27,21 +27,53 @@ struct CameraView: View {
                 }
                 .foregroundColor(.black)
             }
-            Text("Hello \(username)")
-                .padding(.top, 30.0)
-                .foregroundColor(titleCol)
-            HStack (alignment: .top) {
-                if let image = image {
-                    Image(uiImage: image)
-                        .scaledToFit()
-                        .frame(height: 181)
-                        .padding(.trailing, 18)
+//            Text("Hello \(User.shared.username ?? "User")")
+//                .padding(.top, 30.0)
+//                .foregroundColor(titleCol)
+//                .font(Font.custom("Poppins", size: 26).weight(.semibold))
+            Spacer().frame(height:200)
+            VStack () {
+                GeometryReader { geometry in
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: geometry.size.height * 0.5)
+                            .frame(width: geometry.size.width * 0.5)
+                            .frame(maxWidth: .infinity, alignment: .center)
+//                            .padding(.trailing, 18)
+                    }
                 }
             }
             Spacer().frame(height:100)
-            CameraButton()
-            Spacer().frame(height:100)
-            AlbumButton()
+            HStack(spacing: 23) {
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 166, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
+                    CameraButton()
+                }
+                
+                ZStack() {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 165, height: 84)
+                        .background(Color(red: 1, green: 0.83, blue: 0.51))
+                        .cornerRadius(10)
+                        .offset(x: 0, y: 0)
+                    AlbumButton()
+                    
+                    
+                }
+                
+            }
+            Spacer().frame(height:25)
+//            CameraButton()
+//            Spacer().frame(height:100)
+//            AlbumButton()
             
             Spacer()
             ChildNavController(viewModel: viewModel)
@@ -112,3 +144,4 @@ struct CameraView: View {
         .foregroundColor(orangeCol)
     }
 }
+
