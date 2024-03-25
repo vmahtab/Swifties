@@ -107,9 +107,7 @@ struct CameraView: View {
         
         // Call the postChatt function to send the post request
         Task {
-            let _ = await ImageStore.shared.postImage(imagedata, image: image)
-            print("success")
-            print(imagedata)
+            let landmarkName = await ImageStore.shared.postImage(imagedata, image: image)
         }
     }
     
