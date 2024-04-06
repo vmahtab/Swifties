@@ -11,6 +11,9 @@ import Foundation
 struct BookingView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
     @State private var destination: String = ""
+    @State private var city: String = ""
+    @State private var country: String = ""
+    @State private var interests: String = ""
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
     @State private var showingAlert = false
@@ -20,7 +23,17 @@ struct BookingView: View {
                 VStack {
                     Spacer()
                         .frame(height: 50)
-                    TextField("Destination", text: $destination)
+                    TextField("City", text: $city)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
+                    TextField("Country", text: $country)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .shadow(radius: 1)
+                    TextField("Interests", text: $interests)
                         .padding()
                         .background(Color.white)
                         .cornerRadius(5)
@@ -38,8 +51,10 @@ struct BookingView: View {
                         .shadow(radius: 1)
                     
                     
+                    Spacer().frame(height:25)
+                    
                     Button("Submit Booking") {
-                        let booking = TravelBooking(destination: destination, startDate: startDate, endDate: endDate)
+                        let booking = TravelBooking(destination: destination, startDate: startDate, endDate: endDate, city: city, country: country, interests: interests)
                         submitBooking(booking: booking)
                     }
                     .padding()
@@ -74,6 +89,22 @@ struct BookingView: View {
             }
         }
     }
+//    func submit() {
+//        if city.isEmpty || country.isEmpty || interests.isEmpty {
+//            showingAlert = true
+//            return
+//        }
+//        Task {
+//            do {
+//                if let _ = await submit.signup(city: city, country: country, interests: interests) {
+//                    signinProcess.toggle()
+//                    presentationMode.wrappedValue.dismiss()
+//                } else {
+//                    loginFailed = true
+//                }
+//            }
+//        }
+//    }
 }
 
 

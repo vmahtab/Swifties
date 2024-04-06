@@ -99,12 +99,12 @@ struct ItineraryHeaderView: View {
             
             // Image of Trip
             VStack {
-                Image(systemName: "smiley")
+                Image("umich")
                     .resizable()
                     .frame(width: 50.0, height: 50.0)
                     .foregroundColor(Color.yellow)
                 
-                Text("we need images ;-;\n\t- vivi <3").font(Font.caption)
+//                Text("we need images ;-;\n\t- vivi <3").font(Font.caption)
             }
             .padding()
             

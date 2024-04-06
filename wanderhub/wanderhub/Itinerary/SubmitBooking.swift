@@ -11,6 +11,9 @@ struct TravelBooking: Codable {
     var destination: String
     var startDate: Date
     var endDate: Date
+    var city: String
+    var country: String
+    var interests: String
 }
 
 class TravelBookingService {
