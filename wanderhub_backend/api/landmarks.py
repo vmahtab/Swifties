@@ -66,6 +66,7 @@ def post_landmarks(request):
     else:
         # Handle validation errors
         errors = serializer.errors
+        return Response({"error": errors})
     return Response({"success": serializer.is_valid(), "url_for_image": imageUrl})
 
 @api_view(["GET"])
