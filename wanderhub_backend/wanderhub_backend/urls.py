@@ -33,4 +33,5 @@ urlpatterns = [
 
     path('post_landmarks', landmarks.post_landmarks),
     path('get_landmarks', landmarks.get_landmark),
+    path('post_landmark_info', landmarks.post_landmark_info)
 ]
