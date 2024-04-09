@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, re_path
-from api import views, landmarks
+from api import views, landmarks, combine
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -33,5 +33,6 @@ urlpatterns = [
 
     path('post_landmarks/', landmarks.post_landmarks),
     path('get_landmarks/', landmarks.get_landmark),
-    path('post_landmark_info/', landmarks.post_landmark_info)
+    path('post_landmark_info/', landmarks.post_landmark_info),
+    path('post_landmark_id_and_info/', combine.post_landmark_id_and_info)
 ]

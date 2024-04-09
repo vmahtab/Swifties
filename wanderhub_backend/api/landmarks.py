@@ -217,4 +217,4 @@ def post_landmark_info(request):
 
     response_data = json.loads(generated_text)
 
-    return Response(generated_text)
+    return Response(response_data)
