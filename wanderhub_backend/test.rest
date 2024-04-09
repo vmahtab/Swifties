@@ -1,18 +1,18 @@
-POST http://127.0.0.1:8000/login
+POST http://34.23.240.68/login
 Content-Type: application/json
 
 {"username": "alexey", "password": "russia"}
 
 ###
 
-POST http://127.0.0.1:8000/signup
+POST http://34.23.240.68/signup
 Content-Type: application/json
 
 {"username": "alexey", "password": "russia", "email": "alexeyk@umich.edu"}
 
 ###
 
-POST http://127.0.0.1:8000/add-user-landmark
+POST http://34.23.240.68/add-user-landmark
 Content-Type: application/json
 Authorization: Token 43c4a432aa5ea9026a800399fb1e0d80a6faf7f3
 
@@ -38,8 +38,16 @@ Authorization: Token 471bc5e12073b6453fcf814e8b72ea46af683fa1
 
 ###
 
-POST http://127.0.0.1:8000/make-custom-itinerary
+POST http://34.23.240.68/make-custom-itinerary
 Content-Type: application/json
-Authorization: Token 0c1b283d8a6a94def293497b18a0c1fde0f16914
+Authorization: Token 59beda281858f2a83e49d34a451ed9290efda8f8
 
 {"interests": "biking and art", "city_name": "dallas", "country_name": "USA", "start_date": "2024-05-24", "end_date": "2024-05-27"}
+
+###
+
+GET http://34.23.240.68/get-user-itineraries
+Content-Type: application/json
+Authorization: Token 59beda281858f2a83e49d34a451ed9290efda8f8
+
+{}
