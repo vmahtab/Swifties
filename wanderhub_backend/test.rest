@@ -43,3 +43,27 @@ Content-Type: application/json
 Authorization: Token 0c1b283d8a6a94def293497b18a0c1fde0f16914
 
 {"interests": "biking and art", "city_name": "dallas", "country_name": "USA", "start_date": "2024-05-24", "end_date": "2024-05-27"}
+
+###
+
+POST http://34.23.240.68/post_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"username": "alex", "timestamp": "2024-03-26 12:35:31 +0000", "imageUrl": "", "lat": "0.0", "lon": "0.0", "place": "Michigan", "facing": "North", "speed": "0.0", "image": "umich_belltower.jpeg"}
+
+###
+
+GET http://34.23.240.68/get_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{}
+
+###
+
+POST http://34.23.240.68/post_landmark_info
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"landmark_name": "Michigan League", "interest": "history"}
