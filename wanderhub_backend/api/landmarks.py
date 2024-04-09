@@ -30,8 +30,8 @@ import math
 def post_landmarks(request):
     # loading multipart/form-data
     username = request.POST.get("username")
-    # timestamp = request.POST.get("timestamp")
     timestamp = request.POST.get("timestamp")
+    # timestamp = time.time()
 
     if request.FILES.get("image"):
         content = request.FILES['image']
@@ -66,6 +66,7 @@ def post_landmarks(request):
     else:
         # Handle validation errors
         errors = serializer.errors
+        return Response({"error": errors})
     return Response({"success": serializer.is_valid(), "url_for_image": imageUrl})
 
 @api_view(["GET"])
@@ -117,9 +118,10 @@ def landmarkDetection(file_path):
     os.chdir(dir) 
 
     filepath = file_path.strip("/")
-    
+    # print(file_path)
+    absolute_path = "/home/ubuntu/Swifties/wanderhub_backend/media" + file_path
     # Load the image into memory
-    with open(filepath, 'rb') as image_file:
+    with open(absolute_path, 'rb') as image_file:
         content = image_file.read()
 
     image = vision.Image(content=content)
@@ -154,7 +156,7 @@ def landmarkDetection(file_path):
         #landmark_descriptions.append(landmark.description)
             
     # image_file.close()
-    os.remove(filepath)
+    # os.remove(filepath)
 
     return closest_landmark
 

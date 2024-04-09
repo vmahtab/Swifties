@@ -11,7 +11,7 @@ import SwiftUI
 // List of globals to be used by different classes
 
 // FIX the URL TODO: FIXME
-let serverUrl = "https://3.22.222.79/"
+let serverUrl = "https://34.23.240.68/"
 let clientID = "604793800583-otj4ujim5d39t5r6t1ue1u6dc3hem015.apps.googleusercontent.com"
 
 
