@@ -55,3 +55,25 @@ class ItineraryItems(models.Model):
 
     def __str__(self):
         return f"Visit {self.landmark.city_name} on {self.visit_time}"
+
+class UserTags(models.Model):
+    # id = models.AutoField(primary_key=True) 
+    username = models.CharField(max_length=100, null=True, blank=True)
+    art = models.FloatField()
+    architecture = models.FloatField()
+    beach = models.FloatField()
+    entertainment = models.FloatField()
+    food = models.FloatField()
+    hiking = models.FloatField()
+    history = models.FloatField()
+    mountains = models.FloatField()
+    museum = models.FloatField()
+    music = models.FloatField()
+    recreation = models.FloatField()
+    scenicViews = models.FloatField()
+    sports = models.FloatField()
+
+    def __str__(self):
+        return self.name
+
+# TODO: make migrations for user tags

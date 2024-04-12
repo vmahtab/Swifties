@@ -198,6 +198,9 @@ def post_landmark_info(request):
     landmark_name = request.data.get("landmark_name")
     interest = request.data.get("interest")
 
+    # TODO: Look for landmark in database, if found return stored description, else call to chatGPT and store in database
+    # Have Chat GPT make tag for landmarks base on current tag set?
+
     prompt_with_input = "You are a wikipedia. You will give me information about the " + landmark_name + " with this focus: " + interest + ". If I have not provided you any focus, then you can be more flexible and provide more generic information as you see fit. Provide a  RFC8259 compliant JSON response following this format without deviation: {'landmark_info': 'Information about the landmark in paragraph form, include who made the landmark, when it was made, and why it was made.'}"
 
     try:
