@@ -46,8 +46,32 @@ Authorization: Token 59beda281858f2a83e49d34a451ed9290efda8f8
 
 ###
 
+<<<<<<< HEAD
 GET http://34.23.240.68/get-user-itineraries
 Content-Type: application/json
 Authorization: Token 59beda281858f2a83e49d34a451ed9290efda8f8
 
 {}
+=======
+POST http://34.23.240.68/post_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"username": "alex", "timestamp": "2024-03-26 12:35:31 +0000", "imageUrl": "", "lat": "0.0", "lon": "0.0", "place": "Michigan", "facing": "North", "speed": "0.0", "image": "umich_belltower.jpeg"}
+
+###
+
+GET http://34.23.240.68/get_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{}
+
+###
+
+POST http://34.23.240.68/post_landmark_info
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"landmark_name": "Michigan League", "interest": "history"}
+>>>>>>> a8bf10e5d50edd8a8d1780310976e84256ffde45
