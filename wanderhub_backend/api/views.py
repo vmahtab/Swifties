@@ -18,10 +18,15 @@ from .models import VisitedCities, Landmark, Itineraries, ItineraryItems
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
+from dotenv import load_dotenv
+import os
+
 import json
 
 from openai import OpenAI
-api_key = "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"
+
+load_dotenv()
+api_key = os.getenv("API_KEY")
 client = OpenAI(api_key=api_key)
 
 @api_view(["POST"])

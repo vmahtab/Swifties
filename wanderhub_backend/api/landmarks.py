@@ -17,17 +17,30 @@ from .models import VisitedCities, Landmark, LandmarkIdentification
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
-import os
+
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 import time
 from google.cloud import vision
-import math
+from math import radians, sin, cos, acos
+
+import json
+
+from dotenv import load_dotenv
+import os
+
+from openai import OpenAI
+
+
+load_dotenv()
+api_key = os.getenv("API_KEY")
+client = OpenAI(api_key=api_key)
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def post_landmarks(request):
+    '''Save landmark picture to database. Expects multiform data and returns status and url for get request.'''
     # loading multipart/form-data
     username = request.POST.get("username")
     timestamp = request.POST.get("timestamp")
@@ -73,12 +86,13 @@ def post_landmarks(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_landmark(request):
-    # user = request.user
+    '''Perform landmark identification on latest picture taken. Expects no data and returns landmark name of most recent picture taken by user'''
+    user = request.user
     # user = "cctran"
     
     # Retrieve the latest image from the database (replace this with your own logic)
-    # latest_object = LandmarkIdentification.objects.filter(user=user).order_by('timestamp').first()
-    latest_object = LandmarkIdentification.objects.order_by('-timestamp').first()
+    # latest_object = LandmarkIdentification.objects.filter(username=user).order_by('timestamp').first()
+    latest_object = LandmarkIdentification.objects.order_by('-timestamp').first() # --> testing without user
 
     # Get the URL of the image from the database
     image_url = latest_object.url_for_image  # Replace 'image_url' with the actual field name in your model
@@ -91,7 +105,7 @@ def get_landmark(request):
     return Response({'landmarks_info':result})
 
 def landmarkDetection(file_path):
-    """Detects landmarks in the local file."""
+    '''Detects landmarks passed in the parameter using google vision api and returns most accurate landmark.'''
     # Open the file
     # with open('apiKey.txt', 'r') as file:
         # Read the contents of the file
@@ -161,7 +175,46 @@ def landmarkDetection(file_path):
     return closest_landmark
 
 def distance(coord1, coord2):
-    """Calculate the Euclidean distance between two coordinates."""
+    '''Calculates the distance between two coordinates.'''
     x1, y1 = coord1
     x2, y2 = coord2
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    # Euclidean Distance
+    # return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+ 
+    # Spherical law of cosines
+    lat1 = radians(float(x1))
+    lon1 = radians(float(y1))
+    lat2 = radians(float(x2))
+    lon2 = radians(float(y2))
+    
+    return 6371.01 * acos(sin(lat1)*sin(lat2) + cos(lat1)*cos(lat2)*cos(lon1 - lon2))
+
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def post_landmark_info(request):
+    '''Gives information about the landmark with optional interest. Expects landmark name and optional interest/focus and returns relevant info'''
+
+    landmark_name = request.data.get("landmark_name")
+    interest = request.data.get("interest")
+
+    prompt_with_input = "You are a wikipedia. You will give me information about the " + landmark_name + " with this focus: " + interest + ". If I have not provided you any focus, then you can be more flexible and provide more generic information as you see fit. Provide a  RFC8259 compliant JSON response following this format without deviation: {'landmark_info': 'Information about the landmark in paragraph form, include who made the landmark, when it was made, and why it was made.'}"
+
+    try:
+        completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt_with_input,
+                }
+            ],
+            model="gpt-3.5-turbo",
+            response_format={"type": "json_object"}
+        )
+        generated_text = completion.choices[0].message.content
+    except Exception as e:
+        return Response({'error': str(e)}, status=500)
+
+    response_data = json.loads(generated_text)
+
+    return Response(generated_text)
