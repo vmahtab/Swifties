@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedCities, Landmark, LandmarkIdentification
+from .models import VisitedLandmarks, Landmark, LandmarkIdentification
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -89,6 +89,40 @@ def post_landmark_id_and_info(request):
             min_distance = dist
             closest_landmark = landmark.description
     result = closest_landmark
+
+    try:
+        landmark = Landmark.objects.get(name=result)
+    except Landmark.DoesNotExist:
+        #raise NotFound("Landmark not found")
+        landmark = Landmark.objects.create(name = result, city_name = " ", country_name = " ", image_url = imageUrl)
+
+        prompt_with_input = "Given these tags [Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports], what tag would you give the colloseum? Do not include any explanations, provide a  RFC8259 compliant JSON response following this format without deviation: {'tags': [list of tags]}"
+
+        try:
+            completion = client_ChatGPT.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt_with_input,
+                    }
+                ],
+                model="gpt-3.5-turbo",
+                response_format={"type": "json_object"}
+            )
+            generated_text = completion.choices[0].message.content
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+
+        response_data = json.loads(generated_text)
+
+        for tag in response_data["tags"]:
+            landmark.tags.add(tag)
+
+        # TODO: Get tags for new landmark?
+
+    VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now(), rating = 3)
+    # return Response(f"New visit added for {user.email} to {landmark.name}")
+
     return Response({'landmarks_info':result})
     '''
     if (result ==  "Landmark could not be identified"){

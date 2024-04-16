@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedCities, Landmark, LandmarkIdentification
+from .models import VisitedLandmarks, Landmark, LandmarkIdentification
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
