@@ -27,9 +27,14 @@ urlpatterns = [
     path('add-user-landmark/', views.add_user_landmark),
     path('get-user-landmarks/', views.get_user_landmarks),
     path('make-custom-itinerary/', views.make_custom_itinerary),
+    path('add-to-itinerary/', views.add_to_itinerary),
+    path('get-nearby-landmarks/', views.get_nearby_landmarks),
     path('get-user-itineraries/', views.get_user_itineraries),
+    path('get-itinerary-details/', views.get_itinerary_details),
     path('remove-from-itinerary/', views.remove_from_itinerary),
     path('test_token/', views.test_token),
+
+    path('intialize-user-preferences/', views.intialize_user_preferences),
 
     path('post_landmarks/', landmarks.post_landmarks),
     path('get_landmarks/', landmarks.get_landmark),
