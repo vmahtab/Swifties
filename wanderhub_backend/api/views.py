@@ -173,19 +173,19 @@ def update_user_weights(username):
     #all_landmarks = VisitedLandmarks.objects.filter(user=username)
     user_weights = UserTags.objects.get(username=username)
     tags = [
-        Art,
-        Architecture,
-        Beach,
-        Entertainment,
-        Food,
-        Hiking,
-        History,
-        Mountains,
-        Museum,
-        Music,
-        Recreation,
-        Scenic Views,
-        Sports
+        "Art",
+        "Architecture",
+        "Beach",
+        "Entertainment",
+        "Food",
+        "Hiking",
+        "History",
+        "Mountains",
+        "Museum",
+        "Music",
+        "Recreation",
+        "Scenic Views",
+        "Sports"
         ]
     avgs = []
     for tag in tags:
