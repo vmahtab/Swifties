@@ -115,6 +115,7 @@ def make_custom_itinerary(request):
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
+    # Removed during merge
     # visited_landmarks = VisitedLandmarks.objects.filter(user=request.user)
     # landmarks = [visit.landmark.name for visit in visited_landmarks]
     # landmarks_string = ", ".join(landmarks)
@@ -283,7 +284,7 @@ def update_landmark_rating(request):
     item.rating = request.POST.get("new_rating")
     item.save()
     
-    return Response(f"Landmark Rating updated")
+    return Response({"Landmark Rating updated" : item.rating})
 
 def update_user_weights(username):
     #all_landmarks = VisitedLandmarks.objects.filter(user=username)
@@ -303,6 +304,7 @@ def update_user_weights(username):
         "Scenic Views",
         "Sports"
         ]
+        
     avgs = []
     for tag in tags:
         visited_landmarks_with_tag = VisitedLandmarks.objects.filter(user=user, landmark__tags__name=tag)
@@ -329,5 +331,17 @@ def update_user_weights(username):
     user_weights.scenicViews = avgs[11]
     user_weights.sports = avgs[12]
         
-        
+    return Response({"Art" : user_weights.art,
+        "Architecture" : user_weights.architecture,
+        "Beach" : user_weights.beach,
+        "Entertainment" : user_weights.entertainment,
+        "Food" : user_weights.food,
+        "Hiking" : user_weights.hiking,
+        "History" : user_weights.history,
+        "Mountains" : user_weights.mountains,
+        "Museum" : user_weights.museum,
+        "Music" : user_weights.music,
+        "Recreation" : user_weights.recreation,
+        "Scenic Views" : user_weights.scenicViews,
+        "Sports" : user_weights.sports})
 

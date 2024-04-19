@@ -15,6 +15,7 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s profile"
 
 class Tag(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     # landmarks = models.ManyToManyField(Landmark, related_name='tags')
     # need to initialize tags
@@ -24,10 +25,9 @@ class Landmark(models.Model):
     name = models.CharField(max_length=200)
     city_name = models.CharField(max_length=100)
     country_name = models.CharField(max_length=100)
-    # image_url = models.URLField(max_length=200)
+    description = models.CharField(max_length=1000, default="Unknown")
     tags = models.ManyToManyField(Tag)
     
-
     def __str__(self):
         return self.name
 
@@ -37,6 +37,7 @@ class VisitedLandmarks(models.Model):
     landmark = models.ForeignKey(Landmark, on_delete=models.CASCADE)
     visit_time = models.DateTimeField()
     rating = models.FloatField(default=3)
+    image_url = models.URLField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} visited {self.landmark.city_name} on {self.visit_time}"
