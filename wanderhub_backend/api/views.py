@@ -59,10 +59,20 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def get_user_landmarks(request):
     user = request.user
-    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark')
-    landmarks_info = [{"city_name": vl.landmark.city_name, "country_name": vl.landmark.country_name, 
-                       "landmark_name": vl.landmark.name, "image_url": vl.landmark.image_url, "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S")} 
-                      for vl in visited_landmarks]
+    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark').prefetch_related('landmark__tags')
+    
+    landmarks_info = [{
+        "id": vl.landmark.id, 
+        "landmark_name": vl.landmark.name, 
+        "city_name": vl.landmark.city_name, 
+        "country_name": vl.landmark.country_name, 
+        "description": vl.landmark.description,
+        "tags": [tag.name for tag in vl.landmark.tags.all()],
+        "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "rating": vl.rating,
+        "image_url": vl.image_url
+    } for vl in visited_landmarks]
+
     return Response(landmarks_info)
 
 @api_view(["POST"])
