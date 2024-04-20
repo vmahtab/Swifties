@@ -124,7 +124,7 @@ def make_custom_itinerary(request):
     sports=tags.sports
 
 
-    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{it_name: fun name for itinerary, city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
 
     try:
         completion = client.chat.completions.create(
@@ -144,6 +144,8 @@ def make_custom_itinerary(request):
     # Removed during merge
     response_data = json.loads(generated_text)
 
+    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
+
     for i in response_data['Landmarks']:
         landmark_info = {
             'name': i['name'],
@@ -156,24 +158,19 @@ def make_custom_itinerary(request):
             landmark = Landmark.objects.get(name=i['name'])
         except Landmark.DoesNotExist:
             landmark = Landmark(
-        name=landmark_info['name'],
-        city_name=landmark_info['city'],
-        country_name=landmark_info['country'],
-        description=landmark_info['description']
-    )
-    landmark.save()
+            name=landmark_info['name'],
+            city_name=landmark_info['city'],
+            country_name=landmark_info['country'],
+            description=landmark_info['description']
+            )
+            landmark.save()
 
-    # print(landmark_info['tags'])
+            for tag in landmark_info['tags']:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                landmark.tags.add(tag)
+            landmark.save()
 
-    for tag in landmark_info['tags']:
-        tag, created = Tag.objects.get_or_create(name=tag)
-        landmark.tags.add(tag)
-
-    landmark.save()
-
-    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
-    for item in response_data["itinerary"]:
-       ItineraryItems.objects.create(it_id = new_it, landmark_name=item["landmark"], date_time=item["date_time"], latitude=item["latitude"], longitude=item["longitude"])
+        ItineraryItems.objects.create(it_id = new_it, landmark_name=landmark, trip_day=i["day"], latitude=i["latitude"], longitude=i["longitude"])
 
     return Response(generated_text)
 
@@ -184,7 +181,7 @@ def add_to_itinerary(request):
     
     user = request.user
     itinerary_id = request.get.data('itinerary_id')
-    date = request.get.data('day')
+    day = request.get.data('day')
     itinerary = Itineraries.objects.filter(id = itinerary_id)
     city_name = itinerary.city_name
     start_date = itinerary.start_date
@@ -204,7 +201,7 @@ def add_to_itinerary(request):
     scenic_views=tags.scenicViews
     sports=tags.sports
 
-    prompt_with_input = "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + " with a start date of " + start_date + "Return the date for day "+date+" of the trip. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{date_time: Date Time in django parsable format,landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
+    prompt_with_input = "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + " with a start date of " + start_date + "Return the date for day "+day+" of the trip. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{date_time: Date Time in django parsable format,landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
 
     try:
         completion = client.chat.completions.create(
@@ -223,7 +220,30 @@ def add_to_itinerary(request):
 
     response_data = json.loads(generated_text)
 
-    ItineraryItems.objects.create(it_id = itinerary_id, landmark_name=response_data["landmark"], date_time=response_data["date_time"], latitude=response_data["latitude"], longitude=response_data["longitude"])
+    landmark_info = {
+            'name': i['name'],
+            'city': response_data['city'],
+            'country': response_data['country'],
+            'description': i['message'],
+            'tags': i['tags']
+        }
+    try:
+        landmark = Landmark.objects.get(name=i['name'])
+    except Landmark.DoesNotExist:
+        landmark = Landmark(
+        name=landmark_info['name'],
+        city_name=landmark_info['city'],
+        country_name=landmark_info['country'],
+        description=landmark_info['description']
+        )
+        landmark.save()
+
+        for tag in landmark_info['tags']:
+            tag, created = Tag.objects.get_or_create(name=tag)
+            landmark.tags.add(tag)
+        landmark.save()
+
+    ItineraryItems.objects.create(it_id = itinerary_id, landmark_name=landmark, trip_day=i["day"], latitude=i["latitude"], longitude=i["longitude"])
 
     return Response(generated_text)
 
