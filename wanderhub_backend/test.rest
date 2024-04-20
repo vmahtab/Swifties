@@ -21,7 +21,7 @@ Authorization: Token d57593d0b0567b0bd08a360e8d0741868535e601
 
 ###
 
-GET http://34.23.240.68/get-user-landmarks
+GET http://34.23.240.68/get-user-landmarks/
 Content-Type: application/json
 Authorization: Token d57593d0b0567b0bd08a360e8d0741868535e601
 

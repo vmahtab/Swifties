@@ -59,10 +59,20 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def get_user_landmarks(request):
     user = request.user
-    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark')
-    landmarks_info = [{"city_name": vl.landmark.city_name, "country_name": vl.landmark.country_name, 
-                       "landmark_name": vl.landmark.name, "image_url": vl.landmark.image_url, "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S")} 
-                      for vl in visited_landmarks]
+    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark').prefetch_related('landmark__tags')
+    
+    landmarks_info = [{
+        "id": vl.landmark.id, 
+        "landmark_name": vl.landmark.name, 
+        "city_name": vl.landmark.city_name, 
+        "country_name": vl.landmark.country_name, 
+        "description": vl.landmark.description,
+        "tags": [tag.name for tag in vl.landmark.tags.all()],
+        "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "rating": vl.rating,
+        "image_url": vl.image_url
+    } for vl in visited_landmarks]
+
     return Response(landmarks_info)
 
 @api_view(["POST"])
@@ -131,6 +141,7 @@ def make_custom_itinerary(request):
     except Exception as e:
         return Response({'error': str(e)}, status=500)
 
+    # Removed during merge
     response_data = json.loads(generated_text)
 
     landmark_info = {
@@ -365,7 +376,7 @@ def update_landmark_rating(request):
     item.rating = request.POST.get("new_rating")
     item.save()
     
-    return Response(f"Landmark Rating updated")
+    return Response({"Landmark Rating updated" : item.rating})
 
 def update_user_weights(username):
     #all_landmarks = VisitedLandmarks.objects.filter(user=username)
@@ -385,6 +396,7 @@ def update_user_weights(username):
         "Scenic Views",
         "Sports"
         ]
+        
     avgs = []
     for tag in tags:
         visited_landmarks_with_tag = VisitedLandmarks.objects.filter(user=user, landmark__tags__name=tag)
@@ -411,5 +423,17 @@ def update_user_weights(username):
     user_weights.scenicViews = avgs[11]
     user_weights.sports = avgs[12]
         
-        
+    return Response({"Art" : user_weights.art,
+        "Architecture" : user_weights.architecture,
+        "Beach" : user_weights.beach,
+        "Entertainment" : user_weights.entertainment,
+        "Food" : user_weights.food,
+        "Hiking" : user_weights.hiking,
+        "History" : user_weights.history,
+        "Mountains" : user_weights.mountains,
+        "Museum" : user_weights.museum,
+        "Music" : user_weights.music,
+        "Recreation" : user_weights.recreation,
+        "Scenic Views" : user_weights.scenicViews,
+        "Sports" : user_weights.sports})
 

@@ -196,7 +196,8 @@ def post_landmark_info(request):
     '''Gives information about the landmark with optional interest. Expects landmark name and optional interest/focus and returns relevant info'''
 
     landmark_name = request.data.get("landmark_name")
-    interest = request.data.get("interest")
+    # interest = request.data.get("interest")
+    interest = "history"
 
     # TODO: Look for landmark in database, if found return stored description, else call to chatGPT and store in database
     # Have Chat GPT make tag for landmarks base on current tag set?
