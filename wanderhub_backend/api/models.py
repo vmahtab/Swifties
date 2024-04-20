@@ -15,17 +15,20 @@ class UserProfile(models.Model):
         return f"{self.user.username}'s profile"
 
 class Tag(models.Model):
-    id = models.AutoField(primary_key=True)
+    # id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     # landmarks = models.ManyToManyField(Landmark, related_name='tags')
     # need to initialize tags
+
+    def __str__(self):
+        return f"{self.name}"
 
 class Landmark(models.Model):
     id = models.AutoField(primary_key=True) 
     name = models.CharField(max_length=200)
     city_name = models.CharField(max_length=100)
     country_name = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000, default="Unknown")
+    description = models.CharField(default="Unknown")
     tags = models.ManyToManyField(Tag)
     
     def __str__(self):
@@ -77,8 +80,8 @@ class ItineraryItems(models.Model):
         return f"Visit {self.landmark.city_name} on {self.visit_time}"
 
 class UserTags(models.Model):
-    # id = models.AutoField(primary_key=True) 
-    username = models.CharField(max_length=100, null=True, blank=True)
+    id = models.AutoField(primary_key=True) 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     art = models.FloatField()
     architecture = models.FloatField()
     beach = models.FloatField()
@@ -94,7 +97,7 @@ class UserTags(models.Model):
     sports = models.FloatField()
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 # TODO: make migrations for user tags
 @receiver(post_save, sender=User)

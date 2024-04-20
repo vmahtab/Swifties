@@ -14,7 +14,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedLandmarks, Landmark, Itineraries, ItineraryItems
+from .models import VisitedLandmarks, Landmark, Itineraries, ItineraryItems, UserTags
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -284,21 +284,26 @@ def intialize_user_preferences(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def update_landmark_rating(request):
-    username = request.user
+    user = request.user
     landmark_name = request.data.get("landmark_name")
+    landmark = Landmark.objects.get(name=landmark_name)
     try:
-        item = VisitedLandmarks.objects.filter(user=username).get(name=landmark_name)
+        item = VisitedLandmarks.objects.filter(user=user).get(landmark=landmark)
     except ItineraryItems.DoesNotExist:
         raise NotFound("Landmark not found")
     
-    item.rating = request.POST.get("new_rating")
+    item.rating = float(request.data.get("new_rating"))
     item.save()
     
     return Response({"Landmark Rating updated" : item.rating})
 
-def update_user_weights(username):
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_user_weights(request):
+    # def update_user_weights(username):
     #all_landmarks = VisitedLandmarks.objects.filter(user=username)
-    user_weights = UserTags.objects.get(username=username)
+    user_weights = UserTags.objects.get(user=request.user)
     tags = [
         "Art",
         "Architecture",
@@ -316,16 +321,19 @@ def update_user_weights(username):
         ]
         
     avgs = []
+    
     for tag in tags:
-        visited_landmarks_with_tag = VisitedLandmarks.objects.filter(user=user, landmark__tags__name=tag)
+        visited_landmarks = VisitedLandmarks.objects.filter(user=request.user)
+        visited_landmarks_with_tag = visited_landmarks.filter(landmark__tags__name=tag)
+        return Response({"valid" : visited_landmarks_with_tag})
         running_sum = 0
-        runnning_count = 0
+        running_count = 0
         for landmark in visited_landmarks_with_tag:
             running_sum += landmark.rating
             running_count += 1
         if running_count == 0:
-            running_sum = 1
-            running_count = 0
+            running_sum = 3
+            running_count = 1
         avgs.append(running_sum/running_count)
     user_weights.art = avgs[0]
     user_weights.architecture = avgs[1]
@@ -340,6 +348,7 @@ def update_user_weights(username):
     user_weights.recreation = avgs[10]
     user_weights.scenicViews = avgs[11]
     user_weights.sports = avgs[12]
+    user_weights.save()
         
     return Response({"Art" : user_weights.art,
         "Architecture" : user_weights.architecture,
