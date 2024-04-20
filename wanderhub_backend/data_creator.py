@@ -44,7 +44,7 @@ def ask_chatgpt(landmark_name):
                 "content": prompt,
             }
         ],
-        model="gpt-4-turbo",
+        model="gpt-3.5-turbo",
         response_format={"type": "json_object"}
     )
 
@@ -52,6 +52,9 @@ def ask_chatgpt(landmark_name):
     data = json.loads(generated_text)
 
     # print(data['tags'])
+
+    if None in (data['city'], data['country'], data['description'], data['tags']):
+        return None  # Return None if any field is None
 
     return {
         'name': landmark_name,
@@ -83,9 +86,10 @@ def process_images(directory):
     images = list(Path(directory).glob('*.jpg'))
     for image_path in images:
         landmark = landmark_detection(image_path)
-        if landmark is not None:
+        if landmark is not None and not Landmark.objects.filter(name=landmark).exists():
             landmark_info = ask_chatgpt(landmark[0])
-            save_landmark(landmark_info)
+            if landmark_info is not None:
+                save_landmark(landmark_info)
 
 if __name__ == "__main__":
     directory = "/home/ubuntu/Swifties/wanderhub_backend/images"
