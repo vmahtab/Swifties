@@ -14,7 +14,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedCities, Landmark, Itineraries, ItineraryItems
+from .models import VisitedLandmarks, Landmark, Itineraries, ItineraryItems
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -59,7 +59,7 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def get_user_landmarks(request):
     user = request.user
-    visited_landmarks = VisitedCities.objects.filter(user=user).select_related('landmark')
+    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark')
     landmarks_info = [{"city_name": vl.landmark.city_name, "country_name": vl.landmark.country_name, 
                        "landmark_name": vl.landmark.name, "image_url": vl.landmark.image_url, "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S")} 
                       for vl in visited_landmarks]
@@ -76,7 +76,8 @@ def add_user_landmark(request):
     except Landmark.DoesNotExist:
         raise NotFound("Landmark not found")
 
-    VisitedCities.objects.create(user=user, landmark=landmark, visit_time=now())
+    # VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now())
+    VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now(), rating = 3)
     return Response(f"New visit added for {user.email} to {landmark.name}")
 
 @api_view(["GET"])
@@ -113,7 +114,7 @@ def make_custom_itinerary(request):
     sports=tags.sports
 
 
-    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}]}"
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
 
     try:
         completion = client.chat.completions.create(
@@ -131,6 +132,33 @@ def make_custom_itinerary(request):
         return Response({'error': str(e)}, status=500)
 
     response_data = json.loads(generated_text)
+
+    landmark_info = {
+            'name': result,
+            'city': data['city'],
+            'country': data['country'],
+            'description': data['description'],
+            'tags': data['tags']
+        }
+
+        landmark = Landmark(
+            name=landmark_info['name'],
+            city_name=landmark_info['city'],
+            country_name=landmark_info['country'],
+            description=landmark_info['description']
+        )
+        landmark.save()
+
+        # print(landmark_info['tags'])
+
+        # return Response({
+        #             "tags found" : landmark_info['tags']
+        #            })
+
+        for tag in landmark_info['tags']:
+            tag, created = Tag.objects.get_or_create(name=tag)
+            landmark.tags.add(tag)
+        landmark.save()
 
     new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
     for item in response_data["itinerary"]:
@@ -306,16 +334,82 @@ def intialize_user_preferences(request):
         if(x==0):
             x = remain/to_update
 
-    UserTags.objects.filter(username=user).update(art=interests[0])
-    UserTags.objects.filter(username=user).update(architecture=interests[1])
-    UserTags.objects.filter(username=user).update(beach=interests[2])
-    UserTags.objects.filter(username=user).update(entertainment=interests[3])
-    UserTags.objects.filter(username=user).update(food=interests[4])
-    UserTags.objects.filter(username=user).update(hiking=interests[5])
-    UserTags.objects.filter(username=user).update(history=interests[6])
-    UserTags.objects.filter(username=user).update(mountains=interests[7])
-    UserTags.objects.filter(username=user).update(museum=interests[8])
-    UserTags.objects.filter(username=user).update(music=interests[9])
-    UserTags.objects.filter(username=user).update(recreation=interests[10])
-    UserTags.objects.filter(username=user).update(scenicViews=interests[11])
-    UserTags.objects.filter(username=user).update(sports=interests[12])
+    tags = UserTags.objects.get_or_create(username=user)[0]
+    tags.art = interests[0]
+    tags.architecture =interests[1]
+    tags.beach = interests[2]
+    tags.entertainment = interests[3]
+    tags.food = interests[4]
+    tags.hiking = interests[5]
+    tags.history = interests[6]
+    tags.mountains = interests[7]
+    tags.museum = interests[8]
+    tags.music = interests[9]
+    tags.recreation = interests[10]
+    tags.scenicViews = interests[11]
+    tags.sports = interests[12]
+
+
+    
+@api_view(["POST"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_landmark_rating(request):
+    username = request.user
+    landmark_name = request.data.get("landmark_name")
+    try:
+        item = VisitedLandmarks.objects.filter(user=username).get(name=landmark_name)
+    except ItineraryItems.DoesNotExist:
+        raise NotFound("Landmark not found")
+    
+    item.rating = request.POST.get("new_rating")
+    item.save()
+    
+    return Response(f"Landmark Rating updated")
+
+def update_user_weights(username):
+    #all_landmarks = VisitedLandmarks.objects.filter(user=username)
+    user_weights = UserTags.objects.get(username=username)
+    tags = [
+        "Art",
+        "Architecture",
+        "Beach",
+        "Entertainment",
+        "Food",
+        "Hiking",
+        "History",
+        "Mountains",
+        "Museum",
+        "Music",
+        "Recreation",
+        "Scenic Views",
+        "Sports"
+        ]
+    avgs = []
+    for tag in tags:
+        visited_landmarks_with_tag = VisitedLandmarks.objects.filter(user=user, landmark__tags__name=tag)
+        running_sum = 0
+        runnning_count = 0
+        for landmark in visited_landmarks_with_tag:
+            running_sum += landmark.rating
+            running_count += 1
+        if running_count == 0:
+            running_sum = 1
+            running_count = 0
+        avgs.append(running_sum/running_count)
+    user_weights.art = avgs[0]
+    user_weights.architecture = avgs[1]
+    user_weights.beach = avgs[2]
+    user_weights.entertainment = avgs[3]
+    user_weights.food = avgs[4]
+    user_weights.hiking = avgs[5]
+    user_weights.history = avgs[6]
+    user_weights.mountains = avgs[7]
+    user_weights.museum = avgs[8]
+    user_weights.music = avgs[9]
+    user_weights.recreation = avgs[10]
+    user_weights.scenicViews = avgs[11]
+    user_weights.sports = avgs[12]
+        
+        
+

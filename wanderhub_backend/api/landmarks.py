@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedCities, Landmark, LandmarkIdentification
+from .models import VisitedLandmarks, Landmark, LandmarkIdentification
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -34,7 +34,7 @@ from openai import OpenAI
 
 load_dotenv()
 api_key = os.getenv("API_KEY")
-client = OpenAI(api_key=api_key)
+client_ChatGPT = OpenAI(api_key=api_key)
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -112,7 +112,7 @@ def landmarkDetection(file_path):
         # file_contents = file.read()
 
     # Initialize the Google Cloud client library
-    client = vision.ImageAnnotatorClient(
+    client_Google = vision.ImageAnnotatorClient(
             client_options={"api_key": "AIzaSyA5vyof07KCRP1ctCnXqBeOm5xuqENix40", "quota_project_id": "eecs-441-417520"}
     )
 
@@ -141,7 +141,7 @@ def landmarkDetection(file_path):
     image = vision.Image(content=content)
 
     # Perform landmark detection
-    response = client.landmark_detection(image=image)
+    response = client_Google.landmark_detection(image=image)
     # json_response = vision.AnnotateImageResponse.to_json(response)
 
     # print(json_response)
@@ -198,10 +198,13 @@ def post_landmark_info(request):
     landmark_name = request.data.get("landmark_name")
     interest = request.data.get("interest")
 
+    # TODO: Look for landmark in database, if found return stored description, else call to chatGPT and store in database
+    # Have Chat GPT make tag for landmarks base on current tag set?
+
     prompt_with_input = "You are a wikipedia. You will give me information about the " + landmark_name + " with this focus: " + interest + ". If I have not provided you any focus, then you can be more flexible and provide more generic information as you see fit. Provide a  RFC8259 compliant JSON response following this format without deviation: {'landmark_info': 'Information about the landmark in paragraph form, include who made the landmark, when it was made, and why it was made.'}"
 
     try:
-        completion = client.chat.completions.create(
+        completion = client_ChatGPT.chat.completions.create(
             messages=[
                 {
                     "role": "user",
@@ -217,4 +220,4 @@ def post_landmark_info(request):
 
     response_data = json.loads(generated_text)
 
-    return Response(generated_text)
+    return Response(response_data)
