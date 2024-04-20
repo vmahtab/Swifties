@@ -144,32 +144,32 @@ def make_custom_itinerary(request):
     # Removed during merge
     response_data = json.loads(generated_text)
 
-    landmark_info = {
-            'name': result,
-            'city': data['city'],
-            'country': data['country'],
-            'description': data['description'],
-            'tags': data['tags']
+    for i in response_data['Landmarks']:
+        landmark_info = {
+            'name': i['name'],
+            'city': response_data['city'],
+            'country': response_data['country'],
+            'description': i['message'],
+            'tags': i['tags']
         }
+        try:
+            landmark = Landmark.objects.get(name=i['name'])
+        except Landmark.DoesNotExist:
+            landmark = Landmark(
+        name=landmark_info['name'],
+        city_name=landmark_info['city'],
+        country_name=landmark_info['country'],
+        description=landmark_info['description']
+    )
+    landmark.save()
 
-        landmark = Landmark(
-            name=landmark_info['name'],
-            city_name=landmark_info['city'],
-            country_name=landmark_info['country'],
-            description=landmark_info['description']
-        )
-        landmark.save()
+    # print(landmark_info['tags'])
 
-        # print(landmark_info['tags'])
+    for tag in landmark_info['tags']:
+        tag, created = Tag.objects.get_or_create(name=tag)
+        landmark.tags.add(tag)
 
-        # return Response({
-        #             "tags found" : landmark_info['tags']
-        #            })
-
-        for tag in landmark_info['tags']:
-            tag, created = Tag.objects.get_or_create(name=tag)
-            landmark.tags.add(tag)
-        landmark.save()
+    landmark.save()
 
     new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
     for item in response_data["itinerary"]:
@@ -325,7 +325,7 @@ def intialize_user_preferences(request):
     museum = request.data.get('Museum')
     music = request.data.get('Music')
     recreation = request.data.get('Recreation')
-    scenic_views = request.data.get('Scenic_views')
+    scenic_views = request.data.get('Scenic Views')
     sports = request.data.get('Sports')
 
     interests = [art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic_views, sports]
