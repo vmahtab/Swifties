@@ -22,7 +22,7 @@ class Tag(models.Model):
 
 class Landmark(models.Model):
     id = models.AutoField(primary_key=True) 
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     city_name = models.CharField(max_length=100)
     country_name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000, default="Unknown")
@@ -68,7 +68,7 @@ class Itineraries(models.Model):
 class ItineraryItems(models.Model):
     id = models.AutoField(primary_key=True)
     it_id = models.ForeignKey(Itineraries, on_delete=models.CASCADE)
-    landmark_name = models.CharField(max_length=200)
+    landmark_name = models.ForeignKey(max_length=200)
     date_time = models.DateTimeField()
     latitude = models.FloatField()
     longitude = models.FloatField()
