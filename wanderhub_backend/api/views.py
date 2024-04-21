@@ -23,6 +23,8 @@ import os
 
 import json
 
+import random
+
 from openai import OpenAI
 
 load_dotenv()
@@ -366,7 +368,8 @@ def intialize_user_preferences(request):
         if(x==0):
             x = remain/to_update
 
-    tags = UserTags.objects.get_or_create(username=user)[0]
+    tags = UserTags.objects.get_or_create(user=user)[0]
+    # tags,created = UserTags.objects.get_or_create(username=user)
     tags.art = interests[0]
     tags.architecture =interests[1]
     tags.beach = interests[2]
@@ -466,4 +469,17 @@ def update_user_weights(request):
         "Recreation" : user_weights.recreation,
         "Scenic Views" : user_weights.scenicViews,
         "Sports" : user_weights.sports})
+
+@api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_destinations(request):
+        all_cities = Landmark.objects.values_list('city_name', flat=True).distinct()
+        all_cities = list(all_cities)
+
+        random.shuffle(all_cities)
+        random_cities = all_cities[:6]
+
+         return Response(data)
+
 
