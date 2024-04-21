@@ -14,7 +14,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedLandmarks, Landmark, Itineraries, ItineraryItems, UserTags
+from .models import VisitedLandmarks, Landmark, Itineraries, ItineraryItems, UserTags, Tag
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -123,20 +123,20 @@ def make_custom_itinerary(request):
     start_date = request.data.get("start_date")  # Must be YYYY-MM-DD
     end_date = request.data.get("end_date")  # Must be YYYY-MM-DD
 
-    tags = UserTags.objects.get(username=user)
-    art = tags.art
-    architecture = tags.architecture
-    beach = tags.beach
-    entertainment = tags.entertainment
-    food = tags.food
-    hiking = tags.hiking
-    history = tags.history
-    mountains = tags.moauntains
-    museum = tags.museum
-    music = tags.music
-    recreation = tags.recreation
-    scenic_views = tags.scenicViews
-    sports = tags.sports
+    tags = UserTags.objects.get(user=user)
+    art = str(tags.art)
+    architecture = str(tags.architecture)
+    beach = str(tags.beach)
+    entertainment = str(tags.entertainment)
+    food = str(tags.food)
+    hiking = str(tags.hiking)
+    history = str(tags.history)
+    mountains = str(tags.mountains)
+    museum = str(tags.museum)
+    music = str(tags.music)
+    recreation = str(tags.recreation)
+    scenic_views = str(tags.scenicViews)
+    sports = str(tags.sports)
 
     prompt_with_input = (
         "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "
@@ -242,26 +242,29 @@ def make_custom_itinerary(request):
 def add_to_itinerary(request):
 
     user = request.user
-    itinerary_id = request.get.data("itinerary_id")
-    day = request.get.data("day")
-    itinerary = Itineraries.objects.filter(id=itinerary_id)
+    itinerary_id = request.data.get("itinerary_id")
+    day = request.data.get("day")
+    try:
+        itinerary = Itineraries.objects.get(id=itinerary_id)
+    except Itineraries.DoesNotExist:
+        return Response("Itinerary does not exist", status=status.HTTP_404_NOT_FOUND)
     city_name = itinerary.city_name
-    start_date = itinerary.start_date
+    start_date = str(itinerary.start_date)
 
-    tags = UserTags.objects.get(username=user)
-    art = tags.art
-    architecture = tags.architecture
-    beach = tags.beach
-    entertainment = tags.entertainment
-    food = tags.food
-    hiking = tags.hiking
-    history = tags.history
-    mountains = tags.moauntains
-    museum = tags.museum
-    music = tags.music
-    recreation = tags.recreation
-    scenic_views = tags.scenicViews
-    sports = tags.sports
+    tags = UserTags.objects.get(user=user)
+    art = str(tags.art)
+    architecture = str(tags.architecture)
+    beach = str(tags.beach)
+    entertainment = str(tags.entertainment)
+    food = str(tags.food)
+    hiking = str(tags.hiking)
+    history = str(tags.history)
+    mountains = str(tags.mountains)
+    museum = str(tags.museum)
+    music = str(tags.music)
+    recreation = str(tags.recreation)
+    scenic_views = str(tags.scenicViews)
+    sports = str(tags.sports)
 
     prompt_with_input = (
         "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "
@@ -315,14 +318,14 @@ def add_to_itinerary(request):
     response_data = json.loads(generated_text)
 
     landmark_info = {
-        "name": response_data["name"],
+        "name": response_data["landmark"],
         "city": response_data["city"],
         "country": response_data["country"],
         "description": response_data["message"],
         "tags": response_data["tags"],
     }
     try:
-        landmark = Landmark.objects.get(name=i["name"])
+        landmark = Landmark.objects.get(name=response_data["landmark"])
     except Landmark.DoesNotExist:
         landmark = Landmark(
             name=landmark_info["name"],
@@ -338,11 +341,11 @@ def add_to_itinerary(request):
         landmark.save()
 
     ItineraryItems.objects.create(
-        it_id=itinerary_id,
+        it_id=itinerary,
         landmark_name=landmark,
-        trip_day=i["day"],
-        latitude=i["latitude"],
-        longitude=i["longitude"],
+        trip_day=day,
+        latitude=response_data["latitude"],
+        longitude=response_data["longitude"],
     )
 
     return Response(generated_text)
@@ -358,20 +361,20 @@ def get_nearby_landmarks(request):
     longitude = request.data.get("longitude")
     distance = request.data.get("distance")
 
-    tags = UserTags.objects.get(username=user)
-    art = tags.art
-    architecture = tags.architecture
-    beach = tags.beach
-    entertainment = tags.entertainment
-    food = tags.food
-    hiking = tags.hiking
-    history = tags.history
-    mountains = tags.moauntains
-    museum = tags.museum
-    music = tags.music
-    recreation = tags.recreation
-    scenic_views = tags.scenicViews
-    sports = tags.sports
+    tags = UserTags.objects.get(user=user)
+    art = str(tags.art)
+    architecture = str(tags.architecture)
+    beach = str(tags.beach)
+    entertainment = str(tags.entertainment)
+    food = str(tags.food)
+    hiking = str(tags.hiking)
+    history = str(tags.history)
+    mountains = str(tags.mountains)
+    museum = str(tags.museum)
+    music = str(tags.music)
+    recreation = str(tags.recreation)
+    scenic_views = str(tags.scenicViews)
+    sports = str(tags.sports)
 
     prompt_with_input = (
         "You are a travel assistant. You will help me find nearby specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "
@@ -435,13 +438,13 @@ def get_nearby_landmarks(request):
 @permission_classes([IsAuthenticated])
 def get_user_itineraries(request):
     user = request.user
-    user_itineraries = Itineraries.objects.filter(user=user).values("id")
+    user_itineraries = Itineraries.objects.filter(user=user)
     itineraries = [
         {
             "id": i.id,
             "city_name": i.city_name,
             "it_name": i.it_name,
-            "start_date": i.start_date.strftime("%Y-%m-%d"),
+            "start_date": str(i.start_date),
         }
         for i in user_itineraries
     ]
