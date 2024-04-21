@@ -68,12 +68,14 @@ Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
 
 {"landmark_name": "Michigan League", "interest": "history"}
 
+
 {}
 
 ###
 
-POST http://34.23.240.68/initialize_user_preferences
+GET http://34.23.240.68/get-nearby-landmarks
 Content-Type: application/json
 Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
 
-{"landmark_name": "Michigan League", "interest": "history"}
+{"latitude": "", "longitude": "-0.1180", "distance":"10"}
+
