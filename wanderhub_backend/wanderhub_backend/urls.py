@@ -41,7 +41,7 @@ urlpatterns = [
     path('post_landmark_info/', landmarks.post_landmark_info),
     path('post_landmark_id_and_info/', combine.post_landmark_id_and_info),
 
-    path('testing_intialize_user_preferences', views.intialize_user_preferences),
-    path('testing_update_landmark_rating', views.update_landmark_rating),
-    path('testing_update_user_weights', views.update_user_weights)
+    path('testing_intialize_user_preferences/', views.intialize_user_preferences),
+    path('testing_update_landmark_rating/', views.update_landmark_rating),
+    path('testing_update_user_weights/', views.update_user_weights)
 ]

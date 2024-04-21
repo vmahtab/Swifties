@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth import get_user_model
-from .models import VisitedLandmarks, Landmark, LandmarkIdentification
+from .models import VisitedLandmarks, Landmark, LandmarkIdentification, Tag
 from rest_framework.exceptions import NotFound
 from django.utils.timezone import now
 
@@ -43,6 +43,7 @@ def post_landmark_id_and_info(request):
     '''Save landmark picture to database. Expects multiform data and returns status and url for get request.'''
     # loading multipart/form-data
     username = request.POST.get("username")
+    # username = request.user.username
     timestamp = request.POST.get("timestamp")
     # timestamp = time.time()
 
@@ -93,37 +94,58 @@ def post_landmark_id_and_info(request):
     try:
         landmark = Landmark.objects.get(name=result)
     except Landmark.DoesNotExist:
-        #raise NotFound("Landmark not found")
-        landmark = Landmark.objects.create(name = result, city_name = " ", country_name = " ", image_url = imageUrl)
+        prompt = f"Provide detailed information for the landmark named '{result}' including its city, country, a description, and categories under tags such as Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports. Return a JSON object with the following keys: 'city', 'country', 'description', 'tags'"
 
-        prompt_with_input = "Given these tags [Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports], what tag would you give the colloseum? Do not include any explanations, provide a  RFC8259 compliant JSON response following this format without deviation: {'tags': [list of tags]}"
+        completion = client_ChatGPT.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model="gpt-4-turbo",
+            response_format={"type": "json_object"}
+        )
 
-        try:
-            completion = client_ChatGPT.chat.completions.create(
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt_with_input,
-                    }
-                ],
-                model="gpt-3.5-turbo",
-                response_format={"type": "json_object"}
-            )
-            generated_text = completion.choices[0].message.content
-        except Exception as e:
-            return Response({'error': str(e)}, status=500)
+        generated_text = completion.choices[0].message.content
+        data = json.loads(generated_text)
 
-        response_data = json.loads(generated_text)
+        # print(data['tags'])
 
-        for tag in response_data["tags"]:
+        landmark_info = {
+            'name': result,
+            'city': data['city'],
+            'country': data['country'],
+            'description': data['description'],
+            'tags': data['tags']
+        }
+
+        landmark = Landmark(
+            name=landmark_info['name'],
+            city_name=landmark_info['city'],
+            country_name=landmark_info['country'],
+            description=landmark_info['description']
+        )
+        landmark.save()
+
+        # print(landmark_info['tags'])
+
+        # return Response({
+        #             "tags found" : landmark_info['tags']
+        #            })
+
+        for tag in landmark_info['tags']:
+            tag, created = Tag.objects.get_or_create(name=tag)
             landmark.tags.add(tag)
+        landmark.save()
 
-        # TODO: Get tags for new landmark?
-
-    VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now(), rating = 3)
+    VisitedLandmarks.objects.create(user=request.user, landmark=landmark, visit_time=now(), rating = 3, image_url = imageUrl)
     # return Response(f"New visit added for {user.email} to {landmark.name}")
 
-    return Response({'landmarks_info':result})
+    return Response({
+                    'landmark_name': result,
+                    "landmark_info" : landmark.description
+                    })
     '''
     if (result ==  "Landmark could not be identified"){
         return Response({"landmark_name": result, "landmark_info": result})
