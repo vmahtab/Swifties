@@ -108,7 +108,23 @@ def make_custom_itinerary(request):
     start_date = request.data.get('start_date') #Must be YYYY-MM-DD
     end_date = request.data.get('end_date') #Must be YYYY-MM-DD
 
-    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{itinerary_name: Fun Itinerary Name,itinerary: [{date_time: Date Time in django parsable format,landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}]}"
+    tags = UserTags.objects.get(username=user)
+    art=tags.art
+    architecture=tags.architecture
+    beach=tags.beach
+    entertainment=tags.entertainment
+    food=tags.food
+    hiking=tags.hiking
+    history=tags.history
+    mountains=tags.moauntains
+    museum=tags.museum
+    music=tags.music
+    recreation=tags.recreation
+    scenic_views=tags.scenicViews
+    sports=tags.sports
+
+
+    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
 
     try:
         completion = client.chat.completions.create(
@@ -126,11 +142,34 @@ def make_custom_itinerary(request):
         return Response({'error': str(e)}, status=500)
 
     # Removed during merge
-    # visited_landmarks = VisitedLandmarks.objects.filter(user=request.user)
-    # landmarks = [visit.landmark.name for visit in visited_landmarks]
-    # landmarks_string = ", ".join(landmarks)
-
     response_data = json.loads(generated_text)
+
+    for i in response_data['Landmarks']:
+        landmark_info = {
+            'name': i['name'],
+            'city': response_data['city'],
+            'country': response_data['country'],
+            'description': i['message'],
+            'tags': i['tags']
+        }
+        try:
+            landmark = Landmark.objects.get(name=i['name'])
+        except Landmark.DoesNotExist:
+            landmark = Landmark(
+        name=landmark_info['name'],
+        city_name=landmark_info['city'],
+        country_name=landmark_info['country'],
+        description=landmark_info['description']
+    )
+    landmark.save()
+
+    # print(landmark_info['tags'])
+
+    for tag in landmark_info['tags']:
+        tag, created = Tag.objects.get_or_create(name=tag)
+        landmark.tags.add(tag)
+
+    landmark.save()
 
     new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
     for item in response_data["itinerary"]:
@@ -149,6 +188,21 @@ def add_to_itinerary(request):
     itinerary = Itineraries.objects.filter(id = itinerary_id)
     city_name = itinerary.city_name
     start_date = itinerary.start_date
+
+    tags = UserTags.objects.get(username=user)
+    art=tags.art
+    architecture=tags.architecture
+    beach=tags.beach
+    entertainment=tags.entertainment
+    food=tags.food
+    hiking=tags.hiking
+    history=tags.history
+    mountains=tags.moauntains
+    museum=tags.museum
+    music=tags.music
+    recreation=tags.recreation
+    scenic_views=tags.scenicViews
+    sports=tags.sports
 
     prompt_with_input = "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + " with a start date of " + start_date + "Return the date for day "+date+" of the trip. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{date_time: Date Time in django parsable format,landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
 
@@ -182,6 +236,21 @@ def get_nearby_landmarks(request):
     latitude = request.data.get('latitude')
     longitude = request.data.get('longitude')
     distance = request.data.get('distance')
+
+    tags = UserTags.objects.get(username=user)
+    art=tags.art
+    architecture=tags.architecture
+    beach=tags.beach
+    entertainment=tags.entertainment
+    food=tags.food
+    hiking=tags.hiking
+    history=tags.history
+    mountains=tags.moauntains
+    museum=tags.museum
+    music=tags.music
+    recreation=tags.recreation
+    scenic_views=tags.scenicViews
+    sports=tags.sports
 
     prompt_with_input = "You are a travel assistant. You will help me find nearby specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am located at latitude " +  latitude + ", and longitude " + longitude + "Only find me landmarks within "+distance+". Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float, distance:distance from where I am in kilometers}}"
 
@@ -256,7 +325,7 @@ def intialize_user_preferences(request):
     museum = request.data.get('Museum')
     music = request.data.get('Music')
     recreation = request.data.get('Recreation')
-    scenic_views = request.data.get('Scenic_views')
+    scenic_views = request.data.get('Scenic Views')
     sports = request.data.get('Sports')
 
     interests = [art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic_views, sports]
@@ -276,7 +345,20 @@ def intialize_user_preferences(request):
         if(x==0):
             x = remain/to_update
 
-    #update here
+    tags = UserTags.objects.get_or_create(username=user)[0]
+    tags.art = interests[0]
+    tags.architecture =interests[1]
+    tags.beach = interests[2]
+    tags.entertainment = interests[3]
+    tags.food = interests[4]
+    tags.hiking = interests[5]
+    tags.history = interests[6]
+    tags.mountains = interests[7]
+    tags.museum = interests[8]
+    tags.music = interests[9]
+    tags.recreation = interests[10]
+    tags.scenicViews = interests[11]
+    tags.sports = interests[12]
 
 
     
