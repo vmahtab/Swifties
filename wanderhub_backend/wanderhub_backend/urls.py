@@ -34,7 +34,7 @@ urlpatterns = [
     path('remove-from-itinerary/', views.remove_from_itinerary),
     path('test_token/', views.test_token),
 
-    path('intialize-user-preferences/', views.intialize_user_preferences),
+    path('initialize-user-preferences/', views.intialize_user_preferences),
 
     path('post_landmarks/', landmarks.post_landmarks),
     path('get_landmarks/', landmarks.get_landmark),
