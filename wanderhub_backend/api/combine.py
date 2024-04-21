@@ -139,7 +139,10 @@ def post_landmark_id_and_info(request):
             landmark.tags.add(tag)
         landmark.save()
 
-    VisitedLandmarks.objects.create(user=request.user, landmark=landmark, visit_time=now(), rating = 3, image_url = imageUrl)
+    try:
+        visited_landmark = VisitedLandmarks.objects.filter(user=request.user).get(landmark=landmark)
+    except VisitedLandmarks.DoesNotExist:
+        VisitedLandmarks.objects.create(user=request.user, landmark=landmark, visit_time=now(), rating = 3, image_url = imageUrl)
     # return Response(f"New visit added for {user.email} to {landmark.name}")
 
     return Response({

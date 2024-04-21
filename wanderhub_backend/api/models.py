@@ -72,9 +72,9 @@ class ItineraryItems(models.Model):
     id = models.AutoField(primary_key=True)
     it_id = models.ForeignKey(Itineraries, on_delete=models.CASCADE)
     landmark_name = models.ForeignKey(Landmark, on_delete=models.CASCADE, max_length=200)
-    trip_day = models.FloatField()
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    trip_day = models.FloatField(default=0)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
 
     def __str__(self):
         return f"Visit {self.landmark.city_name} on {self.visit_time}"
@@ -82,19 +82,19 @@ class ItineraryItems(models.Model):
 class UserTags(models.Model):
     id = models.AutoField(primary_key=True) 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-    art = models.FloatField()
-    architecture = models.FloatField()
-    beach = models.FloatField()
-    entertainment = models.FloatField()
-    food = models.FloatField()
-    hiking = models.FloatField()
-    history = models.FloatField()
-    mountains = models.FloatField()
-    museum = models.FloatField()
-    music = models.FloatField()
-    recreation = models.FloatField()
-    scenicViews = models.FloatField()
-    sports = models.FloatField()
+    art = models.FloatField(null=True, default=3)
+    architecture = models.FloatField(null=True, default=3)
+    beach = models.FloatField(null=True, default=3)
+    entertainment = models.FloatField(null=True, default=3)
+    food = models.FloatField(null=True, default=3)
+    hiking = models.FloatField(null=True, default=3)
+    history = models.FloatField(null=True, default=3)
+    mountains = models.FloatField(null=True, default=3)
+    museum = models.FloatField(null=True, default=3)
+    music = models.FloatField(null=True, default=3)
+    recreation = models.FloatField(null=True, default=3)
+    scenicViews = models.FloatField(null=True, default=3)
+    sports = models.FloatField(null=True, default=3)
 
     def __str__(self):
         return self.user.username

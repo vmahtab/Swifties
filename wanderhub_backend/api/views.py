@@ -31,12 +31,13 @@ load_dotenv()
 api_key = os.getenv("API_KEY")
 client = OpenAI(api_key=api_key)
 
+
 @api_view(["POST"])
 def login(request):
-    user = get_object_or_404(User, username=request.data['username'])
-    if not user.check_password(request.data['password']):
+    user = get_object_or_404(User, username=request.data["username"])
+    if not user.check_password(request.data["password"]):
         return Response({"detail": "Not found."}, status=status.HTTP_400_BAD_REQUEST)
-    
+
     token, created = Token.objects.get_or_create(user=user)
 
     serializer = UserSerializer(instance=user)
@@ -48,34 +49,43 @@ def signup(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        user = User.objects.get(username=request.data['username'])        
-        user.set_password(request.data['password'])
+        user = User.objects.get(username=request.data["username"])
+        user.set_password(request.data["password"])
         user.save()
         token = Token.objects.create(user=user)
         return Response({"token": token.key, "user": serializer.data})
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_user_landmarks(request):
     user = request.user
-    visited_landmarks = VisitedLandmarks.objects.filter(user=user).select_related('landmark').prefetch_related('landmark__tags')
-    
-    landmarks_info = [{
-        "id": vl.landmark.id, 
-        "landmark_name": vl.landmark.name, 
-        "city_name": vl.landmark.city_name, 
-        "country_name": vl.landmark.country_name, 
-        "description": vl.landmark.description,
-        "tags": [tag.name for tag in vl.landmark.tags.all()],
-        "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S"),
-        "rating": vl.rating,
-        "image_url": vl.image_url
-    } for vl in visited_landmarks]
+    visited_landmarks = (
+        VisitedLandmarks.objects.filter(user=user)
+        .select_related("landmark")
+        .prefetch_related("landmark__tags")
+    )
+
+    landmarks_info = [
+        {
+            "id": vl.landmark.id,
+            "landmark_name": vl.landmark.name,
+            "city_name": vl.landmark.city_name,
+            "country_name": vl.landmark.country_name,
+            "description": vl.landmark.description,
+            "tags": [tag.name for tag in vl.landmark.tags.all()],
+            "visit_time": vl.visit_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "rating": vl.rating,
+            "image_url": vl.image_url,
+        }
+        for vl in visited_landmarks
+    ]
 
     return Response(landmarks_info)
+
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -89,8 +99,11 @@ def add_user_landmark(request):
         raise NotFound("Landmark not found")
 
     # VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now())
-    VisitedLandmarks.objects.create(user=user, landmark=landmark, visit_time=now(), rating = 3)
+    VisitedLandmarks.objects.create(
+        user=user, landmark=landmark, visit_time=now(), rating=3
+    )
     return Response(f"New visit added for {user.email} to {landmark.name}")
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -103,30 +116,65 @@ def test_token(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def make_custom_itinerary(request):
-    
+
     user = request.user
-    city_name = request.data.get('city_name')
-    country_name = request.data.get('country_name')
-    start_date = request.data.get('start_date') #Must be YYYY-MM-DD
-    end_date = request.data.get('end_date') #Must be YYYY-MM-DD
+    city_name = request.data.get("city_name")
+    country_name = request.data.get("country_name")
+    start_date = request.data.get("start_date")  # Must be YYYY-MM-DD
+    end_date = request.data.get("end_date")  # Must be YYYY-MM-DD
 
     tags = UserTags.objects.get(username=user)
-    art=tags.art
-    architecture=tags.architecture
-    beach=tags.beach
-    entertainment=tags.entertainment
-    food=tags.food
-    hiking=tags.hiking
-    history=tags.history
-    mountains=tags.moauntains
-    museum=tags.museum
-    music=tags.music
-    recreation=tags.recreation
-    scenic_views=tags.scenicViews
-    sports=tags.sports
+    art = tags.art
+    architecture = tags.architecture
+    beach = tags.beach
+    entertainment = tags.entertainment
+    food = tags.food
+    hiking = tags.hiking
+    history = tags.history
+    mountains = tags.moauntains
+    museum = tags.museum
+    music = tags.music
+    recreation = tags.recreation
+    scenic_views = tags.scenicViews
+    sports = tags.sports
 
-
-    prompt_with_input = "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + ", " + country_name + " with dates from " + start_date + " to" + end_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{it_name: fun name for itinerary, city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
+    prompt_with_input = (
+        "You are a travel assistant. You will help me write a customized travel itinerary with only specific landmarks. Here is some information about me to help you. Give me landmarks with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "
+        + art
+        + " "
+        + architecture
+        + " "
+        + beach
+        + " "
+        + entertainment
+        + " "
+        + food
+        + " "
+        + hiking
+        + " "
+        + history
+        + " "
+        + mountains
+        + " "
+        + museum
+        + " "
+        + music
+        + " "
+        + recreation
+        + " "
+        + scenic_views
+        + " "
+        + sports
+        + "respectively. I am travelling to "
+        + city_name
+        + ", "
+        + country_name
+        + " with dates from "
+        + start_date
+        + " to"
+        + end_date
+        + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{Trip: [{it_name: fun name for itinerary, city: city name, country: country name, startDate = start date as MM/DD/YYYY, endDate: end date as MM/DD/YYYY, Landmarks: [{name: landmark name,message: short description of landmark, tags: tags as specified above,latitude: latitude in float 10 decimal precision,longitude: longitude in float 10 decimal precision, day: int for day from start of the trip, rating: int of 3}]}]}"
+    )
 
     try:
         completion = client.chat.completions.create(
@@ -137,73 +185,117 @@ def make_custom_itinerary(request):
                 }
             ],
             model="gpt-3.5-turbo",
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
         )
         generated_text = completion.choices[0].message.content
     except Exception as e:
-        return Response({'error': str(e)}, status=500)
+        return Response({"error": str(e)}, status=500)
 
     # Removed during merge
     response_data = json.loads(generated_text)
 
-    new_it = Itineraries.objects.create(user=user, it_name=response_data["itinerary_name"], city_name=city_name, start_date=start_date)
+    new_it = Itineraries.objects.create(
+        user=user,
+        it_name=response_data["itinerary_name"],
+        city_name=city_name,
+        start_date=start_date,
+    )
 
-    for i in response_data['Landmarks']:
+    for i in response_data["Landmarks"]:
         landmark_info = {
-            'name': i['name'],
-            'city': response_data['city'],
-            'country': response_data['country'],
-            'description': i['message'],
-            'tags': i['tags']
+            "name": i["name"],
+            "city": response_data["city"],
+            "country": response_data["country"],
+            "description": i["message"],
+            "tags": i["tags"],
         }
         try:
-            landmark = Landmark.objects.get(name=landmark_info['name'])
+            landmark = Landmark.objects.get(name=landmark_info["name"])
         except Landmark.DoesNotExist:
             landmark = Landmark(
-            name=landmark_info['name'],
-            city_name=landmark_info['city'],
-            country_name=landmark_info['country'],
-            description=landmark_info['description']
+                name=landmark_info["name"],
+                city_name=landmark_info["city"],
+                country_name=landmark_info["country"],
+                description=landmark_info["description"],
             )
             landmark.save()
 
-            for tag in landmark_info['tags']:
+            for tag in landmark_info["tags"]:
                 tag, created = Tag.objects.get_or_create(name=tag)
                 landmark.tags.add(tag)
             landmark.save()
 
-        ItineraryItems.objects.create(it_id = new_it, landmark_name=landmark, trip_day=i['day'], latitude=i['latitude'], longitude=i['longitude'])
+        ItineraryItems.objects.create(
+            it_id=new_it,
+            landmark_name=landmark,
+            trip_day=i["day"],
+            latitude=i["latitude"],
+            longitude=i["longitude"],
+        )
 
     return Response(generated_text)
+
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def add_to_itinerary(request):
-    
+
     user = request.user
-    itinerary_id = request.get.data('itinerary_id')
-    day = request.get.data('day')
-    itinerary = Itineraries.objects.filter(id = itinerary_id)
+    itinerary_id = request.get.data("itinerary_id")
+    day = request.get.data("day")
+    itinerary = Itineraries.objects.filter(id=itinerary_id)
     city_name = itinerary.city_name
     start_date = itinerary.start_date
 
     tags = UserTags.objects.get(username=user)
-    art=tags.art
-    architecture=tags.architecture
-    beach=tags.beach
-    entertainment=tags.entertainment
-    food=tags.food
-    hiking=tags.hiking
-    history=tags.history
-    mountains=tags.moauntains
-    museum=tags.museum
-    music=tags.music
-    recreation=tags.recreation
-    scenic_views=tags.scenicViews
-    sports=tags.sports
+    art = tags.art
+    architecture = tags.architecture
+    beach = tags.beach
+    entertainment = tags.entertainment
+    food = tags.food
+    hiking = tags.hiking
+    history = tags.history
+    mountains = tags.moauntains
+    museum = tags.museum
+    music = tags.music
+    recreation = tags.recreation
+    scenic_views = tags.scenicViews
+    sports = tags.sports
 
-    prompt_with_input = "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am travelling to " +  city_name + " with a start date of " + start_date + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{landmark: landmark name, city: city, country: country, message: a short description of the landmark, tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
+    prompt_with_input = (
+        "You are a travel assistant. You will help me add one itinerary item of a specific landmark. Here is some information about me to help you. Give me one landmark with tags of Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports with ratios of "
+        + art
+        + " "
+        + architecture
+        + " "
+        + beach
+        + " "
+        + entertainment
+        + " "
+        + food
+        + " "
+        + hiking
+        + " "
+        + history
+        + " "
+        + mountains
+        + " "
+        + museum
+        + " "
+        + music
+        + " "
+        + recreation
+        + " "
+        + scenic_views
+        + " "
+        + sports
+        + "respectively. I am travelling to "
+        + city_name
+        + " with a start date of "
+        + start_date
+        + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{landmark: landmark name, city: city, country: country, message: a short description of the landmark, tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
+    )
 
     try:
         completion = client.chat.completions.create(
@@ -214,67 +306,108 @@ def add_to_itinerary(request):
                 }
             ],
             model="gpt-3.5-turbo",
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
         )
         generated_text = completion.choices[0].message.content
     except Exception as e:
-        return Response({'error': str(e)}, status=500)
+        return Response({"error": str(e)}, status=500)
 
     response_data = json.loads(generated_text)
 
     landmark_info = {
-            'name': response_data['name'],
-            'city': response_data['city'],
-            'country': response_data['country'],
-            'description': response_data['message'],
-            'tags': response_data['tags']
-        }
+        "name": response_data["name"],
+        "city": response_data["city"],
+        "country": response_data["country"],
+        "description": response_data["message"],
+        "tags": response_data["tags"],
+    }
     try:
-        landmark = Landmark.objects.get(name=i['name'])
+        landmark = Landmark.objects.get(name=i["name"])
     except Landmark.DoesNotExist:
         landmark = Landmark(
-        name=landmark_info['name'],
-        city_name=landmark_info['city'],
-        country_name=landmark_info['country'],
-        description=landmark_info['description']
+            name=landmark_info["name"],
+            city_name=landmark_info["city"],
+            country_name=landmark_info["country"],
+            description=landmark_info["description"],
         )
         landmark.save()
 
-        for tag in landmark_info['tags']:
+        for tag in landmark_info["tags"]:
             tag, created = Tag.objects.get_or_create(name=tag)
             landmark.tags.add(tag)
         landmark.save()
 
-    ItineraryItems.objects.create(it_id = itinerary_id, landmark_name=landmark, trip_day=i["day"], latitude=i["latitude"], longitude=i["longitude"])
+    ItineraryItems.objects.create(
+        it_id=itinerary_id,
+        landmark_name=landmark,
+        trip_day=i["day"],
+        latitude=i["latitude"],
+        longitude=i["longitude"],
+    )
 
     return Response(generated_text)
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_nearby_landmarks(request):
-    
+
     user = request.user
-    latitude = request.data.get('latitude')
-    longitude = request.data.get('longitude')
-    distance = request.data.get('distance')
+    latitude = request.data.get("latitude")
+    longitude = request.data.get("longitude")
+    distance = request.data.get("distance")
 
     tags = UserTags.objects.get(username=user)
-    art=tags.art
-    architecture=tags.architecture
-    beach=tags.beach
-    entertainment=tags.entertainment
-    food=tags.food
-    hiking=tags.hiking
-    history=tags.history
-    mountains=tags.moauntains
-    museum=tags.museum
-    music=tags.music
-    recreation=tags.recreation
-    scenic_views=tags.scenicViews
-    sports=tags.sports
+    art = tags.art
+    architecture = tags.architecture
+    beach = tags.beach
+    entertainment = tags.entertainment
+    food = tags.food
+    hiking = tags.hiking
+    history = tags.history
+    mountains = tags.moauntains
+    museum = tags.museum
+    music = tags.music
+    recreation = tags.recreation
+    scenic_views = tags.scenicViews
+    sports = tags.sports
 
-    prompt_with_input = "You are a travel assistant. You will help me find nearby specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "+art+" "+architecture+" "+beach+" "+entertainment+" "+food+" "+hiking+" "+history+" "+mountains+" "+museum+" "+music+" "+recreation+" "+scenic_views+" "+sports+"respectively. I am located at latitude " +  latitude + ", and longitude " + longitude + "Only find me landmarks within "+distance+". Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float, distance:distance from where I am in kilometers}}"
+    prompt_with_input = (
+        "You are a travel assistant. You will help me find nearby specific landmarks. Here is some information about me to help you. Give me landmarks with tags of art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic views, sports with ratios of "
+        + art
+        + " "
+        + architecture
+        + " "
+        + beach
+        + " "
+        + entertainment
+        + " "
+        + food
+        + " "
+        + hiking
+        + " "
+        + history
+        + " "
+        + mountains
+        + " "
+        + museum
+        + " "
+        + music
+        + " "
+        + recreation
+        + " "
+        + scenic_views
+        + " "
+        + sports
+        + "respectively. I am located at latitude "
+        + latitude
+        + ", and longitude "
+        + longitude
+        + "Only find me landmarks within "
+        + distance
+        + ". Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float, distance:distance from where I am in kilometers}}"
+    )
 
     try:
         completion = client.chat.completions.create(
@@ -285,38 +418,56 @@ def get_nearby_landmarks(request):
                 }
             ],
             model="gpt-3.5-turbo",
-            response_format={"type": "json_object"}
+            response_format={"type": "json_object"},
         )
         generated_text = completion.choices[0].message.content
     except Exception as e:
-        return Response({'error': str(e)}, status=500)
+        return Response({"error": str(e)}, status=500)
 
     response_data = json.loads(generated_text)
 
-    #distance returned in kilometers
+    # distance returned in kilometers
     return Response(generated_text)
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_user_itineraries(request):
     user = request.user
-    user_itineraries = Itineraries.objects.filter(user=user).values('id')
-    itineraries = [{"id": i.id, "city_name": i.city_name, "it_name": i.it_name, "start_date": i.start_date.strftime("%Y-%m-%d")} 
-                      for i in user_itineraries]
+    user_itineraries = Itineraries.objects.filter(user=user).values("id")
+    itineraries = [
+        {
+            "id": i.id,
+            "city_name": i.city_name,
+            "it_name": i.it_name,
+            "start_date": i.start_date.strftime("%Y-%m-%d"),
+        }
+        for i in user_itineraries
+    ]
     return Response(itineraries)
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_itinerary_details(request):
     user = request.user
-    itinerary_id = request.get.data('itinerary_id')
+    itinerary_id = request.get.data("itinerary_id")
     itinerary = Itineraries.objects.get(id=itinerary_id)
-    itinerary_items = ItineraryItems.objects.filter(it_id=itinerary).values('id')
-    items = [{"it_id": i.it_id, "landmark_name":i.landmark_name, "trip_day": i.trip_day, "latitude":i.latitude, "longitude":i.longitude} 
-                      for i in itinerary_items]
+    itinerary_items = ItineraryItems.objects.filter(it_id=itinerary).values("id")
+    items = [
+        {
+            "it_id": i.it_id,
+            "landmark_name": i.landmark_name,
+            "trip_day": i.trip_day,
+            "latitude": i.latitude,
+            "longitude": i.longitude,
+        }
+        for i in itinerary_items
+    ]
     return Response(items)
+
 
 @api_view(["DELETE"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -327,9 +478,10 @@ def remove_from_itinerary(request):
         item = ItineraryItems.objects.get(id=item_id)
     except ItineraryItems.DoesNotExist:
         raise NotFound("Itinerary Item not found")
-    
-    ItineraryItems.objects.get(id = item_id).delete()
+
+    ItineraryItems.objects.get(id=item_id).delete()
     return Response(f"Itinerary Item deleted")
+
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -337,41 +489,56 @@ def remove_from_itinerary(request):
 def intialize_user_preferences(request):
 
     user = request.user
-    art = request.data.get('Art')
-    architecture = request.data.get('Architecture')
-    beach = request.data.get('Beach')
-    entertainment = request.data.get('Entertainment')
-    food = request.data.get('Food')
-    hiking = request.data.get('Hiking')
-    history = request.data.get('History')
-    mountains = request.data.get('Mountains')
-    museum = request.data.get('Museum')
-    music = request.data.get('Music')
-    recreation = request.data.get('Recreation')
-    scenic_views = request.data.get('Scenic Views')
-    sports = request.data.get('Sports')
+    art = request.data.get("Art")
+    architecture = request.data.get("Architecture")
+    beach = request.data.get("Beach")
+    entertainment = request.data.get("Entertainment")
+    food = request.data.get("Food")
+    hiking = request.data.get("Hiking")
+    history = request.data.get("History")
+    mountains = request.data.get("Mountains")
+    museum = request.data.get("Museum")
+    music = request.data.get("Music")
+    recreation = request.data.get("Recreation")
+    scenic_views = request.data.get("Scenic Views")
+    sports = request.data.get("Sports")
 
-    interests = [art, architecture, beach, entertainment, food, hiking, history, mountains, museum, music, recreation, scenic_views, sports]
-    total = sum(interests)
-    interests = [x/total for x in interests]
+    interests = [
+        art,
+        architecture,
+        beach,
+        entertainment,
+        food,
+        hiking,
+        history,
+        mountains,
+        museum,
+        music,
+        recreation,
+        scenic_views,
+        sports,
+    ]
+    interests = [5 if x == 1 else 3 for x in interests]
+    '''
     remain = 0
     selected = 0
 
     for x in interests:
-        if(x!=0):
-            remain += max(x-0.3, 0)
+        if x != 0:
+            remain += max(x - 0.3, 0)
             x = min(x, 0.3)
-            selected+=1
-
+            selected += 1
+    
     to_update = 13 - selected
     for x in interests:
-        if(x==0):
-            x = remain/to_update
+        if x == 0:
+            x = remain / to_update
+    '''
 
     tags = UserTags.objects.get_or_create(user=user)[0]
     # tags,created = UserTags.objects.get_or_create(username=user)
     tags.art = interests[0]
-    tags.architecture =interests[1]
+    tags.architecture = interests[1]
     tags.beach = interests[2]
     tags.entertainment = interests[3]
     tags.food = interests[4]
@@ -383,9 +550,24 @@ def intialize_user_preferences(request):
     tags.recreation = interests[10]
     tags.scenicViews = interests[11]
     tags.sports = interests[12]
+    tags.save()
+    return Response({
+        "art" : tags.art,
+        "architecture" : tags.architecture,
+        "beach" : tags.beach,
+        "entertainment" : tags.entertainment,
+        "food" : tags.food,
+        "hiking" : tags.hiking,
+        "history" : tags.history,
+        "mountains" : tags.mountains,
+        "museum" : tags.museum,
+        "music" : tags.music,
+        "arrecreationt" : tags.recreation,
+        "scenicViews" : tags.scenicViews,
+        "sports" : tags.sports
+    })
 
 
-    
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -397,18 +579,19 @@ def update_landmark_rating(request):
         item = VisitedLandmarks.objects.filter(user=user).get(landmark=landmark)
     except ItineraryItems.DoesNotExist:
         raise NotFound("Landmark not found")
-    
+
     item.rating = float(request.data.get("new_rating"))
     item.save()
-    
-    return Response({"Landmark Rating updated" : item.rating})
+
+    return Response({"Landmark Rating updated": item.rating})
+
 
 @api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def update_user_weights(request):
     # def update_user_weights(username):
-    #all_landmarks = VisitedLandmarks.objects.filter(user=username)
+    # all_landmarks = VisitedLandmarks.objects.filter(user=username)
     user_weights = UserTags.objects.get(user=request.user)
     tags = [
         "Art",
@@ -423,15 +606,15 @@ def update_user_weights(request):
         "Music",
         "Recreation",
         "Scenic Views",
-        "Sports"
-        ]
-        
+        "Sports",
+    ]
+
     avgs = []
-    
+
     for tag in tags:
         visited_landmarks = VisitedLandmarks.objects.filter(user=request.user)
         visited_landmarks_with_tag = visited_landmarks.filter(landmark__tags__name=tag)
-        return Response({"valid" : visited_landmarks_with_tag})
+        return Response({"valid": visited_landmarks_with_tag})
         running_sum = 0
         running_count = 0
         for landmark in visited_landmarks_with_tag:
@@ -440,7 +623,7 @@ def update_user_weights(request):
         if running_count == 0:
             running_sum = 3
             running_count = 1
-        avgs.append(running_sum/running_count)
+        avgs.append(running_sum / running_count)
     user_weights.art = avgs[0]
     user_weights.architecture = avgs[1]
     user_weights.beach = avgs[2]
@@ -455,31 +638,60 @@ def update_user_weights(request):
     user_weights.scenicViews = avgs[11]
     user_weights.sports = avgs[12]
     user_weights.save()
-        
-    return Response({"Art" : user_weights.art,
-        "Architecture" : user_weights.architecture,
-        "Beach" : user_weights.beach,
-        "Entertainment" : user_weights.entertainment,
-        "Food" : user_weights.food,
-        "Hiking" : user_weights.hiking,
-        "History" : user_weights.history,
-        "Mountains" : user_weights.mountains,
-        "Museum" : user_weights.museum,
-        "Music" : user_weights.music,
-        "Recreation" : user_weights.recreation,
-        "Scenic Views" : user_weights.scenicViews,
-        "Sports" : user_weights.sports})
+
+    return Response(
+        {
+            "Art": user_weights.art,
+            "Architecture": user_weights.architecture,
+            "Beach": user_weights.beach,
+            "Entertainment": user_weights.entertainment,
+            "Food": user_weights.food,
+            "Hiking": user_weights.hiking,
+            "History": user_weights.history,
+            "Mountains": user_weights.mountains,
+            "Museum": user_weights.museum,
+            "Music": user_weights.music,
+            "Recreation": user_weights.recreation,
+            "Scenic Views": user_weights.scenicViews,
+            "Sports": user_weights.sports,
+        }
+    )
+
 
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_destinations(request):
-        all_cities = Landmark.objects.values_list('city_name', flat=True).distinct()
-        all_cities = list(all_cities)
+    all_landmarks = list(Landmark.objects.all())
+    random.shuffle(all_landmarks)
+    random_landmarks = all_landmarks[:6]
 
-        random.shuffle(all_cities)
-        random_cities = all_cities[:6]
+    landmarks_data = []
+    for landmark in random_landmarks:
+        tags = landmark.tags.all()
+        tag_names = [tag.name for tag in tags]
+        landmarks_data.append({
+            "landmark_name": landmark.name,
+            "city_name": landmark.city_name,
+            "country_name": landmark.country_name,
+            "tags": tag_names
+        })
 
-         return Response(data)
+    # Create the JSON response object
+    data = {"Landmarks": landmarks_data}
+    return Response(data)
 
+
+# @api_view(["GET"])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def get_destinations(request):
+#     all_cities = Landmark.objects.values_list("city_name", flat=True).distinct()
+#     all_cities = list(all_cities)
+
+#     random.shuffle(all_cities)
+#     random_cities = all_cities[:6]
+
+#     data = {"cities": random_cities}
+#     return Response(data)
 
