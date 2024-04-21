@@ -265,7 +265,7 @@ def get_nearby_landmarks(request):
     food=tags.food
     hiking=tags.hiking
     history=tags.history
-    mountains=tags.moauntains
+    mountains=tags.mountains
     museum=tags.museum
     music=tags.music
     recreation=tags.recreation
@@ -299,7 +299,7 @@ def get_nearby_landmarks(request):
 @permission_classes([IsAuthenticated])
 def get_user_itineraries(request):
     user = request.user
-    user_itineraries = Itineraries.objects.filter(user=user).values('id')
+    user_itineraries = Itineraries.objects.filter(user=user)
     itineraries = [{"id": i.id, "city_name": i.city_name, "it_name": i.it_name, "start_date": i.start_date.strftime("%Y-%m-%d")} 
                       for i in user_itineraries]
     return Response(itineraries)
