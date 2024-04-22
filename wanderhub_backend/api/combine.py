@@ -91,66 +91,72 @@ def post_landmark_id_and_info(request):
             closest_landmark = landmark.description
     result = closest_landmark
 
-    try:
-        landmark = Landmark.objects.get(name=result)
-    except Landmark.DoesNotExist:
-        prompt = f"Provide detailed information for the landmark named '{result}' including its city, country, a description, and categories under tags such as Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports. Return a JSON object with the following keys: 'city', 'country', 'description', 'tags'"
+    if result != "Landmark could not be identified":
+        try:
+            landmark = Landmark.objects.get(name=result)
+        except Landmark.DoesNotExist:
+            prompt = f"Provide detailed information for the landmark named '{result}' including its city, country, a description, and categories under tags such as Art, Architecture, Beach, Entertainment, Food, Hiking, History, Mountains, Museum, Music, Recreation, Scenic Views, Sports. Return a JSON object with the following keys: 'city', 'country', 'description', 'tags'"
 
-        completion = client_ChatGPT.chat.completions.create(
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt,
-                }
-            ],
-            model="gpt-4-turbo",
-            response_format={"type": "json_object"}
-        )
+            completion = client_ChatGPT.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt,
+                    }
+                ],
+                model="gpt-3.5-turbo",
+                response_format={"type": "json_object"}
+            )
 
-        generated_text = completion.choices[0].message.content
-        data = json.loads(generated_text)
+            generated_text = completion.choices[0].message.content
+            data = json.loads(generated_text)
 
-        # print(data['tags'])
+            # print(data['tags'])
 
-        landmark_info = {
-            'name': result,
-            'city': data['city'],
-            'country': data['country'],
-            'description': data['description'],
-            'tags': data['tags']
-        }
+            landmark_info = {
+                'name': result,
+                'city': data['city'],
+                'country': data['country'],
+                'description': data['description'],
+                'tags': data['tags']
+            }
 
-        landmark = Landmark(
-            name=landmark_info['name'],
-            city_name=landmark_info['city'],
-            country_name=landmark_info['country'],
-            description=landmark_info['description']
-        )
-        landmark.save()
+            landmark = Landmark(
+                name=landmark_info['name'],
+                city_name=landmark_info['city'],
+                country_name=landmark_info['country'],
+                description=landmark_info['description']
+            )
+            landmark.save()
 
-        # print(landmark_info['tags'])
+            # print(landmark_info['tags'])
 
-        # return Response({
-        #             "tags found" : landmark_info['tags']
-        #            })
+            # return Response({
+            #             "tags found" : landmark_info['tags']
+            #            })
 
-        for tag in landmark_info['tags']:
-            try:
-                tag = Tag.objects.get(name=tag)
-                landmark.tags.add(tag)
-            except Tag.DoesNotExist:
-                pass
-        landmark.save()
-    try:
-        visited_landmark = VisitedLandmarks.objects.filter(user=request.user).get(landmark=landmark)
-    except VisitedLandmarks.DoesNotExist:
-        VisitedLandmarks.objects.create(user=request.user, landmark=landmark, visit_time=now(), rating = 3, image_url = imageUrl)
-    # return Response(f"New visit added for {user.email} to {landmark.name}")
+            for tag in landmark_info['tags']:
+                try:
+                    tag = Tag.objects.get(name=tag)
+                    landmark.tags.add(tag)
+                except Tag.DoesNotExist:
+                    pass
+            landmark.save()
+        try:
+            visited_landmark = VisitedLandmarks.objects.filter(user=request.user).get(landmark=landmark)
+        except VisitedLandmarks.DoesNotExist:
+            VisitedLandmarks.objects.create(user=request.user, landmark=landmark, visit_time=now(), rating = 3, image_url = imageUrl)
+        # return Response(f"New visit added for {user.email} to {landmark.name}")
 
-    return Response({
-                    'landmark_name': result,
-                    "landmark_info" : landmark.description
-                    })
+        return Response({
+                        'landmark_name': result,
+                        "landmark_info" : landmark.description
+                        })
+    else:
+        return Response({
+                        'landmark_name': result,
+                        "landmark_info" : "Take a new picture"
+                        })
     '''
     if (result ==  "Landmark could not be identified"){
         return Response({"landmark_name": result, "landmark_info": result})

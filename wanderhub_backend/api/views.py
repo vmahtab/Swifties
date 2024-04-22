@@ -208,6 +208,7 @@ def make_custom_itinerary(request):
         it_name=trip["it_name"],
         city_name=city_name,
         start_date=start_date,
+        end_date=end_date,
     )
 
     response_data["itinerary_id"] = new_it.id
@@ -264,6 +265,7 @@ def add_to_itinerary(request):
         return Response("Itinerary does not exist", status=status.HTTP_404_NOT_FOUND)
     city_name = itinerary.city_name
     start_date = str(itinerary.start_date)
+    end_date = str(itinerary.end_date)
 
     try:
         tags = UserTags.objects.get(user=user)
@@ -310,10 +312,12 @@ def add_to_itinerary(request):
         + scenic_views
         + " "
         + sports
-        + "respectively. I am travelling to "
+        + "respectively. I am traveling to "
         + city_name
         + " with a start date of "
         + start_date
+        + "and end date of "
+        + end_date
         + " Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{landmark: landmark name, city: city, country: country, message: a short description of the landmark, tags: tags as specified above,latitude: latitude in float,longitude: longitude in float}"
     )
 
@@ -470,7 +474,7 @@ def get_user_itineraries(request):
             "city_name": str(i.city_name),
             "it_name": i.it_name,
             "start_date": str(i.start_date),
-            # add end date?
+            "end_date": str(i.end_date),
         }
         for i in user_itineraries
     ]
@@ -483,11 +487,16 @@ def get_user_itineraries(request):
 def get_itinerary_details(request):
     user = request.user
     itinerary_id = int(request.data.get("itinerary_id"))
-    itinerary = Itineraries.objects.get(id=itinerary_id)
+
+    try:
+        itinerary = Itineraries.objects.get(id=itinerary_id)
+    except Itineraries.DoesNotExist:
+        return Response({"error": "Invalid itinerary ID"}, status=status.HTTP_400_BAD_REQUEST)
+
     itinerary_items = ItineraryItems.objects.filter(it_id=itinerary)
     items = [
         {
-            "it_id": i.id,
+            "it_id": itinerary_id,
             "landmark_name": i.landmark_name.name,
             "trip_day": i.trip_day,
             "latitude": i.latitude,
@@ -495,7 +504,15 @@ def get_itinerary_details(request):
         }
         for i in itinerary_items
     ]
-    return Response({"items" : items})
+
+    itinerary_json = {
+        "it_id": itinerary_id,
+        "start_date": itinerary.start_date,
+        "end_date": itinerary.end_date,
+        "items": items,
+    }
+
+    return Response({"itinerary" : itinerary_json})
 
 
 @api_view(["DELETE"])

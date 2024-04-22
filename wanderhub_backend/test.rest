@@ -78,4 +78,3 @@ Content-Type: application/json
 Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
 
 {"latitude": "", "longitude": "-0.1180", "distance":"10"}
-
