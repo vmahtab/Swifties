@@ -358,9 +358,9 @@ def add_to_itinerary(request):
 def get_nearby_landmarks(request):
 
     user = request.user
-    latitude = request.data.get("latitude")
-    longitude = request.data.get("longitude")
-    distance = request.data.get("distance")
+    latitude = str(request.data.get("latitude"))
+    longitude = str(request.data.get("longitude"))
+    distance = str(request.data.get("distance"))
 
     tags = UserTags.objects.get(user=user)
     art = str(tags.art)
@@ -410,7 +410,7 @@ def get_nearby_landmarks(request):
         + longitude
         + "Only find me landmarks within "
         + distance
-        + ". Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name,tags: tags as specified above,latitude: latitude in float,longitude: longitude in float, distance:distance from where I am in kilometers}}"
+        + " kilometers of my location. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name, tags: tags as specified above, latitude: latitude in float, longitude: longitude in float, distance: distance from where I am in kilometers}}"
     )
 
     try:
@@ -431,7 +431,7 @@ def get_nearby_landmarks(request):
     response_data = json.loads(generated_text)
 
     # distance returned in kilometers
-    return Response(generated_text)
+    return Response(response_data)
 
 
 @api_view(["GET"])
@@ -449,7 +449,7 @@ def get_user_itineraries(request):
         }
         for i in user_itineraries
     ]
-    return Response(itineraries)
+    return Response({"itineraries" : itineraries})
 
 
 @api_view(["GET"])
@@ -470,7 +470,7 @@ def get_itinerary_details(request):
         }
         for i in itinerary_items
     ]
-    return Response(items)
+    return Response({"items" : items})
 
 
 @api_view(["DELETE"])

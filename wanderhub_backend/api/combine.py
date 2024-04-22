@@ -52,7 +52,7 @@ def post_landmark_id_and_info(request):
         filename = username+str(time.time())+".jpeg"
         fs = FileSystemStorage()
         filename = fs.save(filename, content)
-        imageUrl = fs.url(filename)
+        imageUrl = fs.url(filename) 
     else:
         imageUrl = None
     

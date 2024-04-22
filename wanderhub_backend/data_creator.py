@@ -85,11 +85,14 @@ def save_landmark(landmark_info):
 def process_images(directory):
     images = list(Path(directory).glob('*.jpg'))
     for image_path in images:
-        landmark = landmark_detection(image_path)
-        if landmark is not None and not Landmark.objects.filter(name=landmark).exists():
-            landmark_info = ask_chatgpt(landmark[0])
-            if landmark_info is not None:
-                save_landmark(landmark_info)
+        landmark_result = landmark_detection(image_path)
+        if landmark_result:
+            landmark_name, _ = landmark_result
+            if not Landmark.objects.filter(name=landmark_name).exists():
+                landmark_info = ask_chatgpt(landmark_name)
+                if landmark_info is not None:
+                    save_landmark(landmark_info)
+        os.remove(image_path)
 
 if __name__ == "__main__":
     directory = "/home/ubuntu/Swifties/wanderhub_backend/images"
