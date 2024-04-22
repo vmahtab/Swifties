@@ -193,16 +193,16 @@ struct LandmarkListRow: View {
                 StarRatingView(rating: $tempRating)
                     .frame(width: 100, height: 20)
                 
-//                Button(action: {
-//                    print("Rating submitted: \(tempRating)")
-//                    Task {
-//                        await submitRating(id: visit.landmark_name, newRating: tempRating)
-//                    }
-//                }) {
-//                    Text("Submit Rating")
-//                        .foregroundColor(.blue)
-//                        .padding(.top, 4)
-//                }
+                Button(action: {
+                    print("Rating submitted: \(tempRating)")
+                    Task {
+                        await submitRating(id: visit.landmark_name, newRating: tempRating)
+                    }
+                }) {
+                    Text("Submit Rating")
+                        .foregroundColor(.blue)
+                        .padding(.top, 4)
+                }
             }
             Spacer()
         }
