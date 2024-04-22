@@ -27,6 +27,8 @@ import random
 
 from openai import OpenAI
 
+from geopy.geocoders import Nominatim
+
 load_dotenv()
 api_key = os.getenv("API_KEY")
 client = OpenAI(api_key=api_key)
@@ -380,6 +382,12 @@ def get_nearby_landmarks(request):
     longitude = str(request.data.get("longitude"))
     distance = str(request.data.get("distance"))
 
+    geolocator = Nominatim(user_agent="wanderhub")
+    location = geolocator.reverse(latitude + ", " + longitude)
+    address = location.raw['address']
+    city = address.get('city', '')
+    country = address.get('country', '')
+
     tags = UserTags.objects.get(user=user)
     art = str(tags.art)
     architecture = str(tags.architecture)
@@ -422,13 +430,11 @@ def get_nearby_landmarks(request):
         + scenic_views
         + " "
         + sports
-        + "respectively. I am located at latitude "
-        + latitude
-        + ", and longitude "
-        + longitude
-        + "Only find me landmarks within "
-        + distance
-        + " kilometers of my location. Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name, tags: tags as specified above, latitude: latitude in float, longitude: longitude in float, distance: distance from where I am in kilometers}}"
+        + "respectively. Find me landmarks in "
+        + city
+        + ", "
+        + country
+        + ". Do not include any explanations, only provide a  RFC8259 compliant JSON response  following this format without deviation.{{landmark: landmark name, tags: tags as specified above, latitude: latitude in float, longitude: longitude in float, distance: distance from where I am in kilometers}}"
     )
 
     try:
@@ -637,7 +643,6 @@ def update_user_weights(request):
     for tag in tags:
         visited_landmarks = VisitedLandmarks.objects.filter(user=request.user)
         visited_landmarks_with_tag = visited_landmarks.filter(landmark__tags__name=tag)
-        return Response({"valid": visited_landmarks_with_tag})
         running_sum = 0
         running_count = 0
         for landmark in visited_landmarks_with_tag:
