@@ -496,7 +496,7 @@ def get_itinerary_details(request):
     itinerary_items = ItineraryItems.objects.filter(it_id=itinerary)
     items = [
         {
-            "it_id": itinerary_id,
+            "item_id": i.id,
             "landmark_name": i.landmark_name.name,
             "trip_day": i.trip_day,
             "latitude": i.latitude,
@@ -506,7 +506,7 @@ def get_itinerary_details(request):
     ]
 
     itinerary_json = {
-        "it_id": itinerary_id,
+        "itinerary_id": itinerary_id,
         "start_date": itinerary.start_date,
         "end_date": itinerary.end_date,
         "items": items,
