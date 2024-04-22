@@ -324,6 +324,7 @@ def add_to_itinerary(request):
         "description": response_data["message"],
         "tags": response_data["tags"],
     }
+    landmark = ""
     try:
         landmark = Landmark.objects.get(name=response_data["landmark"])
     except Landmark.DoesNotExist:
@@ -342,7 +343,7 @@ def add_to_itinerary(request):
 
     ItineraryItems.objects.create(
         it_id=itinerary,
-        landmark_name=landmark,
+        landmark_name_id=landmark.id,
         trip_day=day,
         latitude=response_data["latitude"],
         longitude=response_data["longitude"],
@@ -351,7 +352,7 @@ def add_to_itinerary(request):
     return Response(generated_text)
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_nearby_landmarks(request):
