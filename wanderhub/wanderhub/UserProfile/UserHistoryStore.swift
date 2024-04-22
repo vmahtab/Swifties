@@ -11,122 +11,67 @@ import Alamofire
 import Observation
 import SwiftUI
 
-struct LandmarkVisit {
-    var landmarkName: String
-    var visitTime: String
-    var city: String
-    var country: String
-    var imageUrl: String?
+import Combine
+
+struct LandmarkVisit : Identifiable, Hashable, Decodable {
+    var id: Int
+    var landmark_name: String
+    var visit_time: String
+    var city_name: String
+    var country_name: String
+    var description: String
+    var rating: Int
+    var tags: [String]
+    var image_url: String?
 }
 
-class UserHistoryStore {
+class UserHistoryStore: ObservableObject {
     
-    //private let user = User.shared
     static let shared = UserHistoryStore()
-    // create one instance of the class to be shared
-    private init() {}                // and make the constructor private so no other
-    // instances can be created
-    @State var landmarkVisits = [LandmarkVisit]()
-    // private let nFields = Mirror(reflecting: LandmarkVisit()).children.count
+    private init() {}               
+    @Published var landmarkVisits = [LandmarkVisit]()
+ 
+    
+    func visitedPlaces() -> [LandmarkVisit] {
+        return landmarkVisits
+    }
     
     
-    func getHistory() {
+    func getHistory() async {
         // Method implementation
-        guard let apiUrl = URL(string: "\(serverUrl)get-user-landmark") else {
+        guard let apiUrl = URL(string: "\(serverUrl)get-user-landmarks/") else {
             print("addUser: Bad URL")
             return
         }
         
-        var request = URLRequest(url: apiUrl)
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
-        request.httpMethod = "GET"
-        //request.httpBody = jsonData
-        
-        if let token = UserDefaults.standard.string(forKey: "usertoken") {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        } else {
+        guard let token = UserDefaults.standard.string(forKey: "usertoken") else {
             return
         }
         
-        AF.request(apiUrl, method: .get).responseData { response in
-            guard let data = response.data, response.error == nil else {
-                print("getChatts: NETWORKING ERROR")
-                return
-            }
-            if let httpStatus = response.response, httpStatus.statusCode != 200 {
-                
-                print("user history error: HTTP STATUS: \(httpStatus.statusCode)")
-                return
-            }
-            
-            guard let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [String:Any] else {
+        let headers : HTTPHeaders = [
+            "Authorization": "Token \(token)",
+            "Content-Type": "application/json; charset=utf-8" ]
+
+        
+        AF.request(apiUrl, method: .get, headers: headers).responseData { response in
+            //debugPrint(response)
+            guard let data = response.data else {
+                print("getHistory: No data received")
                 return
             }
             
-            let visitsArray = jsonObj["visits"] as? [[String?]] ?? []
-            self.landmarkVisits = [LandmarkVisit]()
-            for visitEntry in visitsArray {
-                
-                self.landmarkVisits.append(LandmarkVisit(
-                    landmarkName: visitEntry[2]!,
-                    visitTime: visitEntry[4]!,
-                    city: visitEntry[0]!,
-                    country: visitEntry[1]!,
-                    imageUrl: visitEntry[3]!
-                ))
-                
-                
+            do {
+                let decoder = JSONDecoder()
+                let decodedLandmarkVisits = try decoder.decode([LandmarkVisit].self, from: data)
+                self.landmarkVisits = decodedLandmarkVisits
+                //print("Updated landmark visits:", self.landmarkVisits)
+            } catch {
+                   print("getHistory: Error decoding JSON - \(error)")
+                }
                 
             }
-            
+
         }
         
-        
-        //        func parseLandmarkVisits(from json: [String: Any]) -> [LandmarkVisit]? {
-        //            guard let visitsArray = json["visits"] as? [[String: Any]] else {
-        //                print("Unable to parse 'visits' array from JSON")
-        //                return nil
-        //            }
-        //
-        //            var landmarkVisits: [LandmarkVisit] = []
-        //
-        //            for visitDict in visitsArray {
-        //                guard let landmarkName = visitDict["landmark_name"] as? String,
-        //                      let city = visitDict["city_name"] as? String,
-        //                      let country = visitDict["country_name"] as? String,
-        //                      let imageUrl = visitDict["image_url"] as? String,
-        //                      let visitTimeString = visitDict["visit_time"] as? String,
-        //                      let visitTime = ISO8601DateFormatter().date(from: visitTimeString) else {
-        //                    print("Incomplete or invalid visit data in JSON")
-        //                    continue
-        //                }
-        //
-        //                let landmarkVisit = LandmarkVisit(landmarkName: landmarkName,
-        //                                                  visitTime: visitTime,
-        //                                                  city: city,
-        //                                                  country: country)
-        //                landmarkVisits.append(landmarkVisit)
-        //            }
-        //
-        //            return landmarkVisits
-        //        }
-        
-        //        let chattsReceived = jsonObj["chatts"] as? [[String?]] ?? []
-        //                      self.chatts = [Chatt]()
-        //                      for chattEntry in chattsReceived {
-        //                          if (chattEntry.count == self.nFields) {
-        //                              self.chatts.append(Chatt(username: chattEntry[0],
-        //                                               message: chattEntry[1],
-        //                                               timestamp: chattEntry[2],
-        //                                               imageUrl: chattEntry[3],
-        //                                               videoUrl: chattEntry[4]))
-        //                          } else {
-        //                              print("getChatts: Received unexpected number of fields: \(chattEntry.count) instead of \(self.nFields).")
-        //                          }
-        
-        
-        
-        
     }
-}
+    

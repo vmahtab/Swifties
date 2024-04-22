@@ -8,8 +8,8 @@
 import Foundation
 
 struct ImageData {
-    var username: String
-    var timestamp: String
+    var username: String?
+    var timestamp: String?
     var imageUrl: String?
     var geoData: GeoData?
 
