@@ -14,10 +14,14 @@ class NavigationControllerViewModel: ObservableObject {
     @Published var viewState: ViewState = .home
     @Published var isPresented: Bool = false
     
+    //to go to current trip from the HomeView
     @Published var NavigatingToCurrentTrip = false
     
-    func itineraryDirectNavigation(landmark: Landmark) {
-        viewState = .map(landmark)
+    // To go to booking from the suggested destinations
+    @Published var NavigatingToBooking = false
+    
+    func itineraryDirectNavigation(selected: newLandmark?) {
+        viewState = .map(selected)
     }
     
 }
@@ -76,7 +80,7 @@ struct MainNavController: View {
             .fullScreenCover(isPresented: $viewModel.isPresented) {
                 switch viewModel.viewState {
                 case .map(let selectedLandmark):
-                    MapView(viewModel: viewModel, cameraPosition: $viewModel.cameraPosition, landmark: selectedLandmark)
+                    MapView(viewModel: viewModel, cameraPosition: $viewModel.cameraPosition, landmark: nil, selected: selectedLandmark)
                 case .home:
                     HomeView()
                 case .itinerary:
@@ -84,6 +88,8 @@ struct MainNavController: View {
                     MainTripView(viewModel: viewModel)
                 case .landmark:
                     CameraView(viewModel: viewModel)
+                case .profile:
+                    UserProfileView(viewModel: viewModel, identified: UserHistoryStore.shared.visitedPlaces())
                 default:
                     Text("Other view")
                     ChildNavController(viewModel: viewModel)

@@ -19,37 +19,74 @@ struct TravelBooking: Codable {
 class TravelBookingService {
     let apiServer = serverUrl
     
-    func submitBooking(booking: TravelBooking, completion: @escaping (Bool, Error?) -> Void) {
-        guard let url = URL(string: apiServer) else {
-            print("Invalid URL")
+    func submitBooking(booking: TravelBooking, completion: @escaping (Bool, Error?) -> Void) async {
+        
+        guard let apiUrl = URL(string: "\(serverUrl)make-custom-itinerary/") else {
+            print("addUser: Bad URL")
             return
         }
         
-        var request = URLRequest(url: url)
+        guard let token = UserDefaults.standard.string(forKey: "usertoken") else {
+            return
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let jsonObj = ["city_name": booking.city,
+                       "country_name": booking.country,
+                       "start_date": dateFormatter.string(from: booking.startDate),
+                       "end_date": dateFormatter.string(from: booking.endDate),
+        ] as [String : String]
+        print(jsonObj)
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
+            print("postChatt: jsonData serialization error")
+            return
+        }
+        var request = URLRequest(url: apiUrl)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
+        request.setValue("Token \(token)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
-        request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
         do {
-            let encoder = JSONEncoder()
-            encoder.dateEncodingStrategy = .iso8601 // Assuming the server expects dates in ISO 8601 format
-            let jsonData = try encoder.encode(booking)
-            request.httpBody = jsonData
-        } catch {
-            completion(false, error)
-            return
-        }
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                completion(false, error)
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                print("getLandmarks: HTTP STATUS: \(httpStatus.statusCode)")
+                print("Response:")
+                print(response)
                 return
             }
             
-            if let error = error {
-                completion(false, error)
-            } else {
-                completion(true, nil) // Successfully submitted the booking
+            let decoder = JSONDecoder()
+            
+            do {
+                guard let jsonObject = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    print("Failed to parse JSON data")
+                    return
+                }
+                print(jsonObject)
+//                guard let tripData = jsonObject["itinerary_id"] as? [[String: Any]] else {
+//                    print("Failed to parse JSON data")
+//                    return
+//                }
+//                print(tripData)
+//                
+             
+                
+            } catch {
+                print("Error decoding JSON: \(error)")
             }
-        }.resume()
+        } catch {
+            print("Error decoding JSON: \(error)")
+        }
+            
+            
+            
+        }
+        
+        
     }
-}
+

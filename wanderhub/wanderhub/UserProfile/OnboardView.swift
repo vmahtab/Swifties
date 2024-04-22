@@ -7,216 +7,65 @@
 
 import SwiftUI
 
+struct Preference {
+    let name: String
+    var isSelected: Bool
+}
+
 struct Onboard: View {
-    @State private var mountainButton = false // State variable to track button press
-    @State private var beachButton = false
-    @State private var jungleButton = false
-    @State private var ratingButton = false
-    @State private var campingButton = false
-    @State private var lakeButton = false
-    @State private var continueButton = false
+   @Binding var signinProcess: Bool
+    @Binding var showDismiss: Bool
+    
+    
+    @State private var preferences: [Preference] = [
+        Preference(name: "Art", isSelected: false),
+        Preference(name: "Architecture", isSelected: false),
+        Preference(name: "Beach", isSelected: false),
+        Preference(name: "Entertainment", isSelected: false),
+        Preference(name: "Food", isSelected: false),
+        Preference(name: "Hiking", isSelected: false),
+        Preference(name: "History", isSelected: false),
+        Preference(name: "Mountains", isSelected: false),
+        Preference(name: "Museum", isSelected: false),
+        Preference(name: "Music", isSelected: false),
+        Preference(name: "Recreation", isSelected: false),
+        Preference(name: "Scenic Views", isSelected: false),
+        Preference(name: "Sports", isSelected: false),
+    ]
     
     var body: some View {
-        VStack(spacing: 41) {
+        VStack {
             VStack(spacing: 10) {
                 Text("Hello \(User.shared.username ?? "User")")
-                    .font(Font.custom("Poppins", size: 26).weight(.semibold))
-                    .foregroundColor(Color(red: 25/255, green: 52/255, blue: 82/255))
+                    .font(Font.custom("Poppins", size: 20))
+                    .foregroundColor(titleCol)
                 Text("What do you like to do?")
-                    .font(Font.custom("Poppins", size: 25).weight(.medium))
-                    .foregroundColor(Color(red: 0.96, green: 0.40, blue: 0.33))
+                    .font(Font.custom("Poppins", size: 19))
+                    .foregroundColor(orangeCol)
             }
-            .frame(maxWidth: .infinity)
-            ZStack() {
-                
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.mountainButton.toggle()
-                }) {
-                    VStack(spacing: 10) {
-                        Image("Mountains")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 82, height: 82)
-                            .background(Color.white)
-                            .cornerRadius(8)
-                            .shadow(color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6)
-                        
-                        Text("Mountain")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.mountainButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }
-                }
-                .padding(10)
-                .frame(width: 102, height: 138)
-                .offset(x: -80, y: -146.50)
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.beachButton.toggle()
-                }) {
-                    
-                    VStack(spacing: 10) {
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 82, height: 82)
-                                .background(
-                                    Image("Shore")
-                                        .resizable()
-                                        .scaledToFit()                                    )
-                        }
-                        .frame(width: 82, height: 82)
-                        .background(Color(red: 1, green: 1, blue: 1))
-                        .cornerRadius(8)
-                        .shadow(
-                            color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                        )
-                        Text("Beach")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.beachButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
+            
+            VStack {
+                List(preferences.indices, id: \.self) { index in
+                    Toggle(isOn: self.binding(for: index)) {
+                        Text(self.preferences[index].name)
                         
                     }
+                    .toggleStyle(SwitchToggleStyle(tint: .blue))
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(backCol)
+                    
                 }
-                .padding(10)
-                .frame(width: 102, height: 138)
-                .offset(x: 80, y: -146.50)
+                .scrollContentBackground(.hidden)
                 
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.jungleButton.toggle()
-                }) {
-                    
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 82, height: 80)
-                                .background(
-                                    Image("Forest")
-                                        .resizable()
-                                        .scaledToFit()                                    )
-                        }
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 2, trailing: 0))
-                        .frame(width: 82)
-                        .background(Color(red: 1, green: 1, blue: 1))
-                        .cornerRadius(8)
-                        .shadow(
-                            color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                        )
-                        Text("Jungle Safa")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.jungleButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }
-                }
-                .padding(10)
-                .frame(width: 102, height: 138)
-                .offset(x: -80, y: 0.50)
-                
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.ratingButton.toggle()
-                }) {
-                    
-                    VStack(spacing: 10) {
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 82.06, height: 82)
-                                .background(
-                                    Image("Boats")
-                                        .resizable()
-                                        .scaledToFit()                                    )
-                        }
-                        .frame(width: 82, height: 82)
-                        .background(Color(red: 1, green: 1, blue: 1))
-                        .cornerRadius(8)
-                        .shadow(
-                            color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                        )
-                        Text("Rafting")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.ratingButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }
-                    
-                }                  .padding(10)
-                    .frame(width: 102, height: 138)
-                    .offset(x: 80, y: 0.50)
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.campingButton.toggle()
-                }) {
-                    
-                    
-                    VStack(spacing: 10) {
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 82, height: 82)
-                                .background(
-                                    Image("Camp")
-                                        .resizable()
-                                        .scaledToFit()                                    )
-                        }
-                        .frame(width: 82, height: 82)
-                        .background(Color(red: 1, green: 1, blue: 1))
-                        .cornerRadius(8)
-                        .shadow(
-                            color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                        )
-                        Text("Camping")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.campingButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }
-                    
-                    
-                }                  .padding(10)
-                    .frame(width: 102, height: 138)
-                    .offset(x: -80, y: 146.50)
-                
-                Button(action: {
-                    // Action to perform when button is pressed
-                    self.lakeButton.toggle()
-                }) {
-                    
-                    
-                    VStack(spacing: 10) {
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 82, height: 82)
-                                .background(
-                                    Image("Greenland")
-                                        .resizable()
-                                        .scaledToFit()                                    )
-                                .rotationEffect(.degrees(-180))
-                        }
-                        .frame(width: 82, height: 82)
-                        .background(Color(red: 1, green: 1, blue: 1))
-                        .cornerRadius(8)
-                        .shadow(
-                            color: Color(red: 0.71, green: 0.74, blue: 0.79, opacity: 0.12), radius: 16, y: 6
-                        )
-                        Text("Lake")
-                            .font(Font.custom("Cabin", size: 16).weight(.medium))
-                            .lineSpacing(25.60)
-                            .foregroundColor(self.lakeButton ? Color(red: 0, green: 0.15, blue: 0.71) : Color(red: 0.12, green: 0.16, blue: 0.22))
-                    }
-                    
-                    
-                }                  .padding(10)
-                    .frame(width: 102, height: 138)
-                    .offset(x: 80, y: 146.50)
             }
-            .frame(width: 262, height: 431)
             
             Button(action: {
-                // Action to perform when button is pressed
-                self.continueButton.toggle()
+                Task{
+                    await sendPreferencesToBackend()
+                }
+               showDismiss.toggle()
+            signinProcess.toggle()
+                
             }) {
                 VStack(spacing: 10) {
                     Image("arrow_right")
@@ -224,18 +73,78 @@ struct Onboard: View {
                         .frame(width: 40, height: 40)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                
-                
-            }     
-            .frame(maxWidth: .infinity)
+            }
         }
-        .padding(EdgeInsets(top: 147, leading: 49, bottom: 146, trailing: 50))
-        .frame(width: 393, height: 852)
-        .background(Color(red: 0.98, green: 0.97, blue: 0.93))
+        .padding(EdgeInsets(top: 30, leading: 40, bottom: 0, trailing: 40))
+        .background(backCol)
         
     }
-}
+    
+    private func binding(for index: Int) -> Binding<Bool> {
+        Binding(
+            get: { self.preferences[index].isSelected },
+            set: { newValue in
+                self.preferences[index].isSelected = newValue
+            }
+        )
+    }
+    
+    
+    private func sendPreferencesToBackend() async {
+        // Code to send selected preferences to backend via API call
+        let selectedPreferencesDict = preferences.reduce(into: [String: Int]()) { result, preference in
+            result[preference.name] = preference.isSelected ? 1 : 0
+        }
+        print(selectedPreferencesDict)
+        
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: selectedPreferencesDict) else {
+            print("addUser: jsonData serialization error")
+            return
+        }
+            guard let apiUrl = URL(string: "\(serverUrl)initialize-user-preferences/") else { // TODO REPLACE URL
+                print("addUser: Bad URL")
+                return
+            }
+            guard let token = UserDefaults.standard.string(forKey: "usertoken") else {
+                return
+            }
+            // let token = "8f2af7b42bfab0984014567b3688a24f672e9530"
+            //FIXME: CHANGE THIS, THIS IS ONLY FOR TESTING TOKEN IS FOR ONBOARD_PLEASE
+            
+            var request = URLRequest(url: apiUrl)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            //request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
+            request.setValue("Token \(token)", forHTTPHeaderField: "Authorization")
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
+                
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                    print("onboard: HTTP STATUS: \(httpStatus.statusCode)")
+                    print("Response:")
+                    print(response)
+                    return
+                }
+                print("Response:")
+                print(response)
+                
+            } catch {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            
+            
+            
+            
+        }
+        
+        //struct Onboard_Previews: PreviewProvider {
+        //    static var previews: some View {
+        //        Onboard()
+        //    }
+        //}
+    }
 
-#Preview {
-    Onboard()
-}

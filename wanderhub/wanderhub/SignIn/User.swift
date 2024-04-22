@@ -7,22 +7,27 @@
 
 import Foundation
 import Observation
+import SwiftUI
 
 // Consider making this an observable object.
 // I assumed that we only need to set this up once,
 // So there is no need to keep track of this and update views
 class User {
     static let shared = User()
-    let defaults = UserDefaults.standard
+//    let defaults = UserDefaults.standard
     
     private init(){
         // TODO: FIXME change this after backend is connected
-        userID = "Default User"
-        username = "Traveller"
+        userID = "Default User ID"
+        if let name = UserDefaults.standard.string(forKey: "username") {
+            username = name
+        } else {
+            username = ""
+        }
     }
     
-    let userID: String?
-    let username: String?
+    var userID: String?
+    var username: String?
     
     // TODO: For now I hardcoded sign in. connect This to backend
     func signup(username: String?, password: String?, email: String?) async -> String? {
@@ -44,7 +49,7 @@ class User {
             print("addUser: jsonData serialization error")
             return nil
         }
-        guard let apiUrl = URL(string: "\(serverUrl)signup") else {
+        guard let apiUrl = URL(string: "\(serverUrl)signup/") else {
             print("addUser: Bad URL")
             return nil
         }
@@ -68,13 +73,16 @@ class User {
                 return nil
             }
             
-            guard let token = jsonObj["Token"] as? String else {
+            guard let token = jsonObj["token"] as? String else {
                 return nil
             }
             // TODO: implement once ready to store in keychain
             // WanderHubID.shared.id = jsonObj["WanderHubID"] as? String
-            defaults.set(token, forKey: "usertoken")
-            defaults.set(token, forKey: "user")
+            UserDefaults.standard.set(token, forKey: "usertoken")
+            self.username = username
+            
+            //to allow the app remember user
+            UserDefaults.standard.set(username, forKey: "username")
             return token
         } catch {
             print("Login Networking Error")
@@ -94,45 +102,49 @@ class User {
         
         let jsonObj = ["username": username,
                        "password": password]
+
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonObj) else {
             print("addUser: jsonData serialization error")
             return nil
         }
-        guard let apiUrl = URL(string: "\(serverUrl)login") else {
+        guard let apiUrl = URL(string: "\(serverUrl)login/") else {
             print("addUser: Bad URL")
             return nil
         }
         
         var request = URLRequest(url: apiUrl)
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
-        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Accept") // expect response in JSON
+        request.httpMethod = "POST"
         request.httpBody = jsonData
         
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                print("addUser: HTTP STATUS: \(httpStatus.statusCode)")
+                print("login: HTTP STATUS: \(httpStatus.statusCode)")
                 return nil
             }
 
             guard let jsonObj = try? JSONSerialization.jsonObject(with: data) as? [String:Any] else {
-                print("addUser: failed JSON deserialization")
+                print("login: failed JSON deserialization")
                 return nil
             }
             
-            guard let token = jsonObj["Token"] as? String else {
+            guard let token = jsonObj["token"] as? String else {
                 return nil
             }
             // TODO: implement once ready to store in keychain
             // WanderHubID.shared.id = jsonObj["WanderHubID"] as? String
-            defaults.set(token, forKey: "usertoken")
-            defaults.set(token, forKey: "user")
+            UserDefaults.standard.set(token, forKey: "usertoken")
+            self.username = username
+            
+            //to allow the app remember user
+            UserDefaults.standard.set(username, forKey: "username")
             return token
         } catch {
-            print("Login Networking Error")
+            print("Login Networking or JSON Error: \(error.localizedDescription)")
             return nil
         }
     }

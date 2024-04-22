@@ -26,7 +26,7 @@ struct SigninView: View {
         }
         Task {
             do {
-                if let token = await user.signin(username: username, password: password) {
+                if let _ = await user.signin(username: username, password: password) {
                     isPresented.toggle()
                 } else {
                     loginFailed = true
@@ -46,6 +46,7 @@ struct SigninView: View {
                 .foregroundColor(titleCol)
             
             TextField("Enter name", text: $username)
+                .autocapitalization(.none)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -56,6 +57,7 @@ struct SigninView: View {
                 .padding(.horizontal, 40)
             
             SecureField("Enter password", text: $password)
+                .autocapitalization(.none)
                 .foregroundColor(greyCol)
                 .padding()
                 .background(
@@ -66,7 +68,6 @@ struct SigninView: View {
                 .padding(.horizontal, 40)
             
             Button("Login") {
-                isPresented.toggle()
                 login()
             }
             .padding()
@@ -81,16 +82,40 @@ struct SigninView: View {
             .alert(isPresented: $loginFailed) {
                 Alert(title: Text("Error"), message: Text("Login Failed"), dismissButton: .default(Text("OK")))
             }
-            Spacer()
-                .frame(height: 20)
+//            Spacer()
+//                .frame(height: 20)
             NavigationLink(destination: SignUpView(signinProcess: $isPresented)){
                 Text("Sign Up")
-                    .foregroundColor(titleCol)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .foregroundColor(backCol)
+                    .cornerRadius(10)
+                    .padding(.horizontal, 40)
+            }
+            Spacer()
+                         .frame(height: 20)
+            NavigationLink(destination: SignUpView(signinProcess: $isPresented)){
+                Button {
+                        Task {
+                            if let _ = await user.signin(username: "testing", password: "testing") {
+                                isPresented.toggle()
+                            }
+                        }
+                    } label: {
+                        VStack {
+                            Image("demo_arrrow")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                            Text("Start Demo")
+                                .foregroundColor(titleCol)
+                        }
+                    }
             }
             Spacer()
         }
         .onAppear {
-            if let usertoken = user.defaults.string(forKey: "usertoken") {
+	            if let usertoken = UserDefaults.standard.string(forKey: "usertoken") {
                 isPresented.toggle()
             }
         }

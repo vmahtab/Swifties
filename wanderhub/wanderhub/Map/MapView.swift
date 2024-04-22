@@ -11,34 +11,37 @@ import MapKit
 struct MapView: View {
     @ObservedObject var viewModel: NavigationControllerViewModel
     @Binding var cameraPosition: MapCameraPosition
-    let landmark: Landmark?
-    @State var selected: Landmark?
+    @State var landmark: newLandmark?
+    @State var selected: newLandmark?
+    
+    @ObservedObject var userItineraryStore = UserItineraryStore.shared
     
     var body: some View {
         VStack {
             Map(position: $cameraPosition, selection: $selected) {
                 if let landmark {
-                    if let geodata = landmark.geodata {
-                        Marker(landmark.name!, systemImage: "figure.wave",
-                               coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon))
-                        .tint(.red)
-                        .tag(landmark)
-                    }
+                    Marker(landmark.landmark_name, systemImage: "figure.wave",
+                           coordinate: CLLocationCoordinate2D(latitude: landmark.latitude, longitude: landmark.longitude))
+                    .tint(.red)
+                    .tag(landmark)
                 } else {
-                    ForEach(LandmarkStore.shared.landmarks, id: \.self) { landmark in
-                        if let geodata = landmark.geodata {
-                            Marker(landmark.name!, systemImage: "figure.wave",
-                                   coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon))
-                            .tint(.mint)
-                        }
+                    ForEach(userItineraryStore.newLandmarks, id: \.self) { landmark in
+                        Marker(landmark.landmark_name, systemImage: "figure.wave",
+                               coordinate: CLLocationCoordinate2D(latitude: landmark.latitude, longitude: landmark.longitude))
+                        .tint(.mint)
                     }
                 }
-                if let landmark = selected, let geodata = landmark.geodata {
-                    Annotation(landmark.name!, coordinate: CLLocationCoordinate2D(latitude: geodata.lat, longitude: geodata.lon), anchor: .topLeading
+                if let landmark = selected {
+                    Annotation(landmark.landmark_name, coordinate: CLLocationCoordinate2D(latitude: landmark.latitude, longitude: landmark.longitude), anchor: .topLeading
                     ) {
                         InfoView(landmark: landmark)
                     }
                     .annotationTitles(.hidden)
+                }
+                ForEach(LandmarkStore.shared.nearest, id: \.self) { landmark in
+                        Marker(landmark.landmark, systemImage: "questionmark.circle.fill",
+                               coordinate: CLLocationCoordinate2D(latitude: landmark.latitude, longitude: landmark.longitude))
+                            .tint(.mint)
                 }
                 
                 UserAnnotation() // shows user location
@@ -49,29 +52,28 @@ struct MapView: View {
                 MapScaleView()
             }
         }
+        .onAppear {
+            Task {
+                await LandmarkStore.shared.getNearest()
+            }
+        }
         Spacer()
         ChildNavController(viewModel: viewModel)
     }
 }
 
 struct InfoView: View {
-    let landmark: Landmark
+    let landmark: newLandmark
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if let name = landmark.name, let timestamp = landmark.timestamp {
-                    Text(name).padding(EdgeInsets(top: 4, leading: 8, bottom: 0, trailing: 0)).font(.system(size: 16))
-                    Spacer()
-                    Text(timestamp).padding(EdgeInsets(top: 4, leading: 8, bottom: 0, trailing: 4)).font(.system(size: 12))
-                }
+                Text(landmark.landmark_name).padding(EdgeInsets(top: 4, leading: 8, bottom: 0, trailing: 0)).font(.system(size: 16))
             }
-            if let message = landmark.message {
-                Text(message).padding(EdgeInsets(top: 1, leading: 8, bottom: 0, trailing: 4)).font(.system(size: 14)).lineLimit(2, reservesSpace: true)
-            }
-            if let geodata = landmark.geodata {
-                Text("\(geodata.postedFrom)").padding(EdgeInsets(top: 0, leading: 8, bottom: 10, trailing: 4)).font(.system(size: 12)).lineLimit(2, reservesSpace: true)
-            }
+//            if let message = landmark.message {
+//                Text(message).padding(EdgeInsets(top: 1, leading: 8, bottom: 0, trailing: 4)).font(.system(size: 14)).lineLimit(2, reservesSpace: true)
+//            }
+            Text("latitude: \(landmark.latitude) longitude: \(landmark.longitude)").padding(EdgeInsets(top: 0, leading: 8, bottom: 10, trailing: 4)).font(.system(size: 12)).lineLimit(2, reservesSpace: true)
         }
         .background {
             Rectangle()

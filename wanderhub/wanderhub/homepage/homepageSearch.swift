@@ -23,6 +23,7 @@ class SearchBar: UIViewController, UISearchBarDelegate {
         searchBar.delegate = self
         self.view.addSubview(searchBar)
         searchBar.barTintColor = UIColor(backCol)
+        searchBar.backgroundImage = UIImage() // This line removes the line separator
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
