@@ -135,10 +135,12 @@ def post_landmark_id_and_info(request):
         #            })
 
         for tag in landmark_info['tags']:
-            tag, created = Tag.objects.get_or_create(name=tag)
-            landmark.tags.add(tag)
+            try:
+                tag = Tag.objects.get(name=tag)
+                landmark.tags.add(tag)
+            except Tag.DoesNotExist:
+                pass
         landmark.save()
-
     try:
         visited_landmark = VisitedLandmarks.objects.filter(user=request.user).get(landmark=landmark)
     except VisitedLandmarks.DoesNotExist:

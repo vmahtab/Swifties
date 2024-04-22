@@ -71,13 +71,13 @@ class Itineraries(models.Model):
 class ItineraryItems(models.Model):
     id = models.AutoField(primary_key=True)
     it_id = models.ForeignKey(Itineraries, on_delete=models.CASCADE)
-    # landmark_name = models.ForeignKey(Landmark, on_delete=models.CASCADE)
+    landmark_name = models.ForeignKey(Landmark, on_delete=models.CASCADE, null=True)
     trip_day = models.FloatField(default=0)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
 
     def __str__(self):
-        return f"Visit {self.landmark.city_name} on {self.visit_time}"
+        return f"Visit {self.landmark_name.city_name} on day {self.trip_day}"
 
 class UserTags(models.Model):
     id = models.AutoField(primary_key=True) 

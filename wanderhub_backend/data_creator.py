@@ -76,8 +76,11 @@ def save_landmark(landmark_info):
     # print(landmark_info['tags'])
 
     for tag in landmark_info['tags']:
-        tag, created = Tag.objects.get_or_create(name=tag)
-        landmark.tags.add(tag)
+        try:
+            tag = Tag.objects.get(name=tag)
+            landmark.tags.add(tag)
+        except Tag.DoesNotExist:
+            pass
 
     landmark.save()
     print(f"Landmark saved: {landmark}")
