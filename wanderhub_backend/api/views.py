@@ -477,7 +477,7 @@ def get_user_itineraries(request):
     return Response({"itineraries" : itineraries})
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_itinerary_details(request):
@@ -603,25 +603,65 @@ def intialize_user_preferences(request):
 def update_landmark_rating(request):
     user = request.user
     landmark_name = request.data.get("landmark_name")
-    landmark = Landmark.objects.get(name=landmark_name)
+    try:
+        landmark = Landmark.objects.get(name=landmark_name)
+    except Landmark.DoesNotExist:
+        raise NotFound("Landmark not found")
     try:
         item = VisitedLandmarks.objects.filter(user=user).get(landmark=landmark)
     except ItineraryItems.DoesNotExist:
-        raise NotFound("Landmark not found")
+        raise NotFound("VisitedLandmarks not found")
 
     item.rating = float(request.data.get("new_rating"))
     item.save()
 
-    return Response({"Landmark Rating updated": item.rating})
+    update_user_weights(user)
+    user_weights = UserTags.objects.get(user=user)
+    return Response(
+        {
+            "Landmark Rating updated": item.rating,
+            "Art": user_weights.art,
+            "Architecture": user_weights.architecture,
+            "Beach": user_weights.beach,
+            "Entertainment": user_weights.entertainment,
+            "Food": user_weights.food,
+            "Hiking": user_weights.hiking,
+            "History": user_weights.history,
+            "Mountains": user_weights.mountains,
+            "Museum": user_weights.museum,
+            "Music": user_weights.music,
+            "Recreation": user_weights.recreation,
+            "Scenic Views": user_weights.scenicViews,
+            "Sports": user_weights.sports,
+        }
+    )
+
+    # return Response({"Landmark Rating updated": item.rating})
 
 
-@api_view(["POST"])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def update_user_weights(request):
+# @api_view(["POST"])
+# @authentication_classes([SessionAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
+def update_user_weights(userObj):
     # def update_user_weights(username):
     # all_landmarks = VisitedLandmarks.objects.filter(user=username)
-    user_weights = UserTags.objects.get(user=request.user)
+    counter = 0
+
+    try:
+        all_items = VisitedLandmarks.objects.filter(user=userObj)
+    except VisitedLandmarks.DoesNotExist:
+        raise NotFound("VisitedLandmarks not found")
+
+    for item in all_items:
+        counter += 1
+
+    if counter < 10:
+        return
+    
+    try:
+        user_weights = UserTags.objects.get(user=userObj)
+    except UserTags.DoesNotExist:
+        raise NotFound("UserTags not found")
     tags = [
         "Art",
         "Architecture",
