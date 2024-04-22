@@ -78,3 +78,13 @@ Content-Type: application/json
 Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
 
 {"latitude": "", "longitude": "-0.1180", "distance":"10"}
+{"latitude": "", "longitude": "-0.1180", "distance":"10"}
+
+
+###
+
+GET http://34.23.240.68/add-to-itinerary
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"itinerary_id": "11", "day": "4"}
