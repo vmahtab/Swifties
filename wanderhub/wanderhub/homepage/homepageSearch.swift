@@ -4,7 +4,7 @@
 //
 //  Created by Neha Pinnu on 3/24/24.
 //
-
+// TODO: FIXME this search bar might be useful later
 import UIKit
 
 class SearchBar: UIViewController, UISearchBarDelegate {
@@ -22,7 +22,8 @@ class SearchBar: UIViewController, UISearchBarDelegate {
     func setupSearch () {
         searchBar.delegate = self
         self.view.addSubview(searchBar)
-        
+        searchBar.barTintColor = UIColor(backCol)
+        searchBar.backgroundImage = UIImage() // This line removes the line separator
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

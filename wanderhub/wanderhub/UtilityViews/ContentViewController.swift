@@ -8,7 +8,7 @@ import SwiftUI
 
 enum ViewState {
     case itinerary
-    case map
+    case map(newLandmark?)
     case landmark
     case profile
     case home

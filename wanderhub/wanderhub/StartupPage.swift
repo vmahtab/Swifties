@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AVKit
+import AVFoundation
 
 struct StartupPage: View {
     @State private var isActive = false
@@ -19,6 +21,7 @@ struct StartupPage: View {
                     if SigninPresented {
                         SigninView(isPresented: $SigninPresented)
                     } else {
+                        //UpcomingTripsView()
                         HomeView()
                     }
                 } else {
@@ -41,5 +44,6 @@ struct StartupPage: View {
                 }
             }
         }
+        .environment(AudioPlayer())
     }
 }

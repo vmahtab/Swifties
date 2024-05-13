@@ -17,17 +17,33 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, re_path
-from api import views, landmarks
+from api import views, landmarks, combine
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     
-    path('login', views.login),
-    path('signup', views.signup),
-    path('add-user-landmark', views.add_user_landmark),
-    path('get-user-landmarks', views.get_user_landmarks),
-    path('test_token', views.test_token),
+    path('login/', views.login),
+    path('signup/', views.signup),
+    path('add-user-landmark/', views.add_user_landmark),
+    path('get-user-landmarks/', views.get_user_landmarks),
+    path('make-custom-itinerary/', views.make_custom_itinerary),
+    path('add-to-itinerary/', views.add_to_itinerary),
+    path('get-nearby-landmarks/', views.get_nearby_landmarks),
+    path('get-user-itineraries/', views.get_user_itineraries),
+    path('get-itinerary-details/', views.get_itinerary_details),
+    path('remove-from-itinerary/', views.remove_from_itinerary),
+    path('destinations/', views.get_destinations),
 
-    path('post_landmarks', landmarks.post_landmarks),
-    path('get_landmarks', landmarks.get_landmark),
+    path('test_token/', views.test_token),
+
+    path('initialize-user-preferences/', views.intialize_user_preferences),
+
+    path('post_landmarks/', landmarks.post_landmarks),
+    path('get_landmarks/', landmarks.get_landmark),
+    path('post_landmark_info/', landmarks.post_landmark_info),
+    path('post_landmark_id_and_info/', combine.post_landmark_id_and_info),
+
+    path('testing_intialize_user_preferences/', views.intialize_user_preferences),
+    path('testing_update_landmark_rating/', views.update_landmark_rating),
+    path('testing_update_user_weights/', views.update_user_weights)
 ]

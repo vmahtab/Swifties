@@ -1,6 +1,7 @@
-# Swift-related
+wanderhub_backend/api/private/
+wanderhub_backend/images/
+.env
 .DS_Store
-*.xcodeproj
 xcuserdata/
 DerivedData/
 *.hmap
@@ -63,3 +64,4 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+google-cloud-sdk/

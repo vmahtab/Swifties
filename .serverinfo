@@ -1,0 +1,5 @@
+external_ip=34.23.240.68
+
+connecting to the server:
+ssh -i wanderhub.pem ubuntu@34.23.240.68
+chmod 600 wanderhub.pem

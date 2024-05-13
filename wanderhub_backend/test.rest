@@ -1,29 +1,29 @@
-POST http://127.0.0.1:8000/login
+POST http://34.23.240.68/login
 Content-Type: application/json
 
-{"username": "alexey", "password": "russia"}
+{"username": "neha", "password": "neha"}
 
 ###
 
-POST http://127.0.0.1:8000/signup
+POST http://34.23.240.68/signup
 Content-Type: application/json
 
-{"username": "alexey", "password": "russia", "email": "alexeyk@umich.edu"}
+{"username": "neha", "password": "neha", "email": "neha@umich.edu"}
 
 ###
 
-POST http://127.0.0.1:8000/add-user-landmark
+POST http://34.23.240.68/add-user-landmark
 Content-Type: application/json
-Authorization: Token 43c4a432aa5ea9026a800399fb1e0d80a6faf7f3
+Authorization: Token d57593d0b0567b0bd08a360e8d0741868535e601
 
 {"landmark_name": "Leaning Tower of Pisa"}
 
 
 ###
 
-GET http://127.0.0.1:8000/get-user-landmarks
+GET http://34.23.240.68/get-user-landmarks/
 Content-Type: application/json
-Authorization: Token 43c4a432aa5ea9026a800399fb1e0d80a6faf7f3
+Authorization: Token d57593d0b0567b0bd08a360e8d0741868535e601
 
 {}
 
@@ -35,3 +35,56 @@ Content-Type: application/json
 Authorization: Token 471bc5e12073b6453fcf814e8b72ea46af683fa1
 
 {}
+
+###
+
+POST http://127.0.0.1:8000/make-custom-itinerary
+Content-Type: application/json
+Authorization: Token 0c1b283d8a6a94def293497b18a0c1fde0f16914
+
+{"interests": "biking and art", "city_name": "dallas", "country_name": "USA", "start_date": "2024-05-24", "end_date": "2024-05-27"}
+
+###
+
+POST http://34.23.240.68/post_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"username": "alex", "timestamp": "2024-03-26 12:35:31 +0000", "imageUrl": "", "lat": "0.0", "lon": "0.0", "place": "Michigan", "facing": "North", "speed": "0.0", "image": "umich_belltower.jpeg"}
+
+###
+
+GET http://34.23.240.68/get_landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{}
+
+###
+
+POST http://34.23.240.68/post_landmark_info
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"landmark_name": "Michigan League", "interest": "history"}
+
+
+{}
+
+###
+
+GET http://34.23.240.68/get-nearby-landmarks
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"latitude": "", "longitude": "-0.1180", "distance":"10"}
+{"latitude": "", "longitude": "-0.1180", "distance":"10"}
+
+
+###
+
+GET http://34.23.240.68/add-to-itinerary
+Content-Type: application/json
+Authorization: Token eb64db8ba318245164b33025b812cb62475a7e63
+
+{"itinerary_id": "11", "day": "4"}
